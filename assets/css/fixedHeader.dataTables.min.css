@@ -1,0 +1,26 @@
+table.fixedHeader-floating {
+    position: fixed !important;
+    background-color: white;    
+}
+
+table.fixedHeader-floating.no-footer {
+    border-bottom-width: 0
+}
+
+table.fixedHeader-locked {
+    position: absolute !important;
+    background-color: white
+}
+
+@media print {
+    table.fixedHeader-floating {
+        display: none
+    }
+}
+/* .dataTables_scrollHead {
+  position: sticky !important;
+  top: 119px;
+  z-index: 99;
+  background-color: white;
+  box-shadow: 0px 5px 5px 0px rgba(82, 63, 105, 0.08);
+} */

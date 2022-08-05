@@ -1,0 +1,330 @@
+/* input {
+    background: transparent !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    border-bottom: 1px solid#5a5a5a !important;
+}
+
+input:active {
+    border: 0 !important;
+} */
+
+.company-logo {
+    position: relative;
+    z-index: 99;
+}
+
+.bg-logo {
+    position: absolute;
+    width: 80px;
+    /* height: 100px; */
+    top: 0;
+    left: 5px;
+    right: 0;
+}
+
+tr.selected {
+    background-color: #b0bed9;
+}
+
+tr.selected:hover {
+    background-color: #9fb2d6;
+}
+
+.row {
+    position: relative;
+}
+
+.margin-bottom {
+    margin-bottom: 15px;
+}
+
+.btn-login-perm {
+    position: absolute;
+    color: #000;
+    background: #a0a0a0;
+    font-weight: bold;
+    font-size: 13px;
+    right: -23px;
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+    padding: 5px;
+    padding-left: 20px;
+    margin-top: 1rem;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.btn-login-perm:hover {
+    background: #ddd;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.btn-login-permselected {
+    background: #ededed;
+}
+
+.ttl-menu-container {
+    flex: 1 0 auto;
+}
+
+.ttl-grid-wrapper {
+    background-color: transparent;
+    font-size: 13px;
+    border-bottom: 2px solid#6d6d6d;
+    /* margin-bottom: 15px; */
+}
+
+.ttl-grid-wrapper .h-grid-head {
+    font-family: poppins;
+    color: #5a5a5a;
+}
+
+.ttl-grid-menu-text {
+    padding: .25rem .5rem;
+}
+
+.bredcrumb-head {
+    font-size: 19px;
+}
+
+
+
+.col-form-label {
+    font-size: 14px !important;
+}
+
+/* menu nav */
+.menu-nav nav ul {
+    padding: 0;
+}
+
+.menu-nav nav ul li {
+    list-style: none;
+    background: #6d6d6d;
+    padding: 13px;
+    text-align: right;
+    margin-bottom: 20px;
+    transition: 0.2s;
+    cursor: pointer;
+    width: 80%;
+}
+
+.menu-nav nav ul li:hover {
+    transition: 0.2s;
+    width: 100%;
+}
+
+.side-menu-active {
+    width: 100% !important;
+}
+
+.menu-nav nav ul li a {
+    font-family: Poppins;
+    text-decoration: none;
+    color: #fff;
+    font-weight: bold;
+    font-size: 17px;
+}
+
+.navbar-bg {
+    background-image: url(../images/client_logos/epic-warehouse-setup-hero.jpeg);
+}
+
+.navbar-bg::before {
+    content: "";
+    background-color: rgba(255, 255, 255, .5);
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+}
+
+.breadcrumb {
+    flex-wrap: wrap;
+    padding: 0.5rem 0rem;
+    margin-bottom: 1rem;
+    list-style: none;
+    background-color: transparent;
+    border-bottom: 1px solid#ddd;
+}
+
+/* .menu-section {
+    height: 90vh;
+    overflow: hidden;
+    overflow-y: scroll;
+}
+
+*/
+
+.content-menu {
+    padding: 20px;
+    color: #ddd !important;
+    font-size: 16px;
+}
+
+.content-menu .content-menu-area {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    cursor: pointer;
+    background: #354d67;
+    transition: 0.2s;
+}
+
+.content-menu .content-menu-area:hover {
+    color: #fff !important;
+    background: #007bff;
+    transition: 0.2s;
+}
+
+.content-menu .fa {
+    font-size: 50px;
+}
+
+/* width */
+.menu-section::-webkit-scrollbar {
+    width: 3px;
+    display: none;
+}
+
+/* Track */
+.menu-section::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey;
+    border-radius: 10px;
+}
+
+/* Handle */
+.menu-section::-webkit-scrollbar-thumb {
+    background: #6d6d6d;
+    border-radius: 10px;
+}
+
+/* Handle on hover */
+.menu-section::-webkit-scrollbar-thumb:hover {
+    background: #b30000;
+}
+
+.login-bg-client {
+    z-index: 0;
+}
+
+/* Animation image */
+.image {
+    z-index: -1;
+    position: absolute;
+    margin-top: 5vh;
+    /* margin-left: auto;
+			margin-right: auto; */
+    width: 60%;
+    opacity: 0.7;
+    filter: brightness(150px);
+    animation: spin 22s linear infinite;
+}
+
+@keyframes spin {
+    100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+
+/* End Custom Head CSS 1 */
+
+/* Custom Head CSS 2 */
+/* The switch - the box around the slider */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 23px;
+}
+
+thead {
+    min-height: 200px !important;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+/* The slider */
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 24px;
+    width: 24px;
+    left: 0;
+    bottom: 0px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+input:checked+.slider {
+    background-color: #2196F3;
+}
+
+input:focus+.slider {
+    box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked+.slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+
+/* END Custom Head CSS 2 */
+
+
+.menu-section {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 311px;
+    display: block;
+    z-index: 1000;
+    color: #fff;
+    font-weight: 200;
+    background-color: #fff;
+    height: 100%;
+}
+
+.menu-nav {
+    margin-top: 10em;
+}
+
+.main-content {
+    position: relative;
+    width: calc(100% - 311px);
+    min-height: 100%;
+    float: right;
+    margin-top: 105px;
+}
