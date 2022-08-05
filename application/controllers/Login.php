@@ -17,6 +17,11 @@ class Login extends MY_Controller
     $this->load->view('login-view');
   }
 
+  public function not_found()
+  {
+    $this->load->view('errors/html/error_404');
+  }
+
   /**
    * Process
    */

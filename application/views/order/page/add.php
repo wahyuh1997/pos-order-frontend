@@ -19,17 +19,23 @@ use PhpOffice\PhpSpreadsheet\Calculation\MathTrig\Base;
       <a href="javascript:;" class="btn btn-xs btn-icon btn-warning" data-toggle="panel-collapse" data-bs-original-title="" title="" data-tooltip-init="true"><i class="fa fa-minus"></i></a>
     </div>
   </div>
-  <form id="regCrudForm" action="<?= base_url('master_data/menu_categories/add'); ?>" data-redurl="<?= base_url('master-data/menu-categories'); ?>" method="POST" enctype="multipart/form-data">
+  <form id="regCrudForm" data-redurl="<?= base_url('order'); ?>" method="POST">
     <div class="panel-body">
       <!-- Search by Branch Name -->
       <div class="mb-3 row">
-        <label for="menuCatName" class="col-sm-2 col-form-label">Name</label>
+        <label for="menuCatName" class="col-sm-2 col-form-label">Nama Pelanggan</label>
         <div class="col-sm-6">
           <input type="text" class="form-control" id="menuCatName" name="menuCatName" autocomplete="off">
         </div>
       </div>
+      <div class="mb-3 row">
+        <label for="menuCatName" class="col-sm-2 col-form-label">Nomor Meja</label>
+        <div class="col-sm-6">
+          <input type="number" class="form-control" id="menuCatName" name="menuCatName" value="1" min="1" max="40" autocomplete="off">
+        </div>
+      </div>
       <div class="panel-footer text-end">
-        <a href="<?= base_url('master-data/menu-categories'); ?>" class="btn btn-secondary">Back</a>
+        <a href="<?= base_url('order'); ?>" class="btn btn-secondary">Back</a>
         <button class="btn btn-info">Submit</button>
       </div>
     </div>

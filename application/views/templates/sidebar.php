@@ -47,11 +47,6 @@
               <div class="menu-text">Menu Categories</div>
             </a>
           </div>
-          <div class="menu-item <?= $this->uri->segment(2) == 'menu-attributes' ? 'active' : null; ?>">
-            <a href="<?= base_url('master-data/menu-attributes'); ?>" class="menu-link">
-              <div class="menu-text">Menu Attributes</div>
-            </a>
-          </div>
         </div>
       </div>
       <div class="menu-item <?= $this->uri->segment(1) == 'order' ? 'active' : null; ?>">
@@ -71,15 +66,23 @@
         </a>
       </div>
       <div class="menu-item">
-        <a href="<?= base_url('pos'); ?>" target="_blank" class="menu-link">
+        <a href="<?= base_url('kitchen'); ?>" target="_blank" class="menu-link">
+          <div class="menu-icon">
+            <i class="fa fa-bell"></i>
+          </div>
+          <div class="menu-text">Kitchen</div>
+        </a>
+      </div>
+      <div class="menu-item">
+        <a href="#" target="_blank" class="menu-link">
           <div class="menu-icon">
             <i class="fa fa-file-lines"></i>
           </div>
           <div class="menu-text">Report</div>
         </a>
       </div>
-      <div class="menu-item">
-        <a href="<?= base_url('pos'); ?>" target="_blank" class="menu-link">
+      <div class="menu-item <?= $this->uri->segment(1) == 'user' ? 'active' : null; ?>">
+        <a href="<?= base_url('user'); ?>" class="menu-link">
           <div class="menu-icon">
             <i class="fa fa-user"></i>
           </div>

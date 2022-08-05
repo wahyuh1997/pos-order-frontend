@@ -1,18 +1,12 @@
 <?php
 
-class Menu_categories extends MY_Controller
+class User extends MY_Controller
 {
 
   // constructor
   public function __construct()
   {
     parent::__construct();
-  }
-
-  public function dtb_serverside()
-  {
-    // trace();
-    echo json_encode($this->lib_curl->curl_request($this->pos_service_v1 . 'v1/menu-categories/get-all?page=1&limit=10&sorty_by=&sort_type=&menuCatName'));
   }
 
   /**
@@ -22,13 +16,12 @@ class Menu_categories extends MY_Controller
   {
     // dataView
     $dataView = [
-      'title'     => 'Master Data',
-      'subtitle'  => 'Menu Categories',
-      'js'        => 'master_data/menu_categories/js/data'
+      'title'     => 'User',
+      'subtitle'  => 'User',
     ];
 
     // view
-    $this->load_template('master_data/menu_categories/page/index', $dataView);
+    $this->load_template('user/page/index', $dataView);
   }
 
   public function add()
@@ -42,12 +35,13 @@ class Menu_categories extends MY_Controller
       ];
 
       // view
-      $this->load_template('master_data/menu_categories/page/add', $dataView);
+      $this->load_template('user/page/add', $dataView);
     } else {
       $menuCategoriesResponse = $this->lib_curl->curl_request($this->pos_service_v1 . 'v1/menu-categories', 'POST', $_POST);
       echo json_encode($menuCategoriesResponse);
     }
   }
+
 
   public function edit()
   {
@@ -76,6 +70,24 @@ class Menu_categories extends MY_Controller
       }
     } else {
       $menuCategoriesResponse = $this->lib_curl->curl_request($this->pos_service_v1 . 'v1/menu-categories', "PUT", $post);
+      echo json_encode($menuCategoriesResponse);
+    }
+  }
+
+  public function change_password()
+  {
+    $post = $this->input->post(null, true);
+    if (count($post) == 0) {
+      // dataView
+      $dataView = [
+        'title'     => 'User',
+        'subtitle'  => 'Ubah Kata Sandi'
+      ];
+
+      // view
+      $this->load_template('user/page/change', $dataView);
+    } else {
+      $menuCategoriesResponse = $this->lib_curl->curl_request($this->pos_service_v1 . 'v1/menu-categories', 'POST', $_POST);
       echo json_encode($menuCategoriesResponse);
     }
   }

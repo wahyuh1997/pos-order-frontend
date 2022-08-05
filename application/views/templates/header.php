@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8" />
-  <title>I2B POS</title>
+  <title>TAMAN IDE POS</title>
   <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
   <meta content="" name="description" />
   <meta content="" name="author" />
@@ -64,7 +64,7 @@
     <div id="header" class="app-header">
       <!-- BEGIN navbar-header -->
       <div class="navbar-header">
-        <a href="index.html" class="navbar-brand"><span class="navbar-logo"></span> <b>I2B</b> POS</a>
+        <a href="index.html" class="navbar-brand"><span class="navbar-logo"></span> <b>TAMAN IDE </b> POS</a>
         <button type="button" class="navbar-mobile-toggler" data-toggle="app-sidebar-mobile">
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>

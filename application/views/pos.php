@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8" />
-  <title>Color Admin | POS - Customer Order System</title>
+  <title>TAMAN IDE | POS</title>
   <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
   <meta content="" name="description" />
   <meta content="" name="author" />
@@ -34,13 +34,14 @@
         <!-- BEGIN pos-menu -->
         <div class="pos-menu">
           <div class="logo">
-            <a href="index_v3.html">
+            <a href="#">
               <div class="logo-img"><img src="<?= base_url() ?>assets/img/pos/logo.svg" /></div>
               <div class="logo-text">Pine & Dine</div>
             </a>
           </div>
           <div class="nav-container">
-            <div data-scrollbar="true" data-height="100%" data-skip-mobile="true">
+            <!-- data-scrollbar="true" data-height="100%" data-skip-mobile="true" -->
+            <div>
               <ul class="nav nav-tabs">
                 <li class="nav-item">
                   <a class="nav-link active" href="#" data-filter="all">
@@ -85,7 +86,8 @@
 
         <!-- BEGIN pos-content -->
         <div class="pos-content">
-          <div class="pos-content-container" data-scrollbar="true" data-height="100%" data-skip-mobile="true">
+          <!-- data-scrollbar="true" data-height="100%" data-skip-mobile="true" -->
+          <div class="pos-content-container">
             <div class="product-row">
               <div class="product-container" data-type="meat">
                 <a href="#" class="product" data-bs-toggle="modal" data-bs-target="#modalPosItem">

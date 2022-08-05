@@ -1,6 +1,6 @@
 <?php
 
-class Pos_kitchen_order extends MY_Controller
+class Kitchen extends MY_Controller
 {
 
   // constructor
@@ -14,6 +14,6 @@ class Pos_kitchen_order extends MY_Controller
    */
   public function index()
   {
-    $this->load->view('pos_kitchen_order');
+    $this->load->view('kitchen');
   }
 }

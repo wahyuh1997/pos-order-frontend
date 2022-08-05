@@ -1,7 +1,8 @@
 <div class="d-flex justify-content-between">
   <h1 class="page-header"><?= $subtitle; ?></h1>
   <div class="ml-auto">
-    <a href="<?= base_url('order/add'); ?>" class="btn btn-sm btn-primary btn-round">Tambah Order Baru</a>
+    <a href="<?= base_url('user/change_password'); ?>" class="btn btn-sm btn-info btn-round">Ubah Kata Sandi</a>
+    <a href="<?= base_url('user/add'); ?>" class="btn btn-sm btn-primary btn-round">Add New</a>
   </div>
 </div>
 
@@ -20,21 +21,28 @@
       <thead>
         <tr>
           <th width="1%">#</th>
-          <th width="10%"></th>
-          <th>Order Number</th>
-          <th>Receipt Number</th>
-          <th>Table</th>
-          <th>Total Price</th>
-          <th>Service Fee</th>
-          <th>Complete</th>
-          <th>Checkout</th>
-          <th>Payment Type</th>
-          <th>Created At</th>
-          <th>Updated At</th>
+          <th width="15%"></th>
+          <th>Username</th>
+          <th>Name</th>
+          <th>Role</th>
+          <th>Dibuat</th>
+          <th>Diupdate</th>
         </tr>
       </thead>
       <tbody>
-        <!-- Serverside -->
+        <tr>
+          <td>1</td>
+          <td>
+            <a href="#" class="btn btn-primary btn-sm">Ubah</a>
+            <a href="#" class="btn btn-info btn-sm btn-del">Reset</a>
+            <a href="#" class="btn btn-danger btn-sm btn-del">Hapus</a>
+          </td>
+          <td>andi123</td>
+          <td>andi</td>
+          <td>Owner</td>
+          <td>-</td>
+          <td>-</td>
+        </tr>
       </tbody>
     </table>
 

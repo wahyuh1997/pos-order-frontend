@@ -21,11 +21,29 @@ use PhpOffice\PhpSpreadsheet\Calculation\MathTrig\Base;
   </div>
   <form id="regCrudForm" action="<?= base_url('master_data/menu_categories/add'); ?>" data-redurl="<?= base_url('master-data/menu-categories'); ?>" method="POST" enctype="multipart/form-data">
     <div class="panel-body">
-      <!-- Search by Branch Name -->
+
       <div class="mb-3 row">
-        <label for="menuCatName" class="col-sm-2 col-form-label">Name</label>
+        <label for="menuCatName" class="col-sm-2 col-form-label">Username</label>
         <div class="col-sm-6">
           <input type="text" class="form-control" id="menuCatName" name="menuCatName" autocomplete="off">
+        </div>
+      </div>
+      <div class="mb-3 row">
+        <label for="menuCatName" class="col-sm-2 col-form-label">Nama</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control" id="menuCatName" name="menuCatName" autocomplete="off">
+        </div>
+      </div>
+      <div class="mb-3 row">
+        <label for="menuCatName" class="col-sm-2 col-form-label">Posisi</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control" id="menuCatName" name="menuCatName" autocomplete="off">
+        </div>
+      </div>
+      <div class="mb-3 row">
+        <label for="menuCatName" class="col-sm-2 col-form-label">Kata Sandi</label>
+        <div class="col-sm-6">
+          <input type="password" class="form-control" id="menuCatName" name="menuCatName" autocomplete="off">
         </div>
       </div>
       <div class="panel-footer text-end">
