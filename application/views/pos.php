@@ -429,6 +429,7 @@
 
   <script src="<?= base_url(); ?>assets/plugins/gritter/js/jquery.gritter.js"></script>
   <script src="<?= base_url(); ?>assets/js/core_1_0_0_5.js"></script>
+  <script src="<?= base_url(); ?>assets/js/html5-qrcode.min.js"></script>
   <script src="<?= base_url(); ?>assets/js/demo/form-plugins.demo.js"></script>
   <script src="<?= base_url(); ?>assets/js/demo/pos-customer-order.demo.js"></script>
   <!-- ================== END page-js ================== -->
@@ -443,6 +444,7 @@
       let subtotal = 0
       if (keranjang.length == 0) {
         // $('.btn-primary.create-new-order').addClass('d-none');
+        //<h4>No order history found</h4>      
         html = `<div class="h-100 d-flex align-items-center justify-content-center text-center p-20">
                   <div>
                     <div style="margin-top: 3rem;">
@@ -451,7 +453,8 @@
                         <path d="M8 1.5A2.5 2.5 0 0 0 5.5 4h-1a3.5 3.5 0 1 1 7 0h-1A2.5 2.5 0 0 0 8 1.5z" />
                       </svg>
                     </div>
-                    <h4>No order history found</h4>                  
+                    <div id="reader" width="600px"></div>
+                                
                   </div>
                 </div>`;
       } else {
@@ -638,9 +641,33 @@
         }
       }
       load_cart();
-
     });
     /* End Of Order Item Area */
+
+    /* Function Success Scan */
+    function onScanSuccess(qrMessage) {
+      window.open(qrMessage + 'pos');
+
+      html5QrcodeScanner.clear();
+
+      $('#btn-render').css('display', 'block');
+    }
+    /* Function Failure Scan */
+    function onScanFailure(error) {
+      // handle scan failure, usually better to ignore and keep scanning.
+      // for example:
+      console.warn(`QR error = ${error}`);
+    }
+
+    /* Init Function Scan */
+    let html5QrcodeScanner = new Html5QrcodeScanner(
+      "reader", {
+        fps: 10,
+        qrbox: 250
+      }, /* verbose= */ false);
+
+    html5QrcodeScanner.render(onScanSuccess, onScanFailure);
+
 
 
     /* Product Item Area */
