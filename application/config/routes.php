@@ -68,6 +68,7 @@ $route['master-data/menu/edit/(:any)']  = "master_data/menu/edit/$1";
 /* Menu Categories */
 $route['master-data/menu-categories']                       = "master_data/menu_categories";
 $route['master-data/menu-categories/add']                   = "master_data/menu_categories/add";
+$route['master-data/menu-categories/edit/(:num)']           = "master_data/menu_categories/edit/$1";
 $route['master-data/menu-categories/dtb-serverside']        = "master_data/menu_categories/dtb_serverside";
 
 /* Menu Attributes */

@@ -9,22 +9,18 @@ class Menu_categories extends MY_Controller
     parent::__construct();
   }
 
-  public function dtb_serverside()
-  {
-    // trace();
-    echo json_encode($this->lib_curl->curl_request($this->pos_service_v1 . 'v1/menu-categories/get-all?page=1&limit=10&sorty_by=&sort_type=&menuCatName'));
-  }
-
   /**
    * index
    */
   public function index()
   {
+
+    $data = $this->lib_curl->curl_request($this->pos_service_v1 . 'menu/get_all_category');
     // dataView
     $dataView = [
       'title'     => 'Master Data',
-      'subtitle'  => 'Menu Categories',
-      'js'        => 'master_data/menu_categories/js/data'
+      'subtitle'  => 'Kategori',
+      'data'      => $data
     ];
 
     // view
@@ -38,34 +34,33 @@ class Menu_categories extends MY_Controller
       // dataView
       $dataView = [
         'title'     => 'Master Data',
-        'subtitle'  => 'Add New Menu Categories'
+        'subtitle'  => 'Add New Kategori'
       ];
 
       // view
       $this->load_template('master_data/menu_categories/page/add', $dataView);
     } else {
-      $menuCategoriesResponse = $this->lib_curl->curl_request($this->pos_service_v1 . 'v1/menu-categories', 'POST', $_POST);
+      $menuCategoriesResponse = $this->lib_curl->curl_request($this->pos_service_v1 . 'menu/create_category', 'POST', $_POST);
       echo json_encode($menuCategoriesResponse);
     }
   }
 
-  public function edit()
+  public function edit($id)
   {
     // get body
-    $get = $this->input->get();
     $post = $this->input->post();
 
     // check body
+    $data = $this->lib_curl->curl_request($this->pos_service_v1 . 'menu/get_category/' . $id);
     if (count($post) == 0) {
       // get menu category details data
-      $menuCategoriesResponse = $this->lib_curl->curl_request($this->pos_service_v1 . 'v1/menu-categories/get-details?menuCatId=' . $get['menuCatId']);
       // response check
-      if ($menuCategoriesResponse['success'] == true) {
+      if ($data['status'] == true) {
         // dataView
         $dataView = [
           'title'       => 'Master Data',
-          'subtitle'    => 'Edit Menu Categories',
-          'menuCatData' => $menuCategoriesResponse['data']
+          'subtitle'    => 'Edit Kategori',
+          'menuCatData' => $data['data']
         ];
 
         // view
@@ -75,7 +70,7 @@ class Menu_categories extends MY_Controller
         redirect('master-data/menu-categories');
       }
     } else {
-      $menuCategoriesResponse = $this->lib_curl->curl_request($this->pos_service_v1 . 'v1/menu-categories', "PUT", $post);
+      $menuCategoriesResponse = $this->lib_curl->curl_request($this->pos_service_v1 . 'menu/update_category/' . $data['data']['id'], "PUT", $post);
       echo json_encode($menuCategoriesResponse);
     }
   }
@@ -83,12 +78,12 @@ class Menu_categories extends MY_Controller
   /**
    * delete
    */
-  public function delete()
+  public function delete($id)
   {
     // get params
-    $get = $this->input->get();
+    // $get = $this->input->get();
 
-    $menuCategoriesResponse = $this->lib_curl->curl_request($this->pos_service_v1 . 'v1/menu-categories?menuCatId=' . $get['menuCatId'], "DELETE");
+    $menuCategoriesResponse = $this->lib_curl->curl_request($this->pos_service_v1 . 'menu/delete_category/' . $id, "DELETE");
     echo json_encode($menuCategoriesResponse);
   }
 }

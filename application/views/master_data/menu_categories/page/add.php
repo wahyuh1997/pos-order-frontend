@@ -23,9 +23,9 @@ use PhpOffice\PhpSpreadsheet\Calculation\MathTrig\Base;
     <div class="panel-body">
       <!-- Search by Branch Name -->
       <div class="mb-3 row">
-        <label for="menuCatName" class="col-sm-2 col-form-label">Name</label>
+        <label for="nama_kategori" class="col-sm-2 col-form-label">Name</label>
         <div class="col-sm-6">
-          <input type="text" class="form-control" id="menuCatName" name="menuCatName" autocomplete="off">
+          <input type="text" class="form-control" id="nama_kategori" name="nama_kategori" autocomplete="off">
         </div>
       </div>
       <div class="panel-footer text-end">

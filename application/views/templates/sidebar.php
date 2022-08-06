@@ -44,7 +44,7 @@
           </div>
           <div class="menu-item <?= $this->uri->segment(2) == 'menu-categories' ? 'active' : null; ?>">
             <a href="<?= base_url('master-data/menu-categories'); ?>" class="menu-link">
-              <div class="menu-text">Menu Categories</div>
+              <div class="menu-text">Kategori</div>
             </a>
           </div>
         </div>

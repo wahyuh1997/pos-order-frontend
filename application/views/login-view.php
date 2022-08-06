@@ -40,9 +40,9 @@
         <div class="login-header">
           <div class="brand">
             <div class="d-flex align-items-center">
-              <span class="logo"></span> <b>Color</b> Admin
+              <span class="logo"></span> <b>TAMAN IDE POS</b>
             </div>
-            <small>Bootstrap 5 Responsive Admin Template</small>
+            <small>Login</small>
           </div>
           <div class="icon">
             <i class="fa fa-lock"></i>
@@ -52,26 +52,23 @@
 
         <!-- BEGIN login-content -->
         <div class="login-content">
-          <form action="index.html" method="GET">
+          <?php if ($this->session->flashdata('notice')) : ?>
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+              <strong><?= $this->session->flashdata('notice'); ?></strong>
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+          <?php endif; ?>
+          <form action="<?= base_url('login/process'); ?>" method="POST">
             <div class="form-floating mb-20px">
-              <input type="text" class="form-control fs-13px h-45px border-0" placeholder="Email Address" id="emailAddress" />
-              <label for="emailAddress" class="d-flex align-items-center text-gray-600 fs-13px">Email Address</label>
+              <input type="text" class="form-control fs-13px h-45px border-0" placeholder="Username" name="username" id="username" />
+              <label for="username" class="d-flex align-items-center text-gray-600 fs-13px">Username</label>
             </div>
             <div class="form-floating mb-20px">
-              <input type="password" class="form-control fs-13px h-45px border-0" placeholder="Password" />
-              <label for="emailAddress" class="d-flex align-items-center text-gray-600 fs-13px">Password</label>
-            </div>
-            <div class="form-check mb-20px">
-              <input class="form-check-input border-0" type="checkbox" value="1" id="rememberMe" />
-              <label class="form-check-label fs-13px text-gray-500" for="rememberMe">
-                Remember Me
-              </label>
+              <input type="password" class="form-control fs-13px h-45px border-0" name="password" placeholder="Password" />
+              <label for="password" class="d-flex align-items-center text-gray-600 fs-13px">Password</label>
             </div>
             <div class="mb-20px">
               <button type="submit" class="btn btn-success d-block w-100 h-45px btn-lg">Sign me in</button>
-            </div>
-            <div class="text-gray-500">
-              Not a member yet? Click <a href="javascript:;" class="text-white">here</a> to register.
             </div>
           </form>
         </div>

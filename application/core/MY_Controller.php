@@ -5,9 +5,7 @@ class MY_Controller extends CI_Controller
   function __construct()
   {
     parent::__construct();
-    $this->pos_service_v1 = "http://wh.i2b.digital/pos-service-dev/api/";
-    // $this->pos_service_v1 = "http://127.0.0.1:8000/api/";
-    $this->image_server = "http://wh.i2b.digital/pos-service/";
+    $this->pos_service_v1 = "http://127.0.0.1:8000/api/";
   }
 
 
@@ -18,6 +16,10 @@ class MY_Controller extends CI_Controller
    */
   public function load_template($view = null, $data_view)
   {
+    if (!isset($_SESSION['pos_order'])) {
+      redirect('login');
+    }
+
     $this->load->view("templates/header", $data_view);
     $this->load->view($view, $data_view);
     $this->load->view("templates/footer", $data_view);

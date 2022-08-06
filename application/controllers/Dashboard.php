@@ -14,7 +14,6 @@ class Dashboard extends MY_Controller
    */
   public function index()
   {
-
     $data_view = [
       'js' => 'dashboard/js/data',
     ];

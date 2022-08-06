@@ -27,7 +27,18 @@
         </tr>
       </thead>
       <tbody>
-        <!-- Serverside -->
+        <?php foreach ($data['data'] as $key => $res) : ?>
+          <tr>
+            <td><?= $key + 1; ?></td>
+            <td>
+              <a href="<?= base_url('master-data/menu-categories/edit/' . $res['id']); ?>" class="btn btn-primary btn-sm">Ubah</a>
+              <a href="<?= base_url('master_data/menu_categories/delete/' . $res['id']); ?>" class="btn btn-danger btn-sm btn-del">Hapus</a>
+            </td>
+            <td><?= $res['nama_kategori']; ?></td>
+            <td><?= dateFormat($res['created_at']); ?></td>
+            <td><?= $res['updated_at']; ?></td>
+          </tr>
+        <?php endforeach; ?>
       </tbody>
     </table>
 

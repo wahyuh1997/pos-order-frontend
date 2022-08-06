@@ -77,7 +77,8 @@
         if (result == true) {
           $.get(href, function(response) {
             var parse = JSON.parse(response)
-            if (parse.success == true) {
+            // console.log(parse);
+            if (parse.status == true) {
               swal({
                   title: 'Success',
                   text: parse.message,
@@ -199,7 +200,7 @@
               } else {
                 textParse = JSON.parse(response);
                 // check status of response
-                if (textParse['success'] == true) {
+                if (textParse['status'] == true) {
                   swal({
                     icon: 'success',
                     title: 'Success',
