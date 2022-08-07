@@ -21,9 +21,9 @@
         <tr>
           <th width="1%">#</th>
           <th width="10%"></th>
-          <th>Name</th>
-          <th>Created At</th>
-          <th>Updated At</th>
+          <th>Nama Kategori</th>
+          <th>Tanggal Dibuat</th>
+          <th>Tanggal Diubah</th>
         </tr>
       </thead>
       <tbody>

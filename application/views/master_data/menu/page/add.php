@@ -12,7 +12,7 @@ use PhpOffice\PhpSpreadsheet\Calculation\MathTrig\Base;
 <h1 class="page-header"><?= $subtitle; ?></h1>
 
 <!-- panel search -->
-<form id="regCrudForm" action="<?= base_url('master_data/menu/add'); ?>" method="POST" data-redurl="<?= base_url('master_data/menu'); ?>" enctype="multipart/form-data">
+<form id="regCrudForm" method="POST" data-redurl="<?= base_url('master_data/menu'); ?>" enctype="multipart/form-data">
   <div class="panel panel-inverse">
     <div class="panel-heading">
       <h4 class="panel-title"></h4>
@@ -23,49 +23,52 @@ use PhpOffice\PhpSpreadsheet\Calculation\MathTrig\Base;
     <div class="panel-body">
       <!-- Search by Branch Name -->
       <div class="mb-3 row">
-        <label for="menuName" class="col-sm-2 col-form-label">Name</label>
+        <label for="nama_menu" class="col-sm-2 col-form-label">Nama Makanan <span class="text-danger">*</span></label>
         <div class="col-sm-6">
-          <input type="text" class="form-control" id="menuName" name="menuName" autocomplete="off">
+          <input type="text" class="form-control" id="nama_menu" name="nama_menu" autocomplete="off" required>
         </div>
       </div>
       <div class="mb-3 row">
-        <label for="menuDesc" class="col-sm-2 col-form-label">Description</label>
+        <label for="keterangan" class="col-sm-2 col-form-label">Keterangan</label>
         <div class="col-sm-6">
-          <textarea name="menuDesc" id="menuDesc" cols="30" rows="5" class="form-control" autocomplete="off"></textarea>
+          <textarea name="keterangan" id="keterangan" cols="30" rows="5" class="form-control" autocomplete="off"></textarea>
         </div>
       </div>
       <div class="mb-3 row">
-        <label for="menuPrice" class="col-sm-2 col-form-label">Price</label>
+        <label for="harga" class="col-sm-2 col-form-label">Harga <span class="text-danger">*</span></label>
         <div class="col-sm-6">
-          <input type="number" class="form-control" id="menuPrice" name="menuPrice" autocomplete="off" step="0.01" value="0">
+          <input type="number" class="form-control" id="harga" name="harga" autocomplete="off" step="0.01" value="0" required>
         </div>
       </div>
       <div class="mb-3 row">
-        <label for="menuTypeId" class="col-sm-2 col-form-label">Type</label>
+        <label for="jenis" class="col-sm-2 col-form-label">Jenis Makanan <span class="text-danger">*</span></label>
         <div class="col-sm-6">
-          <select class="form-select default-select2" id="menuTypeId" name="menuTypeId">
+          <select class="form-select default-select2" id="jenis" name="jenis" required>
             <option selected value="">Select Menu type</option>
-            <option value="">Makanan</option>
-            <option value="">Minuman</option>
+            <option value="makanan">Makanan</option>
+            <option value="minuman">Minuman</option>
           </select>
         </div>
       </div>
       <div class="mb-3 row">
-        <label for="menuCatId" class="col-sm-2 col-form-label">Categories</label>
+        <label for="kategori_id" class="col-sm-2 col-form-label">Kategori <span class="text-danger">*</span></label>
         <div class="col-sm-6">
-          <select class="form-select teatimeSelect" id="menuCatId" name="menuCatId" data-url="<?= base_url('select_serverside/getData?url=v1/menu-categories/select2'); ?>">
-            <option>Select Option</option>
+          <select class="form-select default-select2" id="kategori_id" name="kategori_id" required>
+            <option selected value="">Select Option</option>
+            <?php foreach ($kategori as $kat) : ?>
+              <option value=<?= $kat['id']; ?>><?= $kat['nama_kategori']; ?></option>
+            <?php endforeach; ?>
           </select>
         </div>
       </div>
       <div class="mb-3 row">
-        <label for="menuImage" class="col-sm-2 col-form-label">Image</label>
+        <label for="image" class="col-sm-2 col-form-label">Image</label>
         <div class="col-sm-6">
-          <input class="form-control" type="file" id="menuImage" name="menuImage" accept="image/*">
+          <input class="form-control" type="file" id="image" name="image" accept="image/*">
         </div>
       </div>
       <div class="mb-3 row">
-        <label for="menuImage" class="col-sm-2 col-form-label">Ukuran</label>
+        <label for="Ukuran" class="col-sm-2 col-form-label">Ukuran</label>
         <div class="col-sm-6">
           <button type="button" class="btn btn-sm btn-primary btn-add"><i class="fa fa-plus"></i> Tambah Ukuran</button>
 

@@ -53,19 +53,19 @@
     e.preventDefault();
     var href = $(this).attr('href')
     swal({
-        title: '{{Are you sure}} ?',
-        text: '{{You will do delete the current data}} !',
+        title: 'Anda Yakin ?',
+        text: 'Akan Menghapus Data Ini !',
         icon: 'info',
         buttons: {
           cancel: {
-            text: '{{Cancel}}',
+            text: 'Cancel',
             value: null,
             visible: true,
             className: 'btn btn-default',
             closeModal: true,
           },
           confirm: {
-            text: '{{Delete}}',
+            text: 'Delete',
             value: true,
             visible: true,
             className: 'btn btn-danger',
@@ -131,8 +131,8 @@
     // make the confirmation first
     swal({
         icon: 'info',
-        title: 'Confirmation',
-        text: 'Please Confirm Your Edit And Input',
+        title: 'Konfirmasi',
+        text: 'Pastikan Data Yang Anda Masukan Telah Sesuai',
         buttons: {
           cancel: {
             text: 'Cancel',
@@ -181,7 +181,7 @@
               return xhr; // IMPORTANT! Return the custom XHR for .ajax to use
             },
             beforeSend: function() {
-              $('.btn-primary').attr('disabled', true);
+              // $('.btn-primary').attr('disabled', true);
               $('.bg-process').fadeIn();
             },
             success: function(response) {

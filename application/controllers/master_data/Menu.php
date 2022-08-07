@@ -14,15 +14,13 @@ class Menu extends MY_Controller
    */
   public function index()
   {
-    // request menu type
-    $menuTypesData = $this->lib_curl->curl_request($this->pos_service_v1 . 'v1/menu-types');
 
+    $data = $this->lib_curl->curl_request($this->pos_service_v1 . 'menu/get_all_menu');
     // dataView
     $dataView = [
       'title'         => 'Master Data',
       'subtitle'      => 'Menu',
-      'menuTypesData' => $menuTypesData['data'],
-      'js'            => 'master_data/menu/js/data'
+      'data'          => $data['data']
     ];
 
     // view
@@ -36,13 +34,13 @@ class Menu extends MY_Controller
     // check body
     if (count($post) == 0) {
       // request menu type
-      $menuTypesData = $this->lib_curl->curl_request($this->pos_service_v1 . 'v1/menu-types');
-
+      $data = $this->lib_curl->curl_request($this->pos_service_v1 . 'menu/get_all_category');
+      // trace($data['data']);
       // dataView
       $dataView = [
         'title'         => 'Master Data',
         'subtitle'      => 'Add New Menu',
-        'menuTypesData' => $menuTypesData['data'],
+        'kategori'      => $data['data'],
         'js'            => 'master_data/menu/js/data'
       ];
 
@@ -50,28 +48,26 @@ class Menu extends MY_Controller
       $this->load_template('master_data/menu/page/add', $dataView);
     } else {
       // check if the image input exist
-      $config['upload_path']          = './assets/tmp/';
-      $config['allowed_types']        = 'gif|jpg|png';
+      $config = [
+        'allowed_types' => '*',
+        'max_size'      => '2048',
+        'upload_path'   => './assets/img/product',
+        'encrypt_name'  => true,
+        'remove_spaces' => true,
+      ];
 
       $this->load->library('upload', $config);
 
-      if (!$this->upload->do_upload('menuImage')) {
-        $post['menuImage'] = null;
+      if (!$this->upload->do_upload('image')) {
+        $post['image'] = null;
       } else {
-        // process convert image into base64
         $data = $this->upload->data();
-        $extension = $data['file_ext'];
-        $type = $data['file_type'];
         $fileName = $data['file_name'];
-        $image = file_get_contents('./assets/tmp/' . $fileName);
-        $imageBase64 = "data:" . $type . ';base64,' . base64_encode($image);
-        // delete the tmp image
-        unlink('./assets/tmp/' . $fileName);
-        $post['menuImage'] = $imageBase64;
+        $post['image'] = $fileName;
       }
 
       // request insert the data
-      $menuInsertResponse = $this->lib_curl->curl_request($this->pos_service_v1 . 'v1/menus', 'POST', $post);
+      $menuInsertResponse = $this->lib_curl->curl_request($this->pos_service_v1 . 'menu/insert_menu', 'POST', $post);
       echo json_encode($menuInsertResponse);
     }
   }
@@ -80,46 +76,45 @@ class Menu extends MY_Controller
   {
     $post = $this->input->post(null, true);
     // request menu 
-    $menu = $this->lib_curl->curl_request($this->pos_service_v1 . 'v1/menus/get-details?menuId=' . $id);
+    $data = $this->lib_curl->curl_request($this->pos_service_v1 . 'menu/get_menu/' . $id);
     // request menu type
-    $menuTypesData = $this->lib_curl->curl_request($this->pos_service_v1 . 'v1/menu-types');
-
+    $category = $this->lib_curl->curl_request($this->pos_service_v1 . 'menu/get_all_category');
+    // trace($data);
     if (count($post) == 0) {
       // dataView
       $dataView = [
         'title'         => 'Master Data',
         'subtitle'      => 'Edit Menu',
-        'data'          => $menu['data'],
-        'menuTypesData' => $menuTypesData['data'],
+        'data'          => $data['data'],
+        'kategori'      => $category['data'],
         'js'            => 'master_data/menu/js/data'
       ];
 
       // view
       $this->load_template('master_data/menu/page/edit', $dataView);
     } else {
-
       // check if the image input exist
-      $config['upload_path']          = './assets/tmp/';
-      $config['allowed_types']        = 'gif|jpg|png';
+      $config = [
+        'allowed_types' => '*',
+        'max_size'      => '2048',
+        'upload_path'   => './assets/img/product',
+        'encrypt_name'  => true,
+        'remove_spaces' => true,
+      ];
 
       $this->load->library('upload', $config);
 
-      if (!$this->upload->do_upload('menuImage')) {
-        $post['menuImage'] = null;
+      if (!$this->upload->do_upload('image')) {
+        $post['image'] = null;
       } else {
-        // process convert image into base64
-        $data = $this->upload->data();
-        $extension = $data['file_ext'];
-        $type = $data['file_type'];
-        $fileName = $data['file_name'];
-        $image = file_get_contents('./assets/tmp/' . $fileName);
-        $imageBase64 = "data:" . $type . ';base64,' . base64_encode($image);
+        $data_image = $this->upload->data();
+        $fileName = $data_image['file_name'];
         // delete the tmp image
-        unlink('./assets/tmp/' . $fileName);
-        $post['menuImage'] = $imageBase64;
+        unlink('./assets/img/product/' . $data['data']['image']);
+        $post['image'] = $fileName;
       }
 
-      $menuInsertResponse = $this->lib_curl->curl_request($this->pos_service_v1 . 'v1/menus', 'PUT', $post);
+      $menuInsertResponse = $this->lib_curl->curl_request($this->pos_service_v1 . 'menu/edit_menu/' . $data['data']['id'], 'PUT', $post);
       echo json_encode($menuInsertResponse);
     }
   }
@@ -128,12 +123,15 @@ class Menu extends MY_Controller
   /**
    * delete
    */
-  public function delete()
+  public function delete($id)
   {
     // get params
-    $get = $this->input->get();
+    $data = $this->lib_curl->curl_request($this->pos_service_v1 . 'menu/get_menu/' . $id);
+    if ($data['data']['image']) {
+      unlink('./assets/img/product/' . $data['data']['image']);
+    }
 
-    $menuDeleteResponse = $this->lib_curl->curl_request($this->pos_service_v1 . 'v1/menus?menuId=' . $get['menuId'], "DELETE");
-    echo json_encode($menuDeleteResponse);
+    $menuCategoriesResponse = $this->lib_curl->curl_request($this->pos_service_v1 . 'menu/delete_menu/' . $id, "DELETE");
+    echo json_encode($menuCategoriesResponse);
   }
 }

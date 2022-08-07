@@ -21,17 +21,34 @@
         <tr>
           <th width="1%">#</th>
           <th width="10%"></th>
-          <th>Name</th>
-          <th width="1%" data-orderable="false">Image</th>
-          <th>Price</th>
-          <th>Type</th>
-          <th>Category</th>
-          <th>Created At</th>
-          <th>Updated At</th>
+          <th>Nama Makanan</th>
+          <th width="1%" data-orderable="false">Gambar</th>
+          <th>Harga</th>
+          <th>Jenis</th>
+          <th>Kategori</th>
+          <th>Tanggal Dibuat</th>
+          <th>Tanggal Diubah</th>
         </tr>
       </thead>
+      <tbody>
+        <?php foreach ($data as $key => $menu) : ?>
+          <tr>
+            <td><?= $key + 1; ?></td>
+            <td>
+              <a href="<?= base_url('master-data/menu/edit/' . $menu['id']); ?>" class="btn btn-primary btn-sm">Ubah</a>
+              <a href="<?= base_url('master_data/menu/delete/' . $menu['id']); ?>" class="btn btn-danger btn-sm btn-del">Hapus</a>
+            </td>
+            <td><?= $menu['nama_menu']; ?></td>
+            <td><img src="<?= base_url('assets/img/product/' . $menu['image']); ?>" class="img-thumbnail" alt="Gambar Product"></td>
+            <td><?= $menu['harga']; ?></td>
+            <td><?= $menu['jenis']; ?></td>
+            <td><?= $menu['nama_kategori']; ?></td>
+            <td><?= dateFormat($menu['created_at']); ?></td>
+            <td><?= dateFormat($menu['updated_at']); ?></td>
+          </tr>
+        <?php endforeach; ?>
+      </tbody>
     </table>
-
     <!-- script -->
   </div>
 </div>

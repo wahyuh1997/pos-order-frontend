@@ -20,7 +20,7 @@
             <div class="col-lg-6">
               <div class="mb-3">
                 <label for="">Jenis Ukuran</label>
-                <input type="text" class="form-control" id="" name="menuName" value="" autocomplete="off">
+                <input type="text" class="form-control attributes" name="attribute[${cnt}][nama]" value="" autocomplete="off">
               </div>
             </div>
             <div class="col-lg-6 ps-0">
@@ -28,7 +28,7 @@
                 <label for="">Harga</label>
                 <div class="row">
                   <div class="col-lg-8">
-                    <input type="number" class="form-control" id="" name="" value="0" min="0" autocomplete="off">
+                    <input type="number" class="form-control" name="attribute[${cnt}][harga]" value="0" min="0" autocomplete="off">
                   </div>
                   <div class="col-lg-4">
                     <button type="button" class="btn btn-sm btn-danger btn-delete"><i class="fa fa-times"></i> Hapus</button>
@@ -38,7 +38,7 @@
             </div>
           </div>`;
     $(this).parent().append(html)
-    teatimeSelect();
+    // teatimeSelect();
   });
 
   $(document).on('click', '.btn-delete', function() {

@@ -5,7 +5,7 @@ class MY_Controller extends CI_Controller
   function __construct()
   {
     parent::__construct();
-    $this->pos_service_v1 = "http://127.0.0.1:8000/api/";
+    $this->pos_service_v1 = "http://localhost/project/pos-order-backend/api/";
   }
 
 
