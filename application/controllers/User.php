@@ -103,8 +103,8 @@ class User extends MY_Controller
       // view
       $this->load_template('user/page/change', $dataView);
     } else {
-      $menuCategoriesResponse = $this->lib_curl->curl_request($this->pos_service_v1 . 'v1/menu-categories', 'POST', $_POST);
-      echo json_encode($menuCategoriesResponse);
+      $response = $this->lib_curl->curl_request($this->pos_service_v1 . 'auth/change_password', 'POST', $_POST);
+      echo json_encode($response);
     }
   }
 
