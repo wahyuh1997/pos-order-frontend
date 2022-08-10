@@ -13,6 +13,7 @@ use PhpOffice\PhpSpreadsheet\Calculation\MathTrig\Base;
 
 <!-- panel search -->
 <form id="regCrudForm" method="POST" data-redurl="<?= base_url('master-data/menu'); ?>" enctype="multipart/form-data">
+  <input type="hidden" name="status" value="1">
   <div class="panel panel-inverse">
     <div class="panel-heading">
       <h4 class="panel-title"></h4>

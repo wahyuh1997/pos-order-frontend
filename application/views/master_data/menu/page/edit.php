@@ -1,7 +1,3 @@
-<?php
-
-use PhpOffice\PhpSpreadsheet\Calculation\MathTrig\Base;
-?>
 <!-- BEGIN breadcrumb -->
 <ol class="breadcrumb float-xl-end">
   <li class="breadcrumb-item"><a href="javascript:;"><?= $title; ?></a></li>
@@ -58,6 +54,14 @@ use PhpOffice\PhpSpreadsheet\Calculation\MathTrig\Base;
               <option value=<?= $kat['id']; ?> <?= $data['kategori_id'] == $kat['id'] ? 'selected' : null; ?>><?= $kat['nama_kategori']; ?></option>
             <?php endforeach; ?>
           </select>
+        </div>
+      </div>
+      <div class="mb-3 row">
+        <label for="status" class="col-sm-2 col-form-label">Tersedia</label>
+        <div class="col-sm-8">
+
+          <input type="hidden" id="status" name="status" value="<?= $data['status']; ?>">
+          <input type="checkbox" id="switchery-default" <?= $data['status'] == 1 ? 'checked' : null; ?> />
         </div>
       </div>
       <div class="mb-3 row">

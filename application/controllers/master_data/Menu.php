@@ -127,11 +127,11 @@ class Menu extends MY_Controller
   {
     // get params
     $data = $this->lib_curl->curl_request($this->pos_service_v1 . 'menu/get_menu/' . $id);
-    if ($data['data']['image']) {
+    if ($data['data']['image'] != null) {
       unlink('./assets/img/product/' . $data['data']['image']);
     }
 
-    $menuCategoriesResponse = $this->lib_curl->curl_request($this->pos_service_v1 . 'menu/delete_menu/' . $id, "DELETE");
-    echo json_encode($menuCategoriesResponse);
+    $response = $this->lib_curl->curl_request($this->pos_service_v1 . 'menu/delete_menu/' . $id, "DELETE");
+    echo json_encode($response);
   }
 }

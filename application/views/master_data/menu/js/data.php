@@ -1,17 +1,17 @@
+<script src="<?= base_url() ?>assets/plugins/switchery/dist/switchery.min.js"></script>
 <script>
-  const dtb_arr = []
-  dtb_arr[0] = ''
-  dtb_arr[1] = ''
+  var elm = document.getElementById('switchery-default');
+  var switchery = new Switchery(elm, {
+    color: '#00acac'
+  });
 
-  $(document).on('change', '.form-select', function() {
-    dtb_arr[1] = $(this).val();
-  })
-
-  function filter_process() {
-    dtb_arr[0] = $('#menuName').val()
-    $('#dtb-serverside').attr('href', "<?= base_url('datatables/menu/get?filter='); ?>" + '["' + dtb_arr[0] + '", "' + dtb_arr[1] + '"]');
-    refreshDtbServerSide()
-  }
+  $(document).on('change', '#switchery-default', function() {
+    if ($(this).prop('checked') == true) {
+      $('#status').val(1);
+    } else {
+      $('#status').val(0);
+    }
+  });
 
   /* Add Section */
   $(document).on('click', '.btn-add', function() {

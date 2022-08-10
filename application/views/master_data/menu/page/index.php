@@ -26,6 +26,7 @@
           <th>Harga</th>
           <th>Jenis</th>
           <th>Kategori</th>
+          <th width="5%">Tersedia</th>
           <th>Tanggal Dibuat</th>
           <th>Tanggal Diubah</th>
         </tr>
@@ -43,6 +44,7 @@
             <td><?= $menu['harga']; ?></td>
             <td><?= $menu['jenis']; ?></td>
             <td><?= $menu['nama_kategori']; ?></td>
+            <td class="text-center"><?= $menu['status'] == 1 ? '<i class="fa fa-check text-success"></i>' : '<i class="fa fa-times text-danger"></i>'; ?></td>
             <td><?= dateFormat($menu['created_at']); ?></td>
             <td><?= dateFormat($menu['updated_at']); ?></td>
           </tr>
