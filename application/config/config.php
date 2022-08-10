@@ -381,7 +381,7 @@ $config['encryption_key'] = '';
 |
 */
 $config['sess_driver'] = 'files';
-$config['sess_cookie_name'] = 'SAAS_I2B_POS';
+$config['sess_cookie_name'] = 'pos_order';
 $config['sess_expiration'] = 0;
 $config['sess_save_path'] = NULL;
 $config['sess_match_ip'] = FALSE;

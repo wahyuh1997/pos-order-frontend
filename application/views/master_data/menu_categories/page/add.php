@@ -19,13 +19,13 @@ use PhpOffice\PhpSpreadsheet\Calculation\MathTrig\Base;
       <a href="javascript:;" class="btn btn-xs btn-icon btn-warning" data-toggle="panel-collapse" data-bs-original-title="" title="" data-tooltip-init="true"><i class="fa fa-minus"></i></a>
     </div>
   </div>
-  <form id="regCrudForm" action="<?= base_url('master_data/menu_categories/add'); ?>" data-redurl="<?= base_url('master-data/menu-categories'); ?>" method="POST" enctype="multipart/form-data">
+  <form id="regCrudForm" data-redurl="<?= base_url('master-data/menu-categories'); ?>" method="POST" enctype="multipart/form-data">
     <div class="panel-body">
       <!-- Search by Branch Name -->
       <div class="mb-3 row">
         <label for="nama_kategori" class="col-sm-2 col-form-label">Name <span class="text-danger">*</span></label>
         <div class="col-sm-6">
-          <input type="text" class="form-control" id="nama_kategori" name="nama_kategori" autocomplete="off" required>
+          <input type="text" class="form-control text-capitalize" id="nama_kategori" name="nama_kategori" autocomplete="off" required>
         </div>
       </div>
       <div class="panel-footer text-end">

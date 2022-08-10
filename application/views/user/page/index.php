@@ -2,6 +2,7 @@
   <h1 class="page-header"><?= $subtitle; ?></h1>
   <div class="ml-auto">
     <a href="<?= base_url('user/change_password'); ?>" class="btn btn-sm btn-info btn-round">Ubah Kata Sandi</a>
+    <a href="<?= base_url('user/edit'); ?>" class="btn btn-sm btn-info btn-round">Ubah Profile</a>
     <a href="<?= base_url('user/add'); ?>" class="btn btn-sm btn-primary btn-round">Add New</a>
   </div>
 </div>
@@ -30,19 +31,23 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>1</td>
-          <td>
-            <a href="#" class="btn btn-primary btn-sm">Ubah</a>
-            <a href="#" class="btn btn-info btn-sm btn-del">Reset</a>
-            <a href="#" class="btn btn-danger btn-sm btn-del">Hapus</a>
-          </td>
-          <td>andi123</td>
-          <td>andi</td>
-          <td>Owner</td>
-          <td>-</td>
-          <td>-</td>
-        </tr>
+        <?php foreach ($data as $key => $user) : ?>
+          <?php if ($user['id'] !== $_SESSION['pos_order']['id']) : ?>
+            <tr>
+              <td><?= $key + 1; ?></td>
+              <td>
+                <a href="<?= base_url('user/edit/' . $user['username']); ?>" class="btn btn-primary btn-sm">Ubah</a>
+                <a href="<?= base_url('user/reset_password/' . $user['username']); ?>" class="btn btn-info btn-sm btn-reset">Reset</a>
+                <a href="<?= base_url('user/delete/' . $user['username']); ?>" class="btn btn-danger btn-sm btn-del">Hapus</a>
+              </td>
+              <td><?= $user['username']; ?></td>
+              <td><?= $user['name']; ?></td>
+              <td><?= $user['role']; ?></td>
+              <td><?= dateFormat($user['created_at']); ?></td>
+              <td><?= dateFormat($user['updated_at']); ?></td>
+            </tr>
+          <?php endif; ?>
+        <?php endforeach; ?>
       </tbody>
     </table>
 

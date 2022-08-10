@@ -20,20 +20,40 @@
       <thead>
         <tr>
           <th width="1%">#</th>
-          <th width="10%"></th>
-          <th>Order Number</th>
-          <th>Receipt Number</th>
-          <th>Table</th>
-          <th>Total Price</th>
-          <th>Service Fee</th>
-          <th>Complete</th>
-          <th>Checkout</th>
-          <th>Payment Type</th>
+          <th width="14%"></th>
+          <th>Nama Pelanggan</th>
+          <th>No. Order</th>
+          <th>No. Invoice</th>
+          <th>No. Meja</th>
+          <th>Total Harga</th>
+          <th>Status Pesanan</th>
+          <th>Status Pembayaran</th>
+          <th>Jenis Pembayaran</th>
           <th>Created At</th>
           <th>Updated At</th>
         </tr>
       </thead>
       <tbody>
+        <?php foreach ($data['data'] as $key => $res) : ?>
+          <tr>
+            <td><?= $key + 1; ?></td>
+            <td>
+              <a href="<?= base_url('order/print_qrcode/' . $res['id']); ?>" target="_blank" class="btn btn-info btn-sm">Cetak QR Code</a>
+              <a href="#" class="btn btn-primary btn-sm">Bayar</a>
+              <!-- <a href="<?= base_url('order/delete/' . $res['id']); ?>" class="btn btn-danger btn-sm btn-del">Hapus</a> -->
+            </td>
+            <td><?= $res['nama_pelanggan']; ?></td>
+            <td class="text-end"><?= $res['no_order']; ?></td>
+            <td class="text-end"><?= $res['no_receip']; ?></td>
+            <td class="text-center"><?= $res['meja_id']; ?></td>
+            <td class="text-end">Rp. <?= check_null($res['total_harga']); ?></td>
+            <td><?= $res['status']; ?></td>
+            <td><?= $res['checkout']; ?></td>
+            <td>-</td>
+            <td><?= dateFormat($res['created_at']); ?></td>
+            <td><?= dateFormat($res['updated_at']); ?></td>
+          </tr>
+        <?php endforeach; ?>
         <!-- Serverside -->
       </tbody>
     </table>

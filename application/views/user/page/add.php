@@ -19,35 +19,39 @@ use PhpOffice\PhpSpreadsheet\Calculation\MathTrig\Base;
       <a href="javascript:;" class="btn btn-xs btn-icon btn-warning" data-toggle="panel-collapse" data-bs-original-title="" title="" data-tooltip-init="true"><i class="fa fa-minus"></i></a>
     </div>
   </div>
-  <form id="regCrudForm" action="<?= base_url('master_data/menu_categories/add'); ?>" data-redurl="<?= base_url('master-data/menu-categories'); ?>" method="POST" enctype="multipart/form-data">
+  <form id="regCrudForm" data-redurl="<?= base_url('user'); ?>" method="POST">
     <div class="panel-body">
 
       <div class="mb-3 row">
-        <label for="menuCatName" class="col-sm-2 col-form-label">Username</label>
+        <label for="username" class="col-sm-2 col-form-label">Username</label>
         <div class="col-sm-6">
-          <input type="text" class="form-control" id="menuCatName" name="menuCatName" autocomplete="off">
+          <input type="text" class="form-control" id="username" name="username" autocomplete="off">
         </div>
       </div>
       <div class="mb-3 row">
-        <label for="menuCatName" class="col-sm-2 col-form-label">Nama</label>
+        <label for="name" class="col-sm-2 col-form-label">Nama</label>
         <div class="col-sm-6">
-          <input type="text" class="form-control" id="menuCatName" name="menuCatName" autocomplete="off">
+          <input type="text" class="form-control" id="name" name="name" autocomplete="off">
         </div>
       </div>
       <div class="mb-3 row">
-        <label for="menuCatName" class="col-sm-2 col-form-label">Posisi</label>
+        <label for="role" class="col-sm-2 col-form-label">Posisi</label>
         <div class="col-sm-6">
-          <input type="text" class="form-control" id="menuCatName" name="menuCatName" autocomplete="off">
+          <select class="form-select default-select2" id="role" name="role" required>
+            <option value="kasir" selected>Kasir</option>
+            <option value="dapur">Dapur</option>
+            <option value="owner">Owner</option>
+          </select>
         </div>
       </div>
       <div class="mb-3 row">
-        <label for="menuCatName" class="col-sm-2 col-form-label">Kata Sandi</label>
+        <label for="password" class="col-sm-2 col-form-label">Kata Sandi</label>
         <div class="col-sm-6">
-          <input type="password" class="form-control" id="menuCatName" name="menuCatName" autocomplete="off">
+          <input type="password" class="form-control" id="password" name="password" autocomplete="off">
         </div>
       </div>
       <div class="panel-footer text-end">
-        <a href="<?= base_url('master-data/menu-categories'); ?>" class="btn btn-secondary">Back</a>
+        <a href="<?= base_url('user'); ?>" class="btn btn-secondary">Back</a>
         <button class="btn btn-info">Submit</button>
       </div>
     </div>

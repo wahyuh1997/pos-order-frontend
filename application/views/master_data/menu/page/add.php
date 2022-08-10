@@ -12,7 +12,7 @@ use PhpOffice\PhpSpreadsheet\Calculation\MathTrig\Base;
 <h1 class="page-header"><?= $subtitle; ?></h1>
 
 <!-- panel search -->
-<form id="regCrudForm" method="POST" data-redurl="<?= base_url('master_data/menu'); ?>" enctype="multipart/form-data">
+<form id="regCrudForm" method="POST" data-redurl="<?= base_url('master-data/menu'); ?>" enctype="multipart/form-data">
   <div class="panel panel-inverse">
     <div class="panel-heading">
       <h4 class="panel-title"></h4>

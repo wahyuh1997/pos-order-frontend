@@ -26,7 +26,7 @@ use PhpOffice\PhpSpreadsheet\Calculation\MathTrig\Base;
       <div class="mb-3 row">
         <label for="nama_kategori" class="col-sm-2 col-form-label">Name</label>
         <div class="col-sm-6">
-          <input type="text" class="form-control" id="nama_kategori" name="nama_kategori" value="<?= $menuCatData['nama_kategori']; ?>" autocomplete="off" required>
+          <input type="text" class="form-control text-capitalize" id="nama_kategori" name="nama_kategori" value="<?= $menuCatData['nama_kategori']; ?>" autocomplete="off" required>
         </div>
       </div>
       <div class="panel-footer text-end">

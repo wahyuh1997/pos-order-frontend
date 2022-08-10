@@ -13,7 +13,7 @@
           <div class="menu-profile-info">
             <div class="d-flex align-items-center">
               <div class="flex-grow-1">
-                Username
+                <?= $_SESSION['pos_order']['name']; ?>
               </div>
             </div>
           </div>

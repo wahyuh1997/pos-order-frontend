@@ -14,10 +14,13 @@ class User extends MY_Controller
    */
   public function index()
   {
+    $data = $this->lib_curl->curl_request($this->pos_service_v1 . 'auth/get_all_user');
     // dataView
     $dataView = [
       'title'     => 'User',
       'subtitle'  => 'User',
+      'data'      => $data['data'],
+      'js'        => 'user/js/data'
     ];
 
     // view
@@ -31,46 +34,59 @@ class User extends MY_Controller
       // dataView
       $dataView = [
         'title'     => 'Master Data',
-        'subtitle'  => 'Add New Menu Categories'
+        'subtitle'  => 'Add New User'
       ];
 
       // view
       $this->load_template('user/page/add', $dataView);
     } else {
-      $menuCategoriesResponse = $this->lib_curl->curl_request($this->pos_service_v1 . 'v1/menu-categories', 'POST', $_POST);
-      echo json_encode($menuCategoriesResponse);
+      $response = $this->lib_curl->curl_request($this->pos_service_v1 . 'register', 'POST', $_POST);
+      echo json_encode($response);
     }
   }
 
 
-  public function edit()
+  public function edit($username = null)
   {
+
+    if ($username == null) {
+      $user_name = $_SESSION['pos_order']['username'];
+    } else {
+      $user_name = $username;
+    }
+
     // get body
-    $get = $this->input->get();
-    $post = $this->input->post();
+    $post = $this->input->post(null, true);
 
     // check body
+    $user = $this->lib_curl->curl_request($this->pos_service_v1 . 'auth/get_user/' . $user_name);
     if (count($post) == 0) {
       // get menu category details data
-      $menuCategoriesResponse = $this->lib_curl->curl_request($this->pos_service_v1 . 'v1/menu-categories/get-details?menuCatId=' . $get['menuCatId']);
       // response check
-      if ($menuCategoriesResponse['success'] == true) {
+      if ($user['status'] == true) {
         // dataView
         $dataView = [
           'title'       => 'Master Data',
-          'subtitle'    => 'Edit Menu Categories',
-          'menuCatData' => $menuCategoriesResponse['data']
+          'subtitle'    => 'Edit Profile User',
+          'data'        => $user['data']
         ];
 
         // view
-        $this->load_template('master_data/menu_categories/page/edit', $dataView);
+        $this->load_template('user/page/edit', $dataView);
       } else {
         // redirect
-        redirect('master-data/menu-categories');
+        redirect('user');
       }
     } else {
-      $menuCategoriesResponse = $this->lib_curl->curl_request($this->pos_service_v1 . 'v1/menu-categories', "PUT", $post);
-      echo json_encode($menuCategoriesResponse);
+      $user = $this->lib_curl->curl_request($this->pos_service_v1 . 'auth/update_user/' . $user['data']['id'], "PUT", $post);
+
+      if ($username == null) {
+        $_SESSION['pos_order']['name'] = $user['data']['name'];
+        $_SESSION['pos_order']['username'] = $user['data']['username'];
+        $_SESSION['pos_order']['role'] = $user['data']['role'];
+      }
+
+      echo json_encode($user);
     }
   }
 
@@ -95,12 +111,28 @@ class User extends MY_Controller
   /**
    * delete
    */
-  public function delete()
+  public function delete($username)
   {
     // get params
-    $get = $this->input->get();
+    $_POST['username'] = $username;
+    $response = $this->lib_curl->curl_request($this->pos_service_v1 . 'auth/delete_user', 'POST', $_POST);
+    echo json_encode($response);
+  }
 
-    $menuCategoriesResponse = $this->lib_curl->curl_request($this->pos_service_v1 . 'v1/menu-categories?menuCatId=' . $get['menuCatId'], "DELETE");
-    echo json_encode($menuCategoriesResponse);
+
+  /**
+   * Reset Password
+   */
+  public function reset_password($username)
+  {
+    $_POST['username'] = $username;
+    echo json_encode($this->lib_curl->curl_request($this->pos_service_v1 . 'auth/reset_password', 'POST', $_POST));
+  }
+
+  /**
+   * Reset Password
+   */
+  public function change_user($id)
+  {
   }
 }
