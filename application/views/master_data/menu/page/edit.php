@@ -32,7 +32,10 @@
       <div class="mb-3 row">
         <label for="harga" class="col-sm-2 col-form-label">Harga <span class="text-danger">*</span></label>
         <div class="col-sm-6">
-          <input type="number" class="form-control" id="harga" name="harga" autocomplete="off" value="<?= $data['harga']; ?>" required>
+          <div class="input-group">
+            <span class="input-group-text">Rp.</span>
+            <input type="number" class="form-control" id="harga" name="harga" autocomplete="off" value="<?= $data['harga']; ?>" required>
+          </div>
         </div>
       </div>
       <div class="mb-3 row">
@@ -92,7 +95,10 @@
                     <label for="">Harga</label>
                     <div class="row">
                       <div class="col-lg-8">
-                        <input type="number" class="form-control" name="attribute[<?= $key; ?>][harga]" value="<?= $attr['harga']; ?>" min="0" autocomplete="off">
+                        <div class="input-group">
+                          <span class="input-group-text">+ Rp.</span>
+                          <input type="number" class="form-control" name="attribute[<?= $key; ?>][harga]" value="<?= $attr['harga']; ?>" min="0" autocomplete="off">
+                        </div>
                       </div>
                       <div class="col-lg-4">
                         <button type="button" class="btn btn-sm btn-danger btn-delete"><i class="fa fa-times"></i> Hapus</button>

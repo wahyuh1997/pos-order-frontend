@@ -16,6 +16,7 @@ class Menu extends MY_Controller
   {
 
     $data = $this->lib_curl->curl_request($this->pos_service_v1 . 'menu/get_all_menu');
+    // trace($data);
     // dataView
     $dataView = [
       'title'         => 'Master Data',
@@ -105,7 +106,12 @@ class Menu extends MY_Controller
       $this->load->library('upload', $config);
 
       if (!$this->upload->do_upload('image')) {
-        $post['image'] = null;
+        if ($data['data']['image'] == null) {
+          $post['image'] = null;
+        } else {
+          $post['image'] = $data['data']['image'];
+          # code...
+        }
       } else {
         $data_image = $this->upload->data();
         $fileName = $data_image['file_name'];

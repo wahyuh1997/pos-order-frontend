@@ -9,6 +9,7 @@
   <meta content="" name="author" />
 
   <!-- ================== BEGIN core-css ================== -->
+  <link rel="icon" href="<?= base_url('assets/img/logo/logo.jpeg') ?>" type="image/x-icon" />
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
   <link href="<?= base_url() ?>assets/css/vendor.min.css" rel="stylesheet" />
   <link href="<?= base_url() ?>assets/css/default/app.min.css" rel="stylesheet" />
@@ -35,8 +36,10 @@
         <div class="pos-menu">
           <div class="logo">
             <a href="#">
-              <div class="logo-img"><img src="<?= base_url() ?>assets/img/pos/logo.svg" /></div>
-              <div class="logo-text">Pine & Dine</div>
+              <div class="logo-img" style="height: 80px !important;">
+                <img src="<?= base_url('assets/img/logo/logo.jpeg') ?>" width="80" />
+              </div>
+              <!-- <div class="logo-text">Pine & Dine</div> -->
             </a>
           </div>
           <div class="nav-container">
@@ -45,39 +48,16 @@
               <ul class="nav nav-tabs">
                 <li class="nav-item">
                   <a class="nav-link active" href="#" data-filter="all">
-                    <i class="fa fa-fw fa-utensils me-1 ms-n2"></i> All Dishes
+                    Semua Menu
                   </a>
                 </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#" data-filter="meat">
-                    <i class="fa fa-fw fa-drumstick-bite me-1 ms-n2"></i> Meat
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#" data-filter="burger">
-                    <i class="fa fa-fw fa-hamburger me-1 ms-n2"></i> Burger
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#" data-filter="pizza">
-                    <i class="fa fa-fw fa-pizza-slice me-1 ms-n2"></i> Pizza
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#" data-filter="drinks">
-                    <i class="fa fa-fw fa-cocktail me-1 ms-n2"></i> Drinks
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#" data-filter="desserts">
-                    <i class="fa fa-fw fa-ice-cream me-1 ms-n2"></i> Desserts
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#" data-filter="snacks">
-                    <i class="fa fa-fw fa-cookie-bite me-1 ms-n2"></i> Snacks
-                  </a>
-                </li>
+                <?php foreach ($data_kategori['data'] as $kat) : ?>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#" data-filter="<?= $kat['id']; ?>">
+                      <?= $kat['nama_kategori']; ?>
+                    </a>
+                  </li>
+                <?php endforeach; ?>
               </ul>
             </div>
           </div>
@@ -89,179 +69,24 @@
           <!-- data-scrollbar="true" data-height="100%" data-skip-mobile="true" -->
           <div class="pos-content-container">
             <div class="product-row">
-              <div class="product-container" data-type="meat">
-                <a href="#" class="product" data-bs-toggle="modal" data-bs-target="#modalPosItem">
-                  <div class="img" style="background-image: url(<?= base_url() ?>assets/img/pos/product-1.jpg)"></div>
-                  <div class="text">
-                    <div class="title">Grill Chicken Chop&reg;</div>
-                    <div class="desc">chicken, egg, mushroom, salad</div>
-                    <div class="price">$10.99</div>
-                  </div>
-                </a>
-              </div>
-              <div class="product-container" data-type="meat">
-                <a href="#" class="product" data-bs-toggle="modal" data-bs-target="#modalPosItem">
-                  <div class="img" style="background-image: url(<?= base_url() ?>assets/img/pos/product-2.jpg)"></div>
-                  <div class="text">
-                    <div class="title">Grill Pork Chop&reg;</div>
-                    <div class="desc">pork, egg, mushroom, salad</div>
-                    <div class="price">$12.99</div>
-                  </div>
-                </a>
-              </div>
-              <div class="product-container" data-type="meat">
-                <a href="#" class="product" data-bs-toggle="modal" data-bs-target="#modalPosItem">
-                  <div class="img" style="background-image: url(<?= base_url() ?>assets/img/pos/product-3.jpg)"></div>
-                  <div class="text">
-                    <div class="title">Capellini Tomato Sauce&reg;</div>
-                    <div class="desc">spaghetti, tomato, mushroom </div>
-                    <div class="price">$11.99</div>
-                  </div>
-                </a>
-              </div>
-              <div class="product-container" data-type="meat">
-                <a href="#" class="product" data-bs-toggle="modal" data-bs-target="#modalPosItem">
-                  <div class="img" style="background-image: url(<?= base_url() ?>assets/img/pos/product-4.jpg)"></div>
-                  <div class="text">
-                    <div class="title">Vegan Salad Bowl&reg;</div>
-                    <div class="desc">apple, carrot, tomato </div>
-                    <div class="price">$6.99</div>
-                  </div>
-                </a>
-              </div>
-              <div class="product-container" data-type="pizza">
-                <div class="product not-available">
-                  <div class="img" style="background-image: url(<?= base_url() ?>assets/img/pos/product-5.jpg)"></div>
-                  <div class="text">
-                    <div class="title">Hawaiian Pizza&reg;</div>
-                    <div class="desc">pizza, crab meat, pineapple </div>
-                    <div class="price">$20.99</div>
-                  </div>
-                  <div class="not-available-text">
-                    <div>Not Available</div>
-                  </div>
+              <?php foreach ($data_menu['data'] as $menu) : ?>
+                <?php
+                if ($menu['image'] == null) {
+                  $menu['image'] = 'no-image-available.png';
+                }; ?>
+                <div class="product-container" data-type="<?= $menu['kategori_id']; ?>">
+                  <a href="#" class="product" data-bs-toggle="modal" data-bs-target="#modalPosItem" data-id="<?= $menu['id']; ?>">
+                    <div class="img" style="background-image: url(<?= base_url('assets/img/product/' . $menu['image']) ?>)"></div>
+                    <div class="text">
+                      <div class="title"><?= $menu['nama_menu']; ?></div>
+                      <?php if ($menu['keterangan'] != null) : ?>
+                      <?php endif; ?>
+                      <div class="desc"><?= $menu['keterangan']; ?></div>
+                      <div class="price">Rp. <?= $menu['harga']; ?></div>
+                    </div>
+                  </a>
                 </div>
-              </div>
-              <div class="product-container" data-type="burger">
-                <a href="#" class="product" data-bs-toggle="modal" data-bs-target="#modalPosItem">
-                  <div class="img" style="background-image: url(<?= base_url() ?>assets/img/pos/product-17.jpg)"></div>
-                  <div class="text">
-                    <div class="title">Perfect Burger</div>
-                    <div class="desc">Dill pickle, cheddar cheese, tomato, red onion, ground chuck beef</div>
-                    <div class="price">$8.99</div>
-                  </div>
-                </a>
-              </div>
-              <div class="product-container" data-type="drinks">
-                <a href="#" class="product" data-bs-toggle="modal" data-bs-target="#modalPosItem">
-                  <div class="img" style="background-image: url(<?= base_url() ?>assets/img/pos/product-6.jpg)"></div>
-                  <div class="text">
-                    <div class="title">Avocado Shake</div>
-                    <div class="desc">avocado, milk, vanilla</div>
-                    <div class="price">$3.99</div>
-                  </div>
-                </a>
-              </div>
-              <div class="product-container" data-type="drinks">
-                <a href="#" class="product" data-bs-toggle="modal" data-bs-target="#modalPosItem">
-                  <div class="img" style="background-image: url(<?= base_url() ?>assets/img/pos/product-7.jpg)"></div>
-                  <div class="text">
-                    <div class="title">Coffee Latte</div>
-                    <div class="desc">espresso, milk</div>
-                    <div class="price">$2.99</div>
-                  </div>
-                </a>
-              </div>
-              <div class="product-container" data-type="drinks">
-                <a href="#" class="product" data-bs-toggle="modal" data-bs-target="#modalPosItem">
-                  <div class="img" style="background-image: url(<?= base_url() ?>assets/img/pos/product-8.jpg)"></div>
-                  <div class="text">
-                    <div class="title">Vita C Detox Juice</div>
-                    <div class="desc">apricot, apple, carrot and ginger juice</div>
-                    <div class="price">$2.99</div>
-                  </div>
-                </a>
-              </div>
-              <div class="product-container" data-type="snacks">
-                <a href="#" class="product" data-bs-toggle="modal" data-bs-target="#modalPosItem">
-                  <div class="img" style="background-image: url(<?= base_url() ?>assets/img/pos/product-9.jpg)"></div>
-                  <div class="text">
-                    <div class="title">Pancake</div>
-                    <div class="desc">Non dairy, egg, baking soda, sugar, all purpose flour</div>
-                    <div class="price">$5.99</div>
-                  </div>
-                </a>
-              </div>
-              <div class="product-container" data-type="snacks">
-                <a href="#" class="product" data-bs-toggle="modal" data-bs-target="#modalPosItem">
-                  <div class="img" style="background-image: url(<?= base_url() ?>assets/img/pos/product-10.jpg)"></div>
-                  <div class="text">
-                    <div class="title">Mushroom soup</div>
-                    <div class="desc">Evaporated milk, marsala wine, beef cubes, chicken broth, butter</div>
-                    <div class="price">$3.99</div>
-                  </div>
-                </a>
-              </div>
-              <div class="product-container" data-type="snacks">
-                <a href="#" class="product" data-bs-toggle="modal" data-bs-target="#modalPosItem">
-                  <div class="img" style="background-image: url(<?= base_url() ?>assets/img/pos/product-11.jpg)"></div>
-                  <div class="text">
-                    <div class="title">Baked chicken wing</div>
-                    <div class="desc">Chicken wings, a1 steak sauce, honey, cayenne pepper</div>
-                    <div class="price">$6.99</div>
-                  </div>
-                </a>
-              </div>
-              <div class="product-container" data-type="meat">
-                <a href="#" class="product" data-bs-toggle="modal" data-bs-target="#modalPosItem">
-                  <div class="img" style="background-image: url(<?= base_url() ?>assets/img/pos/product-12.jpg)"></div>
-                  <div class="text">
-                    <div class="title">Veggie Spaghetti</div>
-                    <div class="desc">Yellow squash, pasta, roasted red peppers, zucchini</div>
-                    <div class="price">$12.99</div>
-                  </div>
-                </a>
-              </div>
-              <div class="product-container" data-type="desserts">
-                <a href="#" class="product" data-bs-toggle="modal" data-bs-target="#modalPosItem">
-                  <div class="img" style="background-image: url(<?= base_url() ?>assets/img/pos/product-13.jpg)"></div>
-                  <div class="text">
-                    <div class="title">Vanilla Ice Cream</div>
-                    <div class="desc">Heavy whipping cream, white sugar, vanilla extract</div>
-                    <div class="price">$3.99</div>
-                  </div>
-                </a>
-              </div>
-              <div class="product-container" data-type="desserts">
-                <a href="#" class="product" data-bs-toggle="modal" data-bs-target="#modalPosItem">
-                  <div class="img" style="background-image: url(<?= base_url() ?>assets/img/pos/product-15.jpg)"></div>
-                  <div class="text">
-                    <div class="title">Perfect Yeast Doughnuts</div>
-                    <div class="desc">Chocolate hazelnut spread, bread flour, doughnuts, quick rise yeast, butter</div>
-                    <div class="price">$2.99</div>
-                  </div>
-                </a>
-              </div>
-              <div class="product-container" data-type="desserts">
-                <a href="#" class="product" data-bs-toggle="modal" data-bs-target="#modalPosItem">
-                  <div class="img" style="background-image: url(<?= base_url() ?>assets/img/pos/product-14.jpg)"></div>
-                  <div class="text">
-                    <div class="title">Macarons</div>
-                    <div class="desc">Almond flour, egg whites, heavy cream, food coloring, powdered sugar</div>
-                    <div class="price">$4.99</div>
-                  </div>
-                </a>
-              </div>
-              <div class="product-container" data-type="desserts">
-                <a href="#" class="product" data-bs-toggle="modal" data-bs-target="#modalPosItem">
-                  <div class="img" style="background-image: url(<?= base_url() ?>assets/img/pos/product-16.jpg)"></div>
-                  <div class="text">
-                    <div class="title">Perfect Vanilla Cupcake</div>
-                    <div class="desc">Baking powder, all purpose flour, plain kefir, vanilla extract</div>
-                    <div class="price">$2.99</div>
-                  </div>
-                </a>
-              </div>
+              <?php endforeach; ?>
             </div>
           </div>
         </div>
@@ -360,54 +185,7 @@
   <div class="modal modal-pos-item fade" id="modalPosItem">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
-        <div class="modal-body p-0">
-          <a href="#" data-bs-dismiss="modal" class="btn-close position-absolute top-0 end-0 m-4"></a>
-          <div class="pos-product">
-            <div class="pos-product-img">
-              <div class="img" style="background-image: url(<?= base_url() ?>assets/img/pos/product-1.jpg)"></div>
-            </div>
-            <div class="pos-product-info">
-              <div class="title">Roti Panggang Coklat</div>
-              <div class="desc">
-                chicken, egg, mushroom, salad
-              </div>
-              <div class="price">Rp. 12000</div>
-              <hr />
-              <div class="option-row">
-                <div class="qty">
-                  <div class="input-group">
-                    <a href="#" class="btn btn-default pos-product-minqty"><i class="fa fa-minus"></i></a>
-                    <input type="text" id="pos-product-qty" class="form-control border-0 text-center" name="" value="1" />
-                    <a href="#" class="btn btn-default pos-product-addqty"><i class="fa fa-plus"></i></a>
-                  </div>
-                </div>
-              </div>
-              <div class="option-row">
-                <div class="option-title">Ukuran</div>
-                <div class="option-list">
-                  <div class="option">
-                    <input type="radio" id="size3" name="size" value="0" data-attr="Kecil" class="option-input" checked />
-                    <label class="option-label" for="size3">
-                      <span class="option-text">Kecil</span>
-                      <span class="option-price">+ Rp. 0</span>
-                    </label>
-                  </div>
-                  <div class="option">
-                    <input type="radio" id="size1" name="size" value="3000" data-attr="Besar" class="option-input" />
-                    <label class="option-label" for="size1">
-                      <span class="option-text">Besar</span>
-                      <span class="option-price">+ Rp. 3000</span>
-                    </label>
-                  </div>
-                </div>
-              </div>
-              <div class="btn-row">
-                <a href="#" class="btn btn-default" data-bs-dismiss="modal">Cancel</a>
-                <a href="#" id="add-to-cart" data-id="1" data-menutypeid="1" class="btn btn-success">Add to cart <i class="fa fa-plus fa-fw ms-2"></i></a>
-              </div>
-            </div>
-          </div>
-        </div>
+
       </div>
     </div>
   </div>
@@ -466,7 +244,7 @@
                           <div class="img" style="${keranjang[i].img}"></div>
                           <div class="info">
                             <div class="title">${keranjang[i].title}</div>
-                            <div class="single-price">Rp. ${keranjang[i].price.toFixed(2)}</div>                            
+                            <div class="single-price">Rp. ${keranjang[i].price}</div>                            
                             <div class="desc">${keranjang[i].attributes}</div>                        
                             <div class="input-group qty" data-id="${keranjang[i].id}" data-arr="${i}">
                               <div class="input-group-append">
@@ -482,14 +260,14 @@
                       </div>
                       <div class="col-3 d-flex flex-column">
                         <div class="total-price">
-                          Rp. ${keranjang[i].subprice.toFixed(2)}
+                          Rp. ${keranjang[i].subprice}
                         </div>
                         <a href="#" class="mt-auto text-danger align-self-start text-decoration-none btn-delete-order" data-id="${keranjang[i].orderDetailId}">
                           Delete
                         </a>
                       </div>                      
                     </div>`;
-          subtotal += parseFloat(keranjang[i].subprice);
+          subtotal += parseInt(keranjang[i].subprice);
         }
       }
 
@@ -503,24 +281,37 @@
         tax_text = 'PPn (10%)';
       }
 
-      let total = parseFloat(tax) + parseFloat(subtotal);
+      let total = parseInt(tax) + parseInt(subtotal);
 
-      $('.subtotal .price').html('Rp. ' + parseFloat(subtotal).toFixed(2));
+      $('.subtotal .price').html('Rp. ' + parseInt(subtotal));
       $('.taxes .text').html(tax_text);
-      $('.taxes .price').html('Rp. ' + parseFloat(tax).toFixed(2));
-      $('.total .price').html('Rp. ' + parseFloat(total).toFixed(2));
+      $('.taxes .price').html('Rp. ' + parseInt(tax));
+      $('.total .price').html('Rp. ' + parseInt(total));
       $('.total-order').html(`New Order (${keranjang.length})`)
       $('.pos-mobile-sidebar-toggler .badge').html(keranjang.length)
       $('.pos-table').html(html);
     }
 
+    $(document).on('click', '.product', function() {
+      let id = $(this).data('id');
+
+      $.get(`pos/get_detail_item/${id}`, function(data) {
+        // let res = JSON.parse(data);
+        // /* Check if have an Attributes */
+        // let html = '';
+        // let attr = res.data.attributes;
+
+        $('#modalPosItem .modal-content').html(data)
+        $('#modalPosItem').modal('show');
+      });
+    });
+
     /* Detail Area */
     $(document).on('click', '#add-to-cart', function() {
       let id = $(this).data('id');
-      let menuType = $(this).data('menutypeid');
       let title = $('.pos-product-info .title').html();
       let img = $('.pos-product-img .img').attr('style');
-      let price = parseFloat($('.pos-product-info .price').html().replace('Rp.', ''));
+      let price = parseInt($('.pos-product-info .price').html().replace('Rp.', ''));
       let qty = parseInt($('#pos-product-qty').val());
 
       let orderId = $('#orderId').val();
@@ -529,13 +320,16 @@
         return $(this).data('attr')
       }).get();
 
+      if (size_price == undefined) {
+        size_price = 0
+      }
+
       let product = {
         id: id,
         title: title,
         img: img,
         price: price,
-        subprice: (price * qty) + parseFloat(size_price),
-        menuTypeId: menuType,
+        subprice: (price * qty) + parseInt(size_price),
         qty: qty,
         orderDetailId: keranjang.length + 1,
         attributes: size_name.toString()
@@ -569,7 +363,7 @@
       let orderId = $('#orderId').val();
 
       let total_price_addon = keranjang[arr].subprice - (keranjang[arr].price * keranjang[arr].qty);
-      let total_subprice = keranjang[arr].price * (parseInt(keranjang[arr].qty) + parseInt(1)) + parseFloat(total_price_addon);
+      let total_subprice = keranjang[arr].price * (parseInt(keranjang[arr].qty) + parseInt(1)) + parseInt(total_price_addon);
 
       keranjang[arr].qty++
       keranjang[arr].subprice = total_subprice
@@ -584,7 +378,7 @@
       let valueQty = $(this).val();
 
       let total_price_addon = keranjang[arr].subprice - (keranjang[arr].price * keranjang[arr].qty);
-      let total_subprice = keranjang[arr].price * valueQty + parseFloat(total_price_addon);
+      let total_subprice = keranjang[arr].price * valueQty + parseInt(total_price_addon);
 
 
       keranjang[arr].qty = valueQty;
@@ -600,7 +394,7 @@
       let arr = $(this).parent().parent().data('arr');
 
       let total_price_addon = keranjang[arr].subprice - (keranjang[arr].price * keranjang[arr].qty);
-      let total_subprice = keranjang[arr].price * (parseInt(keranjang[arr].qty) - parseInt(1)) + parseFloat(total_price_addon);
+      let total_subprice = keranjang[arr].price * (parseInt(keranjang[arr].qty) - parseInt(1)) + parseInt(total_price_addon);
 
       if (keranjang[arr].qty > 1) {
         keranjang[arr].qty--
@@ -667,8 +461,6 @@
       }, /* verbose= */ false);
 
     html5QrcodeScanner.render(onScanSuccess, onScanFailure);
-
-
 
     /* Product Item Area */
     /* End Of Product Item Area */

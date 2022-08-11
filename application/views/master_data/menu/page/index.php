@@ -33,6 +33,10 @@
       </thead>
       <tbody>
         <?php foreach ($data as $key => $menu) : ?>
+          <?php
+          if ($menu['image'] == null) {
+            $menu['image'] = 'no-image-available.png';
+          }; ?>
           <tr>
             <td><?= $key + 1; ?></td>
             <td>
@@ -46,7 +50,7 @@
             <td><?= $menu['nama_kategori']; ?></td>
             <td class="text-center"><?= $menu['status'] == 1 ? '<i class="fa fa-check text-success"></i>' : '<i class="fa fa-times text-danger"></i>'; ?></td>
             <td><?= dateFormat($menu['created_at']); ?></td>
-            <td><?= dateFormat($menu['updated_at']); ?></td>
+            <td><?= dateFormat(check_null($menu['updated_at'])); ?></td>
           </tr>
         <?php endforeach; ?>
       </tbody>

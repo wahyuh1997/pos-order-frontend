@@ -34,7 +34,7 @@ class Menu_categories extends MY_Controller
       // dataView
       $dataView = [
         'title'     => 'Master Data',
-        'subtitle'  => 'Add New Kategori'
+        'subtitle'  => 'Tambah Kategori Baru'
       ];
 
       // view
@@ -59,7 +59,7 @@ class Menu_categories extends MY_Controller
         // dataView
         $dataView = [
           'title'       => 'Master Data',
-          'subtitle'    => 'Edit Kategori',
+          'subtitle'    => 'Ubah Kategori',
           'menuCatData' => $data['data']
         ];
 

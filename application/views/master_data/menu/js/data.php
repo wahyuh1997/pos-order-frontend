@@ -28,7 +28,10 @@
                 <label for="">Harga</label>
                 <div class="row">
                   <div class="col-lg-8">
-                    <input type="number" class="form-control" name="attribute[${cnt}][harga]" value="0" min="0" autocomplete="off">
+                    <div class="input-group">
+                      <span class="input-group-text">+ Rp.</span>
+                      <input type="number" class="form-control" name="attribute[${cnt}][harga]" value="0" min="0" autocomplete="off">
+                    </div>                    
                   </div>
                   <div class="col-lg-4">
                     <button type="button" class="btn btn-sm btn-danger btn-delete"><i class="fa fa-times"></i> Hapus</button>

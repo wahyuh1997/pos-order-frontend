@@ -9,6 +9,7 @@
   <meta content="" name="author" />
 
   <!-- ================== BEGIN core-css ================== -->
+  <link rel="icon" href="<?= base_url('assets/img/logo/logo.jpeg') ?>" type="image/x-icon" />
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
   <link href="<?= base_url(); ?>assets/css/vendor.min.css" rel="stylesheet" />
   <link href="<?= base_url(); ?>assets/css/default/app.min.css" rel="stylesheet" />
@@ -76,15 +77,7 @@
       <!-- BEGIN header-nav -->
       <div class="navbar-nav">
         <div class="navbar-item navbar-user dropdown">
-          <a href="#" class="navbar-link dropdown-toggle d-flex align-items-center" data-bs-toggle="dropdown">
-            <img src="<?= base_url(); ?>assets/img/user/user-13.jpg" alt="" />
-            <span>
-              <span class="d-none d-md-inline">Settings</span>
-            </span>
-          </a>
-          <div class="dropdown-menu dropdown-menu-end me-1">
-            <a href="<?= base_url('login/logout'); ?>" class="btn-logout dropdown-item" data-redurl="<?= base_url('login'); ?>">Log Out</a>
-          </div>
+          <a href="<?= base_url('login/logout'); ?>" class="btn-logout dropdown-item" data-redurl="<?= base_url('login'); ?>"><b>Log Out</b></a>
         </div>
       </div>
       <!-- END header-nav -->

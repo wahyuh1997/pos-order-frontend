@@ -1,12 +1,17 @@
+<?php
+if ($data['image'] == null) {
+  $data['image'] = 'no-image-available.png';
+};
+?>
 <div class="modal-body p-0">
   <a href="#" data-bs-dismiss="modal" class="btn-close position-absolute top-0 end-0 m-4"></a>
   <div class="pos-product">
     <div class="pos-product-img">
-      <div class="img" style="background-image: url(<?= $this->image_server . $data['menuImage']; ?>)"></div>
+      <div class="img" style="background-image: url(<?= base_url('assets/img/product/' . $data['image']) ?>)"></div>
     </div>
     <div class="pos-product-info">
-      <div class="title"><?= $data['menuName']; ?></div>
-      <div class="price">TWD<?= currency_format($data['menuPrice']); ?></div>
+      <div class="title"><?= $data['nama_menu']; ?></div>
+      <div class="price">Rp. <?= $data['harga']; ?></div>
       <hr />
       <div class="option-row">
         <div class="qty">
@@ -17,28 +22,31 @@
           </div>
         </div>
       </div>
-
-      <?php foreach ($data['attributes'] as $key => $attr) : ?>
+      <?php if (count($data['atribute']) > 0) : ?>
         <div class="option-row">
-          <div class="option-title"><?= $attr['menuAttrName']; ?></div>
+          <div class="option-title">Ukuran</div>
           <div class="option-list">
-
-            <?php foreach ($attr['selections'] as $i => $selections) : ?>
-              <div class="option">
-                <input type="checkbox" name="addon[sos]" value="<?= $selections['menuAttrSelectId']; ?>" data-attrid="<?= $attr['menuAttrId']; ?>" class="option-input" id="addon-<?= $key ?>-<?= $i ?>" />
-                <label class="option-label" for="addon-<?= $key ?>-<?= $i ?>">
-                  <span class="option-text"><?= $selections['menuAttrSelectName']; ?></span>
-                  <span class="option-price">+<?= currency_format($selections['menuAttrSelectPrice']); ?></span>
-                </label>
-              </div>
-            <?php endforeach; ?>
-
+            <div class="option">
+              <input type="radio" id="size3" name="size" value="0" data-attr="Kecil" class="option-input" checked />
+              <label class="option-label" for="size3">
+                <span class="option-text">Kecil</span>
+                <span class="option-price">+ Rp. 0</span>
+              </label>
+            </div>
+            <div class="option">
+              <input type="radio" id="size1" name="size" value="3000" data-attr="Besar" class="option-input" />
+              <label class="option-label" for="size1">
+                <span class="option-text">Besar</span>
+                <span class="option-price">+ Rp. 3000</span>
+              </label>
+            </div>
           </div>
         </div>
-      <?php endforeach; ?>
-      <div class="btn-row" <?= count($data['attributes']) == 0 ? 'style="margin-top: 90px;"' : null; ?>>
-        <a href="#" class="btn btn-default" data-bs-dismiss="modal">{{Cancel}}</a>
-        <a href="#" id="add-to-cart" class="btn btn-success" data-id="<?= $data['menuId']; ?>" data-menuTypeId="<?= $data['menuTypeId']; ?>" data-title="<?= $data['menuName']; ?>">{{Add to cart}} <i class="fa fa-plus fa-fw ms-2"></i></a>
+      <?php endif; ?>
+
+      <div class="btn-row" <?= count($data['atribute']) == 0 ? 'style="margin-top: 90px;"' : null; ?>>
+        <a href="#" class="btn btn-default" data-bs-dismiss="modal">Cancel</a>
+        <a href="#" id="add-to-cart" class="btn btn-success" data-id="<?= $data['id']; ?>">Add to cart <i class="fa fa-plus fa-fw ms-2"></i></a>
       </div>
     </div>
   </div>

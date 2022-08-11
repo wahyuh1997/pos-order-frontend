@@ -27,7 +27,7 @@
           <th>Name</th>
           <th>Role</th>
           <th>Dibuat</th>
-          <th>Diupdate</th>
+          <th>Di Ubah</th>
         </tr>
       </thead>
       <tbody>

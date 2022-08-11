@@ -13,7 +13,6 @@ use PhpOffice\PhpSpreadsheet\Calculation\MathTrig\Base;
 
 <!-- panel search -->
 <form id="regCrudForm" method="POST" data-redurl="<?= base_url('master-data/menu'); ?>" enctype="multipart/form-data">
-  <input type="hidden" name="status" value="1">
   <div class="panel panel-inverse">
     <div class="panel-heading">
       <h4 class="panel-title"></h4>
@@ -38,7 +37,10 @@ use PhpOffice\PhpSpreadsheet\Calculation\MathTrig\Base;
       <div class="mb-3 row">
         <label for="harga" class="col-sm-2 col-form-label">Harga <span class="text-danger">*</span></label>
         <div class="col-sm-6">
-          <input type="number" class="form-control" id="harga" name="harga" autocomplete="off" step="0.01" value="0" required>
+          <div class="input-group">
+            <span class="input-group-text">Rp.</span>
+            <input type="number" class="form-control" id="harga" name="harga" autocomplete="off" step="0.01" value="0" required>
+          </div>
         </div>
       </div>
       <div class="mb-3 row">
@@ -60,6 +62,14 @@ use PhpOffice\PhpSpreadsheet\Calculation\MathTrig\Base;
               <option value=<?= $kat['id']; ?>><?= $kat['nama_kategori']; ?></option>
             <?php endforeach; ?>
           </select>
+        </div>
+      </div>
+      <div class="mb-3 row">
+        <label for="status" class="col-sm-2 col-form-label">Tersedia</label>
+        <div class="col-sm-8">
+
+          <input type="hidden" id="status" name="status" value="1">
+          <input type="checkbox" id="switchery-default" checked />
         </div>
       </div>
       <div class="mb-3 row">
