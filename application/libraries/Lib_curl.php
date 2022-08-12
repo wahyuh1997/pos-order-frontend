@@ -26,7 +26,7 @@ class Lib_curl
     // initialize data
     $body     = json_encode($data);
 
-    if (isset($_SESSION['pos_order'])) {
+    if (isset($_SESSION['pos_order']['token'])) {
       $headers  = ["Content-Type:" . "application/json", "Cache-Control: no-cache", "Authorization:Bearer " . $_SESSION['pos_order']['token']];
     } else {
       $headers  = ["Content-Type:" . "application/json", "Cache-Control: no-cache"];

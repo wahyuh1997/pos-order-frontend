@@ -16,6 +16,17 @@
 
   <link href="<?= base_url() ?>assets/plugins/gritter/css/jquery.gritter.css" rel="stylesheet" />
 
+  <style>
+    #reader {
+      position: absolute !important;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 99999;
+      background: white;
+    }
+  </style>
   <!-- ================== END core-css ================== -->
 </head>
 
@@ -28,6 +39,9 @@
 
   <!-- BEGIN #app -->
   <div id="app" class="app app-content-full-height app-without-sidebar app-without-header bg-white">
+    <?php if ($data_order['status'] == false) : ?>
+      <div id="reader" width="600px"></div>
+    <?php endif; ?>
     <!-- BEGIN #content -->
     <div id="content" class="app-content p-0">
       <!-- BEGIN pos -->
@@ -65,6 +79,7 @@
         <!-- END pos-menu -->
 
         <!-- BEGIN pos-content -->
+        <input type="hidden" id="orderId" value="<?= $data_order['data']['id']; ?>">
         <div class="pos-content">
           <!-- data-scrollbar="true" data-height="100%" data-skip-mobile="true" -->
           <div class="pos-content-container">
@@ -75,7 +90,7 @@
                   $menu['image'] = 'no-image-available.png';
                 }; ?>
                 <div class="product-container" data-type="<?= $menu['kategori_id']; ?>">
-                  <a href="#" class="product" data-bs-toggle="modal" data-bs-target="#modalPosItem" data-id="<?= $menu['id']; ?>">
+                  <a href="#" class="product <?= $menu['status'] == 0 ? 'not-available' : null; ?>" data-status="<?= $menu['status']; ?>" data-id="<?= $menu['id']; ?>">
                     <div class="img" style="background-image: url(<?= base_url('assets/img/product/' . $menu['image']) ?>)"></div>
                     <div class="text">
                       <div class="title"><?= $menu['nama_menu']; ?></div>
@@ -84,6 +99,11 @@
                       <div class="desc"><?= $menu['keterangan']; ?></div>
                       <div class="price">Rp. <?= $menu['harga']; ?></div>
                     </div>
+                    <?php if ($menu['status'] == 0) : ?>
+                      <div class="not-available-text">
+                        <div>Not Available</div>
+                      </div>
+                    <?php endif; ?>
                   </a>
                 </div>
               <?php endforeach; ?>
@@ -106,16 +126,16 @@
               </button>
             </div>
             <div class="icon"><img src="<?= base_url() ?>assets/img/pos/icon-table.svg" /></div>
-            <div class="title">Table 01</div>
-            <div class="order">Order: <b>#0056</b></div>
+            <div class="title">Meja <?= $data_order['data']['no_meja']; ?></div>
+            <div class="order">No. Pesanan: <b>#<?= $data_order['data']['no_order']; ?></b></div>
           </div>
           <div class="pos-sidebar-nav">
             <ul class="nav nav-tabs nav-fill">
               <li class="nav-item">
-                <a class="nav-link active" href="#" data-bs-toggle="tab" data-bs-target="#newOrderTab">New Order (5)</a>
+                <a class="nav-link active total-order" href="#" data-bs-toggle="tab" data-bs-target="#newOrderTab">Jumlah Pesanan (0)</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#" data-bs-toggle="tab" data-bs-target="#orderHistoryTab">Order History (0)</a>
+                <a class="nav-link" href="#" data-bs-toggle="tab" data-bs-target="#orderHistoryTab">Riwayat Pemesanan (0)</a>
               </li>
             </ul>
           </div>
@@ -155,7 +175,7 @@
             <div class="btn-row">
               <a href="#" class="btn btn-default" onclick="handleDashboardGritterNotification()"><i class="fa fa-bell fa-fw fa-lg"></i> Service</a>
               <a href="#" class="btn btn-default"><i class="fa fa-file-invoice-dollar fa-fw fa-lg"></i> Bill</a>
-              <a href="#" class="btn btn-success"><i class="fa fa-check fa-fw fa-lg"></i> Submit Order</a>
+              <a href="#" id="submit-order" class="btn btn-success"><i class="fa fa-check fa-fw fa-lg"></i> Submit Order</a>
             </div>
           </div>
         </div>
@@ -214,12 +234,29 @@
 
   <!-- ================== CUSTOM-js ================== -->
   <script>
-    var keranjang = [];
+    var keranjang = [
+      <?php if ($data_order['status'] == true) : ?>
+        <?php foreach ($data_order['data']['order_detail'] as $value) : ?>
+          <?php if ($value['status'] == 1) : ?> {
+              id: '<?= $value['id'] ?>',
+              title: '<?= $value['nama_menu'] ?>',
+              img: 'background-image: url(<?= base_url('assets/img/product/' . $value['image']) ?>)',
+              qty: <?= $value['qty'] ?>,
+              harga: <?= $value['harga'] ?>,
+              sub_harga: <?= $value['sub_harga'] ?>,
+              attributes: '<?= $value['name_attribute'] ?>'
+            },
+          <?php endif; ?>
+        <?php endforeach; ?>
+      <?php endif; ?>
+    ];
+
     load_cart();
     /* Laod View menu in order */
     function load_cart() {
       let html = '';
       let subtotal = 0
+
       if (keranjang.length == 0) {
         // $('.btn-primary.create-new-order').addClass('d-none');
         //<h4>No order history found</h4>      
@@ -231,8 +268,7 @@
                         <path d="M8 1.5A2.5 2.5 0 0 0 5.5 4h-1a3.5 3.5 0 1 1 7 0h-1A2.5 2.5 0 0 0 8 1.5z" />
                       </svg>
                     </div>
-                    <div id="reader" width="600px"></div>
-                                
+                    <h4>Anda Belum Memesan Apapun!</h4>
                   </div>
                 </div>`;
       } else {
@@ -244,7 +280,7 @@
                           <div class="img" style="${keranjang[i].img}"></div>
                           <div class="info">
                             <div class="title">${keranjang[i].title}</div>
-                            <div class="single-price">Rp. ${keranjang[i].price}</div>                            
+                            <div class="single-price">Rp. ${keranjang[i].harga}</div>                            
                             <div class="desc">${keranjang[i].attributes}</div>                        
                             <div class="input-group qty" data-id="${keranjang[i].id}" data-arr="${i}">
                               <div class="input-group-append">
@@ -260,14 +296,14 @@
                       </div>
                       <div class="col-3 d-flex flex-column">
                         <div class="total-price">
-                          Rp. ${keranjang[i].subprice}
+                          Rp. ${keranjang[i].sub_harga}
                         </div>
-                        <a href="#" class="mt-auto text-danger align-self-start text-decoration-none btn-delete-order" data-id="${keranjang[i].orderDetailId}">
+                        <a href="#" class="mt-auto text-danger align-self-start text-decoration-none btn-delete-order" data-id="${keranjang[i].id}">
                           Delete
                         </a>
                       </div>                      
                     </div>`;
-          subtotal += parseInt(keranjang[i].subprice);
+          subtotal += parseInt(keranjang[i].sub_harga);
         }
       }
 
@@ -287,23 +323,22 @@
       $('.taxes .text').html(tax_text);
       $('.taxes .price').html('Rp. ' + parseInt(tax));
       $('.total .price').html('Rp. ' + parseInt(total));
-      $('.total-order').html(`New Order (${keranjang.length})`)
+      $('.total-order').html(`Jumlah Pesanan (${keranjang.length})`)
       $('.pos-mobile-sidebar-toggler .badge').html(keranjang.length)
       $('.pos-table').html(html);
     }
 
-    $(document).on('click', '.product', function() {
+    $(document).on('click', '.product', function(e) {
+      e.preventDefault();
       let id = $(this).data('id');
+      let status = $(this).data('status');
 
-      $.get(`pos/get_detail_item/${id}`, function(data) {
-        // let res = JSON.parse(data);
-        // /* Check if have an Attributes */
-        // let html = '';
-        // let attr = res.data.attributes;
-
-        $('#modalPosItem .modal-content').html(data)
-        $('#modalPosItem').modal('show');
-      });
+      if (status == 1) {
+        $.get(`pos/get_detail_item/${id}`, function(data) {
+          $('#modalPosItem .modal-content').html(data)
+          $('#modalPosItem').modal('show');
+        });
+      }
     });
 
     /* Detail Area */
@@ -324,20 +359,35 @@
         size_price = 0
       }
 
-      let product = {
-        id: id,
-        title: title,
-        img: img,
-        price: price,
-        subprice: (price * qty) + parseInt(size_price),
-        qty: qty,
-        orderDetailId: keranjang.length + 1,
-        attributes: size_name.toString()
-      }
+      $.ajax({
+        url: 'pos/new_orders',
+        method: 'POST',
+        dataType: 'JSON',
+        data: {
+          pesanan_id: orderId,
+          menu_id: id,
+          qty: parseInt(qty),
+          harga: parseFloat(price),
+          sub_harga: (price * qty) + parseInt(size_price),
+          name_attribute: size_name.toString()
+        },
+        success: function(data) {
+          let product = {
+            id: id,
+            title: title,
+            img: img,
+            qty: qty,
+            harga: price,
+            sub_harga: (price * qty) + parseInt(size_price),
+            attributes: size_name.toString()
+          }
+          keranjang.push(product);
 
-      keranjang.push(product);
-      console.log(keranjang);
-      load_cart();
+          load_cart();
+        }
+      })
+
+
       $('#modalPosItem').modal('hide');
     });
 
@@ -356,50 +406,89 @@
 
 
     /* Order Item Area */
-    /* Minus qty button */
+    /* Plus qty button */
     $(document).on('click', '.input-group-prepend .btn', function() {
       let id = $(this).parent().parent().data('id');
       let arr = $(this).parent().parent().data('arr');
       let orderId = $('#orderId').val();
 
-      let total_price_addon = keranjang[arr].subprice - (keranjang[arr].price * keranjang[arr].qty);
-      let total_subprice = keranjang[arr].price * (parseInt(keranjang[arr].qty) + parseInt(1)) + parseInt(total_price_addon);
+      let total_price_attr = keranjang[arr].sub_harga - (keranjang[arr].harga * keranjang[arr].qty);
+      let total_subprice = keranjang[arr].harga * (parseInt(keranjang[arr].qty) + parseInt(1)) + parseInt(total_price_attr);
 
-      keranjang[arr].qty++
-      keranjang[arr].subprice = total_subprice
-      load_cart();
+      $.ajax({
+        url: 'pos/update_orders/' + id,
+        method: 'POST',
+        dataType: 'JSON',
+        data: {
+          qty: parseInt(keranjang[arr].qty) + parseInt(1),
+          harga: keranjang[arr].harga,
+          sub_harga: total_subprice,
+        },
+        success: function(data) {
+          if (data == true) {
+            keranjang[arr].qty++
+            keranjang[arr].sub_harga = total_subprice
+            load_cart();
+          }
+        }
+      });
     })
     /* On Input QTY */
     $(document).on('input', '.qty-input', function() {
       this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');
       let id = $(this).parent().data('id');
       let arr = $(this).parent().data('arr');
-      let orderId = $('#orderId').val();
       let valueQty = $(this).val();
 
-      let total_price_addon = keranjang[arr].subprice - (keranjang[arr].price * keranjang[arr].qty);
-      let total_subprice = keranjang[arr].price * valueQty + parseInt(total_price_addon);
-
-
-      keranjang[arr].qty = valueQty;
-      keranjang[arr].subprice = total_subprice
-      load_cart();
-
+      let total_price_attr = keranjang[arr].sub_harga - (keranjang[arr].harga * keranjang[arr].qty);
+      let total_sub_harga = keranjang[arr].harga * valueQty + parseInt(total_price_attr);
+      console.log(total_sub_harga);
+      $.ajax({
+        url: 'pos/update_orders/' + id,
+        method: 'POST',
+        dataType: 'JSON',
+        data: {
+          qty: valueQty,
+          harga: keranjang[arr].harga,
+          sub_harga: total_sub_harga,
+        },
+        success: function(data) {
+          if (data == true) {
+            keranjang[arr].qty = valueQty;
+            keranjang[arr].sub_harga = total_sub_harga
+            load_cart();
+          }
+        }
+      });
     })
 
-    /* Add qty button */
+    /* Minus qty button */
     $(document).on('click', '.input-group-append .btn', function() {
       let id = $(this).parent().parent().data('id')
       let orderId = $('#orderId').val();
       let arr = $(this).parent().parent().data('arr');
 
-      let total_price_addon = keranjang[arr].subprice - (keranjang[arr].price * keranjang[arr].qty);
-      let total_subprice = keranjang[arr].price * (parseInt(keranjang[arr].qty) - parseInt(1)) + parseInt(total_price_addon);
+      let total_price_attr = keranjang[arr].sub_harga - (keranjang[arr].harga * keranjang[arr].qty);
+      let total_sub_harga = keranjang[arr].harga * (parseInt(keranjang[arr].qty) - parseInt(1)) + parseInt(total_price_attr);
 
       if (keranjang[arr].qty > 1) {
-        keranjang[arr].qty--
-        keranjang[arr].subprice = total_subprice
-        load_cart();
+        $.ajax({
+          url: 'pos/update_orders/' + id,
+          method: 'POST',
+          dataType: 'JSON',
+          data: {
+            qty: parseInt(keranjang[arr].qty) - parseInt(1),
+            harga: keranjang[arr].harga,
+            sub_harga: total_sub_harga,
+          },
+          success: function(data) {
+            if (data == true) {
+              keranjang[arr].qty--
+              keranjang[arr].sub_harga = total_sub_harga
+              load_cart();
+            }
+          }
+        });
       }
     })
 
@@ -425,52 +514,143 @@
       $(this).parent().remove()
     });
 
-    $(document).on('click', '.yes-remove', function() {
-      let orderDetailId = $(this).data('id');
+    $(document).on('click', '.yes-remove', function(e) {
+      e.preventDefault();
+      let id = $(this).data('id');
       let this_parent = $(this).parent().parent().remove();
 
-      for (let i = 0; i < keranjang.length; i++) {
-        if (keranjang[i].orderDetailId == orderDetailId) {
-          keranjang.splice(i, 1);
+      $.get(`pos/delete_order/` + id, function(data) {
+        let res = JSON.parse(data)
+        if (res == true) {
+          for (let i = 0; i < keranjang.length; i++) {
+            if (keranjang[i].id == id) {
+              keranjang.splice(i, 1);
+            }
+          }
+          this_parent;
+          load_cart();
         }
-      }
-      load_cart();
+        // /* Delete Function */      
+      });
+
+      // for (let i = 0; i < keranjang.length; i++) {
+      //   if (keranjang[i].orderDetailId == orderDetailId) {
+      //     keranjang.splice(i, 1);
+      //   }
+      // }
+      // load_cart();
+    });
+
+    /* Submit Order button Trigger */
+    $(document).on('click', '#submit-order', function(e) {
+      e.preventDefault()
+      let orderId = $('#orderId').val();
+      let subtotal = $('.subtotal .price').html();
+      let serviceFee = $('.taxes .price').html();
+      let totalprice = $('.total .price').html();
+
+      swal({
+          title: 'Apakah anda yakin ?',
+          text: 'Dengan Menu yang anda pesan ?',
+          icon: 'info',
+          buttons: {
+            cancel: {
+              text: 'Tidak',
+              value: null,
+              visible: true,
+              className: 'btn btn-default',
+              closeModal: true,
+            },
+            confirm: {
+              text: 'Ya',
+              value: true,
+              visible: true,
+              className: 'btn btn-primary',
+              closeModal: true
+            }
+          }
+        })
+        .then((result) => {
+          if (result == true) {
+            $.ajax({
+              url: 'pos/submit_order/' + orderId,
+              method: 'POST',
+              async: true,
+              dataType: 'JSON',
+              data: {
+                sub_total: subtotal.replace('Rp. ', ''),
+                total_harga: totalprice.replace('Rp. ', ''),
+                pajak: serviceFee.replace('Rp. ', '')
+              },
+              success: function(res) {
+                if (res.status == true) {
+                  swal({
+                      title: 'Success',
+                      text: res.message,
+                      icon: 'success',
+                      buttons: {
+                        confirm: {
+                          text: 'Ok',
+                          value: true,
+                          visible: true,
+                          className: 'btn btn-primary',
+                          closeModal: true
+                        }
+                      }
+                    })
+                    .then((result) => {
+                      if (result == true) {
+                        location.reload();
+                      }
+                    })
+                }
+              }
+            })
+          } {
+            return false
+          }
+        })
     });
     /* End Of Order Item Area */
-
-    /* Function Success Scan */
-    function onScanSuccess(qrMessage) {
-      window.open(qrMessage + 'pos');
-
-      html5QrcodeScanner.clear();
-
-      $('#btn-render').css('display', 'block');
-    }
-    /* Function Failure Scan */
-    function onScanFailure(error) {
-      // handle scan failure, usually better to ignore and keep scanning.
-      // for example:
-      console.warn(`QR error = ${error}`);
-    }
-
-    /* Init Function Scan */
-    let html5QrcodeScanner = new Html5QrcodeScanner(
-      "reader", {
-        fps: 10,
-        qrbox: 250
-      }, /* verbose= */ false);
-
-    html5QrcodeScanner.render(onScanSuccess, onScanFailure);
 
     /* Product Item Area */
     /* End Of Product Item Area */
 
     var handleDashboardGritterNotification = function() {
       $.get("<?= base_url('dashboard/call_service?service=ok'); ?>", function(data) {
-        console.log(data);
+        // console.log(data);
       })
     };
   </script>
+
+
+  <?php if ($data_order['status'] == false) : ?>
+    <script>
+      /* Function Success Scan */
+      function onScanSuccess(qrMessage) {
+        window.open(qrMessage);
+
+        html5QrcodeScanner.clear();
+
+        $('#btn-render').css('display', 'block');
+      }
+      /* Function Failure Scan */
+      function onScanFailure(error) {
+        // handle scan failure, usually better to ignore and keep scanning.
+        // for example:
+        console.warn(`QR error = ${error}`);
+      }
+
+      /* Init Function Scan */
+      let html5QrcodeScanner = new Html5QrcodeScanner(
+        "reader", {
+          fps: 10,
+          qrbox: 250
+        }, /* verbose= */ false);
+
+      html5QrcodeScanner.render(onScanSuccess, onScanFailure);
+    </script>
+  <?php endif; ?>
 </body>
 
 </html>

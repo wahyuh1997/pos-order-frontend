@@ -31,7 +31,13 @@ use PhpOffice\PhpSpreadsheet\Calculation\MathTrig\Base;
       <div class="mb-3 row">
         <label for="meja_id" class="col-sm-2 col-form-label">Nomor Meja</label>
         <div class="col-sm-6">
-          <input type="number" class="form-control" id="meja_id" name="meja_id" value="1" min="1" max="40" autocomplete="off">
+          <select class="form-select default-select2" id="meja_id" name="meja_id" required>
+            <option selected value="">Select Option</option>
+            <?php foreach ($data_meja['data'] as $meja) : ?>
+              <option value=<?= $meja['id']; ?>><?= $meja['no_meja']; ?></option>
+            <?php endforeach; ?>
+          </select>
+          <!-- <input type="number" class="form-control" id="meja_id" name="meja_id" value="1" min="1" max="40" autocomplete="off"> -->
         </div>
       </div>
       <div class="panel-footer text-end">

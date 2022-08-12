@@ -28,7 +28,7 @@
           <div class="menu-text">Dashboard</div>
         </a>
       </div>
-      <div class="menu-item has-sub <?= $this->uri->segment(1) == 'master-data' ? 'active' : null; ?>">
+      <div class="menu-item has-sub <?= $this->uri->segment(1) == 'master-data' || $this->uri->segment(1) == 'master_data' ? 'active' : null; ?>">
         <a href="javascript:;" class="menu-link">
           <div class="menu-icon">
             <i class="fa fa-hdd"></i>
@@ -45,6 +45,11 @@
           <div class="menu-item <?= $this->uri->segment(2) == 'menu-categories' ? 'active' : null; ?>">
             <a href="<?= base_url('master-data/menu-categories'); ?>" class="menu-link">
               <div class="menu-text">Kategori</div>
+            </a>
+          </div>
+          <div class="menu-item <?= $this->uri->segment(2) == 'menu_table' ? 'active' : null; ?>">
+            <a href="<?= base_url('master_data/menu_table'); ?>" class="menu-link">
+              <div class="menu-text">No. Meja</div>
             </a>
           </div>
         </div>

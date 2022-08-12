@@ -14,24 +14,27 @@ class order extends MY_Controller
    */
   public function index()
   {
-    $data = $this->lib_curl->curl_request($this->pos_service_v1 . 'order/get_all_order');
+    $data      = $this->lib_curl->curl_request($this->pos_service_v1 . 'order/get_all_order');
     $data_view = [
       'title'     => 'Order',
       'subtitle'  => 'Order',
       'data'      => $data,
-      // 'js'        => 'order/js/data',
     ];
+
     $this->load_template('order/page/index', $data_view);
   }
 
   public function add()
   {
+    // trace($_SESSION);
     $post = $this->input->post(null, true);
+    $data_meja = $this->lib_curl->curl_request($this->pos_service_v1 . 'menu/get_all_meja');
     if (count($post) == 0) {
       // dataView
       $dataView = [
         'title'     => 'Master Data',
-        'subtitle'  => 'Add New Menu Order'
+        'subtitle'  => 'Add New Menu Order',
+        'data_meja' => $data_meja,
       ];
 
       // view
@@ -45,9 +48,9 @@ class order extends MY_Controller
 
       $image_name = $response['data']['kode_unik'] . '.png';
 
-      $params['data'] = $response['data']['kode_unik']; //data yang akan di jadikan QR CODE
-      $params['level'] = 'H'; //H=High
-      $params['size'] = 10;
+      $params['data']   = base_url('pos/get_order_customer/') . $response['data']['kode_unik']; //data yang akan di jadikan QR CODE
+      $params['level']  = 'H'; //H=High
+      $params['size']   = 10;
       $params['savename'] = FCPATH . $config['imagedir'] . $image_name; //simpan image QR CODE ke folder assets/images/
       $this->ciqrcode->generate($params); // fungsi untuk generate QR CODE
 

@@ -21,7 +21,7 @@
         <tr>
           <th width="1%">#</th>
           <th width="14%"></th>
-          <th>Nama Pelanggan</th>
+          <th>Nama Pemesan</th>
           <th>No. Order</th>
           <th>No. Invoice</th>
           <th>No. Meja</th>
@@ -45,13 +45,13 @@
             <td><?= $res['nama_pelanggan']; ?></td>
             <td class="text-end"><?= $res['no_order']; ?></td>
             <td class="text-end"><?= $res['no_receip']; ?></td>
-            <td class="text-center"><?= $res['meja_id']; ?></td>
+            <td class="text-center"><?= $res['no_meja']; ?></td>
             <td class="text-end">Rp. <?= check_null($res['total_harga']); ?></td>
             <td><?= $res['status']; ?></td>
             <td><?= $res['checkout']; ?></td>
             <td>-</td>
             <td><?= dateFormat($res['created_at']); ?></td>
-            <td><?= dateFormat($res['updated_at']); ?></td>
+            <td><?= dateFormat(check_null($res['updated_at'])); ?></td>
           </tr>
         <?php endforeach; ?>
         <!-- Serverside -->
