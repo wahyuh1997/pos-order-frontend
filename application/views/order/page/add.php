@@ -1,7 +1,3 @@
-<?php
-
-use PhpOffice\PhpSpreadsheet\Calculation\MathTrig\Base;
-?>
 <!-- BEGIN breadcrumb -->
 <ol class="breadcrumb float-xl-end">
   <li class="breadcrumb-item"><a href="javascript:;"><?= $title; ?></a></li>

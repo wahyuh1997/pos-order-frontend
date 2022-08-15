@@ -20,7 +20,7 @@
       <thead>
         <tr>
           <th width="1%">#</th>
-          <th width="14%"></th>
+          <th width="5%" data-orderable="false"></th>
           <th>Nama Pemesan</th>
           <th>No. Order</th>
           <th>No. Invoice</th>
@@ -37,18 +37,25 @@
         <?php foreach ($data['data'] as $key => $res) : ?>
           <tr>
             <td><?= $key + 1; ?></td>
-            <td>
-              <a href="<?= base_url('order/print_qrcode/' . $res['id']); ?>" target="_blank" class="btn btn-info btn-sm">Cetak QR Code</a>
-              <a href="#" class="btn btn-primary btn-sm">Bayar</a>
-              <!-- <a href="<?= base_url('order/delete/' . $res['id']); ?>" class="btn btn-danger btn-sm btn-del">Hapus</a> -->
+            <td class="text-center">
+              <div class="btn-group">
+                <a href="#" class="btn btn-info dropdown-toggle" data-bs-toggle="dropdown">
+                  <i class="fa fa-caret-down"></i>
+                </a>
+                <ul class="dropdown-menu">
+                  <a class="dropdown-item" href="<?= base_url('order/print_qrcode/' . $res['id']); ?>" target="_blank">Cetak QR Code</a>
+                  <a class="dropdown-item" href="<?= base_url('order/paid_order/' . $res['id']); ?>" class="btn btn-primary btn-sm">Bayar</a>
+                  <a class="dropdown-item del-sel" href="<?= base_url('order/cancelled/' . $res['id']); ?>" data-redurl="' . base_url('dev_master_data/category/') . '">Batalkan Pesanan</a>
+                </ul>
+              </div>
             </td>
             <td><?= $res['nama_pelanggan']; ?></td>
             <td class="text-end"><?= $res['no_order']; ?></td>
             <td class="text-end"><?= $res['no_receip']; ?></td>
             <td class="text-center"><?= $res['no_meja']; ?></td>
             <td class="text-end">Rp. <?= check_null($res['total_harga']); ?></td>
-            <td><?= $res['status']; ?></td>
-            <td><?= $res['checkout']; ?></td>
+            <td class="text-center"><?= $res['status'] == 1 ? '<i class="fa fa-check text-success"></i>' : '<i class="fa fa-times text-danger"></i>'; ?></td>
+            <td class="text-center"><?= $res['checkout'] == 1 ? '<i class="fa fa-check text-success"></i>' : '<i class="fa fa-times text-danger"></i>'; ?></td>
             <td>-</td>
             <td><?= dateFormat($res['created_at']); ?></td>
             <td><?= dateFormat(check_null($res['updated_at'])); ?></td>

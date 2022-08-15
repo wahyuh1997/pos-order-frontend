@@ -16,6 +16,7 @@ class Pos extends MY_Controller
   {
     $menu     = $this->lib_curl->curl_request($this->pos_service_v1 . 'menu/get_all_menu');
     $kategori = $this->lib_curl->curl_request($this->pos_service_v1 . 'menu/get_all_category');
+
     if (isset($_SESSION['pos_order']['qrcode'])) {
       # code...
       $order = $this->lib_curl->curl_request($this->pos_service_v1 . 'customer/get_order/' . $_SESSION['pos_order']['qrcode']);
@@ -65,6 +66,17 @@ class Pos extends MY_Controller
   public function submit_order($id)
   {
     echo json_encode($this->lib_curl->curl_request($this->pos_service_v1 . 'customer/final_order_detail/' . $id, 'PUT', $_POST));
+  }
+
+  public function get_history()
+  {
+    $response = $this->lib_curl->curl_request($this->pos_service_v1 . 'customer/get_order/' . $_SESSION['pos_order']['qrcode']);
+    $dataView = [
+      'data'     => $response,
+    ];
+
+
+    $this->load->view("templates/menu/pos_history", $dataView);
   }
 
   public function delete_order($id)

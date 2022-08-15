@@ -15,6 +15,7 @@ class order extends MY_Controller
   public function index()
   {
     $data      = $this->lib_curl->curl_request($this->pos_service_v1 . 'order/get_all_order');
+
     $data_view = [
       'title'     => 'Order',
       'subtitle'  => 'Order',
@@ -59,9 +60,18 @@ class order extends MY_Controller
     }
   }
 
-  public function get_order_id()
+  public function paid_order($id)
   {
-    /* Get Order by id Using QR Code */
+    $data = $this->lib_curl->curl_request($this->pos_service_v1 . 'order/get_order/' . $id);
+    // trace($data);
+    $dataView = [
+      'title'     => 'Bayar Pesanan',
+      'subtitle'  => 'Bayar Pesanan',
+      'data'      => $data['data'],
+      'js'        => 'order/js/data'
+    ];
+
+    $this->load_template('order/page/paid', $dataView);
   }
 
   public function print_qrcode($id)

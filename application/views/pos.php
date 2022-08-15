@@ -135,7 +135,7 @@
                 <a class="nav-link active total-order" href="#" data-bs-toggle="tab" data-bs-target="#newOrderTab">Jumlah Pesanan (0)</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#" data-bs-toggle="tab" data-bs-target="#orderHistoryTab">Riwayat Pemesanan (0)</a>
+                <a class="nav-link" id="tabOrderHistory" href="#" data-bs-toggle="tab" data-bs-target="#orderHistoryTab">Riwayat Pemesanan</a>
               </li>
             </ul>
           </div>
@@ -146,16 +146,9 @@
               </div>
             </div>
             <div class="tab-pane fade h-100" id="orderHistoryTab">
-              <div class="h-100 d-flex align-items-center justify-content-center text-center p-20">
-                <div>
-                  <div class="mb-3 mt-n5">
-                    <svg width="6em" height="6em" viewBox="0 0 16 16" class="text-gray-300" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                      <path fill-rule="evenodd" d="M14 5H2v9a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V5zM1 4v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4H1z" />
-                      <path d="M8 1.5A2.5 2.5 0 0 0 5.5 4h-1a3.5 3.5 0 1 1 7 0h-1A2.5 2.5 0 0 0 8 1.5z" />
-                    </svg>
-                  </div>
-                  <h4>No order history found</h4>
-                </div>
+              <!-- Order History -->
+              <div id="load-history-order" class="h-100 py-4 px-2 pos-table">
+
               </div>
             </div>
           </div>
@@ -174,7 +167,7 @@
             </div>
             <div class="btn-row">
               <a href="#" class="btn btn-default" onclick="handleDashboardGritterNotification()"><i class="fa fa-bell fa-fw fa-lg"></i> Service</a>
-              <a href="#" class="btn btn-default"><i class="fa fa-file-invoice-dollar fa-fw fa-lg"></i> Bill</a>
+              <a href="#" id="btn-bill" class="btn btn-success d-none"><i class="fa fa-file-invoice-dollar fa-fw fa-lg"></i> Bill</a>
               <a href="#" id="submit-order" class="btn btn-success"><i class="fa fa-check fa-fw fa-lg"></i> Submit Order</a>
             </div>
           </div>
@@ -237,8 +230,9 @@
     var keranjang = [
       <?php if ($data_order['status'] == true) : ?>
         <?php foreach ($data_order['data']['order_detail'] as $value) : ?>
-          <?php if ($value['status'] == 1) : ?> {
+          <?php if ($value['status'] == 0) : ?> {
               id: '<?= $value['id'] ?>',
+              menuDetailid: '<?= $value['id'] ?>',
               title: '<?= $value['nama_menu'] ?>',
               img: 'background-image: url(<?= base_url('assets/img/product/' . $value['image']) ?>)',
               qty: <?= $value['qty'] ?>,
@@ -342,7 +336,8 @@
     });
 
     /* Detail Area */
-    $(document).on('click', '#add-to-cart', function() {
+    $(document).on('click', '#add-to-cart', function(e) {
+      e.preventDefault();
       let id = $(this).data('id');
       let title = $('.pos-product-info .title').html();
       let img = $('.pos-product-img .img').attr('style');
@@ -371,9 +366,11 @@
           sub_harga: (price * qty) + parseInt(size_price),
           name_attribute: size_name.toString()
         },
-        success: function(data) {
+        success: function(res) {
+          let arr = keranjang.length
+
           let product = {
-            id: id,
+            id: res.data.order_detail[arr].id,
             title: title,
             img: img,
             qty: qty,
@@ -601,6 +598,8 @@
                     .then((result) => {
                       if (result == true) {
                         location.reload();
+                        keranjang = [];
+                        load_cart()
                       }
                     })
                 }
@@ -610,6 +609,37 @@
             return false
           }
         })
+    });
+
+    $(document).on('click', '.total-order', function() {
+      $('#btn-bill').addClass('d-none');
+      $('#submit-order').removeClass('d-none');
+      load_cart();
+    });
+
+    /* Tab Order History */
+    $(document).on('click', '#tabOrderHistory', function() {
+      $.ajax({
+        url: 'pos/get_history',
+        method: 'get',
+        beforeSend: function() {
+          $('#load-history-order').html(`<div class="d-flex justify-content-center h-100">
+            <div class="spinner-border" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+          </div>`);
+        },
+        success: function(res) {
+
+          $('#load-history-order').html(res);
+          $('.subtotal .price').html('Rp. ' + $('#historyPrice').val());
+          $('.taxes .price').html('Rp. ' + $('#historyTax').val())
+          $('.total .price').html('Rp. ' + $('#historyTotalPrice').val())
+          $('#btn-bill').removeClass('d-none');
+          $('#submit-order').addClass('d-none');
+          // if (res.status == true) {}
+        }
+      })
     });
     /* End Of Order Item Area */
 
