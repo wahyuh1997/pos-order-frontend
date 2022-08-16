@@ -77,7 +77,7 @@
         if (result == true) {
           $.get(href, function(response) {
             var parse = JSON.parse(response)
-            // console.log(parse);
+
             if (parse.status == true) {
               swal({
                   title: 'Success',

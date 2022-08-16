@@ -15,11 +15,11 @@ class order extends MY_Controller
   public function index()
   {
     $data      = $this->lib_curl->curl_request($this->pos_service_v1 . 'order/get_all_order');
-
     $data_view = [
       'title'     => 'Order',
       'subtitle'  => 'Order',
       'data'      => $data,
+      'js'        => 'order/js/data'
     ];
 
     $this->load_template('order/page/index', $data_view);
@@ -62,16 +62,21 @@ class order extends MY_Controller
 
   public function paid_order($id)
   {
+    $post = $this->input->post(null, true);
     $data = $this->lib_curl->curl_request($this->pos_service_v1 . 'order/get_order/' . $id);
-    // trace($data);
-    $dataView = [
-      'title'     => 'Bayar Pesanan',
-      'subtitle'  => 'Bayar Pesanan',
-      'data'      => $data['data'],
-      'js'        => 'order/js/data'
-    ];
+    if (count($post) == 0) {
+      # code...
+      $dataView = [
+        'title'     => 'Bayar Pesanan',
+        'subtitle'  => 'Bayar Pesanan',
+        'data'      => $data['data'],
+        'js'        => 'order/js/data'
+      ];
 
-    $this->load_template('order/page/paid', $dataView);
+      $this->load_template('order/page/paid', $dataView);
+    } else {
+      echo json_encode($this->lib_curl->curl_request($this->pos_service_v1 . 'order/final_order/' . $id, 'PUT', $_POST));
+    }
   }
 
   public function print_qrcode($id)
@@ -89,12 +94,9 @@ class order extends MY_Controller
     $this->core_library->PdfGenerator($html, 'QR Code-' . $data['data']['no_order'], 'A4', 'potrait');
   }
 
-  public function delete()
+  public function cancelled($id)
   {
-    // get params
-    $get = $this->input->get();
-
-    $delete = $this->lib_curl->curl_request($this->pos_service_v1 . 'v1/orders?orderId=' . $get['orderId'], "DELETE");
+    $delete = $this->lib_curl->curl_request($this->pos_service_v1 . 'order/batal_order/' . $id);
     echo json_encode($delete);
   }
 }

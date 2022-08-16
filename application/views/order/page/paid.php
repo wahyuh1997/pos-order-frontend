@@ -52,12 +52,12 @@
         <tr>
           <th>#</th>
           <th>Nama Menu</th>
-          <th>Jumlah</th>
+          <th class="text-center">Jumlah</th>
           <th>Ukuran</th>
-          <th>Harga Tambahan</th>
-          <th>Harga</th>
-          <th>Total</th>
-          <th>Status</th>
+          <th class="text-center">Harga Tambahan</th>
+          <th class="text-center">Harga</th>
+          <th class="text-center">Total</th>
+          <th class="text-center">Status</th>
         </tr>
       </thead>
       <tbody>
@@ -70,96 +70,106 @@
 
           switch ($menu['status']) {
             case 1:
-              $status = 'Berhasil';
+              $menu['harga']      = $menu['harga'];
+              $menu['sub_harga']  = $menu['sub_harga'];
+              $status             = 'Berhasil';
               break;
             case 2:
-              $status = 'Sedang Diproses';
+              $menu['harga']      = $menu['harga'];
+              $menu['sub_harga']  = $menu['sub_harga'];
+              $status             = 'Sedang Diproses';
               break;
             default:
-              $status = 'Dibatalkan';
+              $menu['harga']      = 0;
+              $menu['sub_harga']  = 0;
+              $status             = 'Dibatalkan';
               break;
           }
         ?>
           <tr>
             <td><?= $key + 1; ?></td>
             <td><?= $menu['nama_menu']; ?></td>
-            <td><?= $menu['qty']; ?></td>
+            <td class="text-center"><?= $menu['qty']; ?></td>
             <td><?= $menu['name_attribute']; ?></td>
-            <td><?= $priceAttr; ?></td>
-            <td><?= $menu['harga']; ?></td>
-            <td><?= $menu['sub_harga']; ?></td>
-            <td><?= $status; ?></td>
+            <td class="text-center"><?= $priceAttr; ?></td>
+            <td class="text-end">Rp. <?= $menu['harga']; ?></td>
+            <td class="text-end">Rp. <?= $menu['sub_harga']; ?></td>
+            <td class="text-center"><?= $status; ?></td>
           </tr>
-        <?php endforeach; ?>
+        <?php
+          $subtotal[] = $menu['sub_harga'];
+        endforeach; ?>
       </tbody>
     </table>
   </div>
 </div>
 
-<div class="card mt-3">
-  <div class="card-header">
-    Pembayaran
-  </div>
-  <div class="card-body">
-    <div class="mb-3 row">
-      <label for="payment_type" class="col-sm-2 col-form-label">Jenis Pembayaran</label>
-      <div class="col-sm-6">
-        <select class="form-select default-select2" id="payment_type" name="payment_type" required>
-          <option selected value="cash">Cash</option>
-          <option value="qris">QRIS</option>
-          <option value="debit">Debit</option>
-        </select>
-      </div>
+<form id="regCrudForm" data-redurl="<?= base_url('order'); ?>" method="POST">
+  <div class="card mt-3">
+    <div class="card-header">
+      Pembayaran
     </div>
-    <div class="mb-3 row">
-      <label for="keterangan" class="col-sm-2 col-form-label">Subtotal</label>
-      <div class="col-sm-6">
-        <div class="input-group">
-          <span class="input-group-text">Rp.</span>
-          <input type="text" class="form-control" value="<?= $data['sub_total']; ?>" readonly>
+    <div class="card-body">
+      <div class="mb-3 row">
+        <label for="payment_type" class="col-sm-2 col-form-label">Jenis Pembayaran</label>
+        <div class="col-sm-6">
+          <select class="form-select default-select2" id="payment_type" name="payment_type" required>
+            <option selected value="1">Cash</option>
+            <option value="2">QRIS</option>
+            <option value="3">Debit</option>
+          </select>
         </div>
       </div>
-    </div>
-    <div class="mb-3 row">
-      <label for="keterangan" class="col-sm-2 col-form-label">Pajak (10 %)</label>
-      <div class="col-sm-6">
-        <div class="input-group">
-          <span class="input-group-text">Rp.</span>
-          <input type="text" class="form-control" value="<?= $data['pajak']; ?>" readonly>
+      <div class="mb-3 row">
+        <label for="keterangan" class="col-sm-2 col-form-label">Subtotal</label>
+        <div class="col-sm-6">
+          <div class="input-group">
+            <span class="input-group-text">Rp.</span>
+            <input type="text" class="form-control" value="<?= array_sum($subtotal); ?>" readonly>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="mb-3 row">
-      <label for="keterangan" class="col-sm-2 col-form-label">Total</label>
-      <div class="col-sm-6">
-        <div class="input-group">
-          <span class="input-group-text">Rp.</span>
-          <input type="text" class="form-control" id="total" value="<?= $data['total_harga']; ?>" readonly>
+      <div class="mb-3 row">
+        <label for="pajak" class="col-sm-2 col-form-label">Pajak (10 %)</label>
+        <div class="col-sm-6">
+          <div class="input-group">
+            <span class="input-group-text">Rp.</span>
+            <input type="text" class="form-control" id="pajak" name="pajak" value="<?= array_sum($subtotal) * 10 / 100; ?>" readonly>
+          </div>
         </div>
       </div>
-    </div>
+      <div class="mb-3 row">
+        <label for="total_harga" class="col-sm-2 col-form-label">Total</label>
+        <div class="col-sm-6">
+          <div class="input-group">
+            <span class="input-group-text">Rp.</span>
+            <input type="text" class="form-control" id="total" name="total_harga" value="<?= array_sum($subtotal) + (array_sum($subtotal) * 10 / 100); ?>" readonly>
+          </div>
+        </div>
+      </div>
 
-    <div class="mb-3 row cash">
-      <label for="pay" class="col-sm-2 col-form-label">Bayar</label>
-      <div class="col-sm-6">
-        <div class="input-group">
-          <span class="input-group-text">Rp.</span>
-          <input type="number" class="form-control" id="pay" value="0" min="0">
+      <div class="mb-3 row cash">
+        <label for="pay" class="col-sm-2 col-form-label">Bayar</label>
+        <div class="col-sm-6">
+          <div class="input-group">
+            <span class="input-group-text">Rp.</span>
+            <input type="number" class="form-control" id="pay" name="bayar" value="0" min="0">
+          </div>
+        </div>
+      </div>
+      <div class="mb-3 row cash">
+        <label for="change" class="col-sm-2 col-form-label">Kembali</label>
+        <div class="col-sm-6">
+          <div class="input-group">
+            <span class="input-group-text">Rp.</span>
+            <input type="number" class="form-control" id="change" name="kembalian" value="0" min="0" readonly>
+          </div>
         </div>
       </div>
     </div>
-    <div class="mb-3 row cash">
-      <label for="change" class="col-sm-2 col-form-label">Kembali</label>
-      <div class="col-sm-6">
-        <div class="input-group">
-          <span class="input-group-text">Rp.</span>
-          <input type="number" class="form-control" id="change" value="0" min="0" readonly>
-        </div>
-      </div>
+    <div class="card-footer text-end">
+      <a href="<?= base_url('order'); ?>" class="btn btn-secondary">Back</a>
+      <button type="submit" class="btn btn-info">Submit</button>
     </div>
   </div>
-  <div class="card-footer text-end">
-    <a href="<?= base_url('order'); ?>" class="btn btn-secondary">Back</a>
-    <button class="btn btn-info">Submit</button>
-  </div>
-</div>
+</form>

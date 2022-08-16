@@ -34,27 +34,44 @@
         </tr>
       </thead>
       <tbody>
-        <?php foreach ($data['data'] as $key => $res) : ?>
+        <?php foreach ($data['data'] as $key => $res) :
+          switch ($res['status']) {
+            case 1:
+              $status = 'Dibatalkan';
+              break;
+            case 2:
+              $status = 'Selesai';
+              break;
+            default:
+              $status = 'Sedang Berjalan';
+              break;
+          }
+
+        ?>
           <tr>
             <td><?= $key + 1; ?></td>
             <td class="text-center">
-              <div class="btn-group">
-                <a href="#" class="btn btn-info dropdown-toggle" data-bs-toggle="dropdown">
-                  <i class="fa fa-caret-down"></i>
-                </a>
-                <ul class="dropdown-menu">
-                  <a class="dropdown-item" href="<?= base_url('order/print_qrcode/' . $res['id']); ?>" target="_blank">Cetak QR Code</a>
-                  <a class="dropdown-item" href="<?= base_url('order/paid_order/' . $res['id']); ?>" class="btn btn-primary btn-sm">Bayar</a>
-                  <a class="dropdown-item del-sel" href="<?= base_url('order/cancelled/' . $res['id']); ?>" data-redurl="' . base_url('dev_master_data/category/') . '">Batalkan Pesanan</a>
-                </ul>
-              </div>
+              <?php if ($res['status'] == 0) : ?>
+                <div class="btn-group">
+                  <a href="#" class="btn btn-info dropdown-toggle" data-bs-toggle="dropdown">
+                    <i class="fa fa-caret-down"></i>
+                  </a>
+                  <ul class="dropdown-menu">
+                    <a class="dropdown-item" href="<?= base_url('order/print_qrcode/' . $res['id']); ?>" target="_blank">Cetak QR Code</a>
+                    <a class="dropdown-item" href="<?= base_url('order/paid_order/' . $res['id']); ?>" class="btn btn-primary btn-sm">Bayar</a>
+                    <a class="dropdown-item cancel" href="<?= base_url('order/cancelled/' . $res['id']); ?>" data-redurl="<?= base_url('order'); ?>">Batalkan Pesanan</a>
+                  </ul>
+                </div>
+              <?php else : ?>
+                <a href="" class="btn btn-sm btn-info">Detail</a>
+              <?php endif; ?>
             </td>
             <td><?= $res['nama_pelanggan']; ?></td>
             <td class="text-end"><?= $res['no_order']; ?></td>
             <td class="text-end"><?= $res['no_receip']; ?></td>
             <td class="text-center"><?= $res['no_meja']; ?></td>
             <td class="text-end">Rp. <?= check_null($res['total_harga']); ?></td>
-            <td class="text-center"><?= $res['status'] == 1 ? '<i class="fa fa-check text-success"></i>' : '<i class="fa fa-times text-danger"></i>'; ?></td>
+            <td class="text-center"><?= $status; ?></td>
             <td class="text-center"><?= $res['checkout'] == 1 ? '<i class="fa fa-check text-success"></i>' : '<i class="fa fa-times text-danger"></i>'; ?></td>
             <td>-</td>
             <td><?= dateFormat($res['created_at']); ?></td>
