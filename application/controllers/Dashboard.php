@@ -15,12 +15,18 @@ class Dashboard extends MY_Controller
   public function index()
   {
     $data      = $this->lib_curl->curl_request($this->pos_service_v1 . 'dashboard');
+    // trace($data);
     $data_view = [
       'data'  => $data['data'],
       'js'    => 'dashboard/js/data',
     ];
     // trace($data);
     $this->load_template('dashboard/page/index', $data_view);
+  }
+
+  public function get_statistic()
+  {
+    echo json_encode($this->lib_curl->curl_request($this->pos_service_v1 . 'dashboard'));
   }
 
   public function call_service()

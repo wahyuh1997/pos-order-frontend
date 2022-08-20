@@ -45,24 +45,16 @@
 <!-- END row -->
 
 <div class="row">
-  <!-- BEGIN col-8 -->
-  <div class="col-xl-8">
-    <!-- BEGIN panel -->
-    <div class="panel panel-inverse" data-sortable-id="index-1">
-      <div class="panel-heading">
-        <h4 class="panel-title">Website Analytics (Last 7 Days)</h4>
-        <div class="panel-heading-btn">
-          <a href="javascript:;" class="btn btn-xs btn-icon btn-warning" data-toggle="panel-collapse"><i class="fa fa-minus"></i></a>
-        </div>
+  <div class="col-lg-8">
+    <div class="card">
+      <div class="card-header">
+        Total Pendapatan Tahunan
       </div>
-      <div class="panel-body pe-1">
+      <div class="card-body">
         <div id="interactive-chart" class="h-300px"></div>
       </div>
     </div>
-    <!-- END panel -->
   </div>
-  <!-- END col-8 -->
-
   <!-- BEGIN col-4 -->
   <div class="col-xl-4">
     <!-- begin widget-list -->
@@ -88,4 +80,27 @@
     <!-- end widget-list -->
   </div>
   <!-- END col-4 -->
+</div>
+
+<div class="row mt-3">
+  <div class="col-lg-6">
+    <div class="card">
+      <div class="card-header">
+        Total Menu Terjual Tahunan
+      </div>
+      <div class="card-body">
+        <div id="interactive-chart2" class="h-300px"></div>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-6">
+    <div class="card">
+      <div class="card-header">
+        Total Meja Terpakai Tahunan
+      </div>
+      <div class="card-body">
+        <div id="interactive-chart3" class="h-300px"></div>
+      </div>
+    </div>
+  </div>
 </div>

@@ -43,12 +43,12 @@ use PhpOffice\PhpSpreadsheet\Calculation\MathTrig\Base;
           </div>
         </div>
       </div>
-      <div class="mb-3 row">
+      <div class="mb-3 row d-none">
         <label for="jenis" class="col-sm-2 col-form-label">Jenis Makanan <span class="text-danger">*</span></label>
         <div class="col-sm-6">
-          <select class="form-select default-select2" id="jenis" name="jenis" required>
-            <option selected value="">Select Menu type</option>
-            <option value="makanan">Makanan</option>
+          <select class="form-select default-select2" id="jenis" name="jenis">
+            <option value="">Select Menu type</option>
+            <option value="makanan" selected>Makanan</option>
             <option value="minuman">Minuman</option>
           </select>
         </div>

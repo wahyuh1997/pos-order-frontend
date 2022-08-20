@@ -30,7 +30,7 @@
 <script src="<?= base_url(); ?>assets/plugins/select2/dist/js/select2.full.js"></script>
 <!-- <script src="<?= base_url(); ?>assets/js/core_1_0_0_5.js"></script> -->
 <!-- <script src="<?= base_url(); ?>assets/js/core-system_0_5234.js"></script> -->
-<script src="<?= base_url(); ?>assets/js/demo/dashboard-v2-01.js"></script>
+<script src="<?= base_url(); ?>assets/js/demo/dashboard-v2-02.js"></script>
 <!-- ================== END page-js ================== -->
 </body>
 

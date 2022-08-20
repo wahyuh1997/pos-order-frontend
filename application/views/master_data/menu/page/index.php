@@ -24,7 +24,6 @@
           <th>Nama Makanan</th>
           <th width="1%" data-orderable="false">Gambar</th>
           <th>Harga</th>
-          <th>Jenis</th>
           <th>Kategori</th>
           <th width="5%">Tersedia</th>
           <th>Tanggal Dibuat</th>
@@ -46,7 +45,6 @@
             <td><?= $menu['nama_menu']; ?></td>
             <td><img src="<?= base_url('assets/img/product/' . $menu['image']); ?>" class="img-thumbnail" alt="Gambar Product"></td>
             <td><?= $menu['harga']; ?></td>
-            <td><?= $menu['jenis']; ?></td>
             <td><?= $menu['nama_kategori']; ?></td>
             <td class="text-center"><?= $menu['status'] == 1 ? '<i class="fa fa-check text-success"></i>' : '<i class="fa fa-times text-danger"></i>'; ?></td>
             <td><?= dateFormat($menu['created_at']); ?></td>
