@@ -8,8 +8,9 @@
 <h1 class="page-header"><?= $subtitle; ?></h1>
 
 <div class="card">
-  <div class="card-header">
-    Informasi Pelanggan
+  <div class="card-header d-flex justify-content-between">
+    <span>Informasi Pelanggan</span>
+    <a href="<?= base_url('order/print_bill/' . $data['id']); ?>" class="btn btn-sm btn-danger"><i class="fa fa-print-pdf"></i> Cetak Tagihan</a>
   </div>
   <div class="card-body">
     <div class="row">
@@ -99,6 +100,11 @@
         <?php
           $subtotal[] = $menu['sub_harga'];
         endforeach; ?>
+        <?php if (!isset($subtotal)) : ?>
+          <tr>
+            <td colspan="8" class="text-center">Tidak Ada Pesanan</td>
+          </tr>
+        <?php endif; ?>
       </tbody>
     </table>
   </div>
@@ -106,10 +112,10 @@
 
 <form id="regCrudForm" data-redurl="<?= base_url('order'); ?>" method="POST">
   <div class="card mt-3">
-    <div class="card-header">
+    <div class="card-header <?= !isset($subtotal) ? 'd-none' : null; ?>">
       Pembayaran
     </div>
-    <div class="card-body">
+    <div class="card-body <?= !isset($subtotal) ? 'd-none' : null; ?>">
       <div class="mb-3 row">
         <label for="payment_type" class="col-sm-2 col-form-label">Jenis Pembayaran</label>
         <div class="col-sm-6">
@@ -125,7 +131,7 @@
         <div class="col-sm-6">
           <div class="input-group">
             <span class="input-group-text">Rp.</span>
-            <input type="text" class="form-control" value="<?= array_sum($subtotal); ?>" readonly>
+            <input type="text" class="form-control" value="<?= isset($subtotal) ? array_sum($subtotal) : 0; ?>" readonly>
           </div>
         </div>
       </div>
@@ -134,7 +140,7 @@
         <div class="col-sm-6">
           <div class="input-group">
             <span class="input-group-text">Rp.</span>
-            <input type="text" class="form-control" id="pajak" name="pajak" value="<?= array_sum($subtotal) * 10 / 100; ?>" readonly>
+            <input type="text" class="form-control" id="pajak" name="pajak" value="<?= isset($subtotal) ? array_sum($subtotal) * 10 / 100 : 0; ?>" readonly>
           </div>
         </div>
       </div>
@@ -143,7 +149,7 @@
         <div class="col-sm-6">
           <div class="input-group">
             <span class="input-group-text">Rp.</span>
-            <input type="text" class="form-control" id="total" name="total_harga" value="<?= array_sum($subtotal) + (array_sum($subtotal) * 10 / 100); ?>" readonly>
+            <input type="text" class="form-control" id="total" name="total_harga" value="<?= isset($subtotal) ? array_sum($subtotal) + (array_sum($subtotal) * 10 / 100) : 0; ?>" readonly>
           </div>
         </div>
       </div>
@@ -169,7 +175,9 @@
     </div>
     <div class="card-footer text-end">
       <a href="<?= base_url('order'); ?>" class="btn btn-secondary">Back</a>
-      <button type="submit" class="btn btn-info">Submit</button>
+      <?php if (isset($subtotal)) : ?>
+        <button type="submit" class="btn btn-info">Bayar</button>
+      <?php endif; ?>
     </div>
   </div>
 </form>

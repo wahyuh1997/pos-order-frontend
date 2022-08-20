@@ -10,7 +10,7 @@ class core_library
     $this->ci = &get_instance();
   }
 
-  function PdfGenerator($html, $filename,  $orientation)
+  function PdfGenerator($html, $filename, $orientation)
   {
     $options = new Dompdf\Options();
     $options->set('isRemoteEnabled', true);

@@ -64,6 +64,7 @@ class order extends MY_Controller
   {
     $post = $this->input->post(null, true);
     $data = $this->lib_curl->curl_request($this->pos_service_v1 . 'order/get_order/' . $id);
+
     if (count($post) == 0) {
       # code...
       $dataView = [
@@ -91,7 +92,22 @@ class order extends MY_Controller
     ];
 
     $html = $this->load->view('order/page/qrcode', $dataView, true);
-    $this->core_library->PdfGenerator($html, 'QR Code-' . $data['data']['no_order'], 'A4', 'potrait');
+    $this->core_library->PdfGenerator($html, 'QR Code-' . $data['data']['no_order'], 'potrait');
+  }
+
+  public function print_bill($id)
+  {
+    $this->load->library('core_library');
+
+    $data = $this->lib_curl->curl_request($this->pos_service_v1 . 'order/get_order/' . $id);
+    $dataView = [
+      'title'     => 'QRCODE',
+      'subtitle'  => 'QRCODE',
+      'data'      => $data
+    ];
+
+    $html = $this->load->view('order/page/pos_bill', $dataView, true);
+    $this->core_library->PdfGenerator($html, 'Tagihan-' . $data['data']['no_order'], 'potrait');
   }
 
   public function cancelled($id)
