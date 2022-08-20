@@ -10,7 +10,7 @@ class core_library
     $this->ci = &get_instance();
   }
 
-  function PdfGenerator($html, $filename, $paper_size, $orientation)
+  function PdfGenerator($html, $filename,  $orientation)
   {
     $options = new Dompdf\Options();
     $options->set('isRemoteEnabled', true);
@@ -22,7 +22,7 @@ class core_library
     $dompdf->loadHtml($html);
 
     // (Optional) Setup the paper size and orientation
-    $dompdf->setPaper($paper_size, $orientation);
+    $dompdf->setPaper(array(0, 0, 212.59, 425.20), $orientation);
 
 
     // Render the HTML as PDF

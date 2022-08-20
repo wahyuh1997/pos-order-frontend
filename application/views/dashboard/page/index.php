@@ -13,8 +13,8 @@
     <div class="widget widget-stats bg-blue">
       <div class="stats-icon stats-icon-lg"><i class="fa fa-dollar-sign fa-fw"></i></div>
       <div class="stats-content">
-        <div class="stats-title">TODAY'S REVENUE</div>
-        <div class="stats-number">180,200</div>
+        <div class="stats-title">Total Pendapatan</div>
+        <div class="stats-number">Rp. <?= $data['pendapatan_harian']; ?></div>
       </div>
     </div>
   </div>
@@ -24,8 +24,8 @@
     <div class="widget widget-stats bg-indigo">
       <div class="stats-icon stats-icon-lg"><i class="fa fa-archive fa-fw"></i></div>
       <div class="stats-content">
-        <div class="stats-title">TOTAL DISHES SELLED</div>
-        <div class="stats-number">156</div>
+        <div class="stats-title">Total Menu Terjual</div>
+        <div class="stats-number"><?= $data['dishes_selled']; ?></div>
       </div>
     </div>
   </div>
@@ -35,8 +35,8 @@
     <div class="widget widget-stats bg-gray-900">
       <div class="stats-icon stats-icon-lg"><i class="fa fa-comment-alt fa-fw"></i></div>
       <div class="stats-content">
-        <div class="stats-title">TABLE USED</div>
-        <div class="stats-number">178</div>
+        <div class="stats-title">Total Meja Digunakan</div>
+        <div class="stats-number"><?= $data['table_used']; ?></div>
       </div>
     </div>
   </div>
@@ -71,51 +71,18 @@
     </div>
     <div class="widget-list rounded mb-4">
       <!-- begin widget-list-item -->
-      <div class="widget-list-item">
-        <div class="widget-list-media">
-          <img src="<?= base_url() ?>assets/img/pos/product-1.jpg" width="50" height="50" class="rounded" />
+      <?php foreach ($data['top_menu'] as $menu) : ?>
+        <div class="widget-list-item">
+          <div class="widget-list-media">
+            <img src="<?= base_url('assets/img/product/' . $menu['image']) ?>" width="50" height="50" class="rounded" />
+          </div>
+          <div class="widget-list-content">
+            <h4 class="widget-list-title"><?= $menu['nama_menu']; ?></h4>
+            <small><?= $menu['attribute']; ?></small>
+            <p class="widget-list-desc">Rp. <?= $menu['harga']; ?></p>
+          </div>
         </div>
-        <div class="widget-list-content">
-          <h4 class="widget-list-title">Grill Chicken Chop®</h4>
-          <p class="widget-list-desc">$10.99</p>
-        </div>
-      </div>
-      <div class="widget-list-item">
-        <div class="widget-list-media">
-          <img src="<?= base_url() ?>assets/img/pos/product-2.jpg" width="50" height="50" class="rounded" />
-        </div>
-        <div class="widget-list-content">
-          <h4 class="widget-list-title">Grill Pork Chop®</h4>
-          <p class="widget-list-desc">$10.99</p>
-        </div>
-      </div>
-      <div class="widget-list-item">
-        <div class="widget-list-media">
-          <img src="<?= base_url() ?>assets/img/pos/product-3.jpg" width="50" height="50" class="rounded" />
-        </div>
-        <div class="widget-list-content">
-          <h4 class="widget-list-title">Capellini Tomato Sauce®</h4>
-          <p class="widget-list-desc">$10.99</p>
-        </div>
-      </div>
-      <div class="widget-list-item">
-        <div class="widget-list-media">
-          <img src="<?= base_url() ?>assets/img/pos/product-4.jpg" width="50" height="50" class="rounded" />
-        </div>
-        <div class="widget-list-content">
-          <h4 class="widget-list-title">Vegan Salad Bowl®</h4>
-          <p class="widget-list-desc">$10.99</p>
-        </div>
-      </div>
-      <div class="widget-list-item">
-        <div class="widget-list-media">
-          <img src="<?= base_url() ?>assets/img/pos/product-5.jpg" width="50" height="50" class="rounded" />
-        </div>
-        <div class="widget-list-content">
-          <h4 class="widget-list-title">Avocado Shake</h4>
-          <p class="widget-list-desc">$10.99</p>
-        </div>
-      </div>
+      <?php endforeach; ?>
       <!-- end widget-list-item -->
     </div>
     <!-- end widget-list -->

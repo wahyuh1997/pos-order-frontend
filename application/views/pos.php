@@ -115,8 +115,8 @@
         <!-- BEGIN pos-sidebar -->
         <div class="pos-sidebar" id="pos-sidebar">
           <div class="pos-sidebar-header">
-            <input type="hidden" id="orderId" value="1">
-            <input type="hidden" id="orderTypeMenu" value="1">
+            <input type="hidden" id="orderId" value="<?= $data_order['data']['id']; ?>">
+            <input type="hidden" id="tableNumber" value="<?= $data_order['data']['no_meja']; ?>">
 
             <div class="back-btn">
               <button type="button" data-dismiss-class="pos-mobile-sidebar-toggled" data-target="#pos-customer" class="btn">
@@ -166,7 +166,7 @@
               <div class="price">$33.10</div>
             </div>
             <div class="btn-row">
-              <a href="#" class="btn btn-default" onclick="handleDashboardGritterNotification()"><i class="fa fa-bell fa-fw fa-lg"></i> Service</a>
+              <a href="#" id="btn-service" class="btn btn-default"><i class="fa fa-bell fa-fw fa-lg"></i> Service</a>
               <a href="#" id="btn-bill" class="btn btn-success d-none"><i class="fa fa-file-invoice-dollar fa-fw fa-lg"></i> Bill</a>
               <a href="#" id="submit-order" class="btn btn-success"><i class="fa fa-check fa-fw fa-lg"></i> Submit Order</a>
             </div>
@@ -202,6 +202,27 @@
       </div>
     </div>
   </div>
+
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Service</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="message-text" class="col-form-label">Keterangan</label>
+            <textarea class="form-control" name="keterangan" id="keterangan" cols="30" rows="10"></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+          <button type="button" id="btn-call-service" class="btn btn-primary">Kirim</button>
+        </div>
+      </div>
+    </div>
+  </div>
   <!-- END #modalPosItem -->
 
   <!-- ================== BEGIN core-js ================== -->
@@ -219,8 +240,7 @@
   <!-- ================== BEGIN page-js ================== -->
 
   <script src="<?= base_url(); ?>assets/plugins/gritter/js/jquery.gritter.js"></script>
-  <script src="<?= base_url(); ?>assets/js/core_1_0_0_5.js"></script>
-  <script src="<?= base_url(); ?>assets/js/html5-qrcode.min.js"></script>
+  <script src="<?= base_url(); ?>assets/js/html5-qrcode-01.min.js"></script>
   <script src="<?= base_url(); ?>assets/js/demo/form-plugins.demo.js"></script>
   <script src="<?= base_url(); ?>assets/js/demo/pos-customer-order.demo.js"></script>
   <!-- ================== END page-js ================== -->
@@ -303,13 +323,8 @@
 
       let tax = 0;
       let tax_text = '';
-      if ($('#orderTypeMenu').val() == 'takeAway') {
-        tax = subtotal * 0 / 100;
-        tax_text = 'PPn (0%)';
-      } else {
-        tax = subtotal * 10 / 100;
-        tax_text = 'PPn (10%)';
-      }
+      tax = subtotal * 10 / 100;
+      tax_text = 'PPn (10%)';
 
       let total = parseInt(tax) + parseInt(subtotal);
 
@@ -619,18 +634,30 @@
 
     /* Tab Order History */
     $(document).on('click', '#tabOrderHistory', function() {
+      load_history();
+      if ($('#tabOrderHistory').hasClass('active')) {
+        setInterval(function() {
+          // console.log('ok')
+          load_history(false)
+        }, 30000)
+      }
+    });
+
+
+    function load_history(load = true) {
       $.ajax({
         url: 'pos/get_history',
         method: 'get',
         beforeSend: function() {
-          $('#load-history-order').html(`<div class="d-flex justify-content-center h-100">
-            <div class="spinner-border" role="status">
-              <span class="visually-hidden">Loading...</span>
-            </div>
-          </div>`);
+          if (load == true) {
+            $('#load-history-order').html(`<div class="d-flex justify-content-center h-100">
+              <div class="spinner-border" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div>
+            </div>`);
+          }
         },
         success: function(res) {
-
           $('#load-history-order').html(res);
           $('.subtotal .price').html('Rp. ' + $('#historyPrice').val());
           $('.taxes .price').html('Rp. ' + $('#historyTax').val())
@@ -640,17 +667,28 @@
           // if (res.status == true) {}
         }
       })
-    });
+    }
     /* End Of Order Item Area */
 
     /* Product Item Area */
     /* End Of Product Item Area */
+    $(document).on('click', '#btn-service', function(e) {
+      e.preventDefault()
+      $('#exampleModal').modal('show')
+    })
+    // var handleDashboardGritterNotification = function(e) {
 
-    var handleDashboardGritterNotification = function() {
-      $.get("<?= base_url('dashboard/call_service?service=ok'); ?>", function(data) {
-        // console.log(data);
+    // };
+
+    $(document).on('click', '#btn-call-service', function() {
+      let table = $('#tableNumber').val();
+      let text = $('#keterangan').val()
+      $.get("<?= base_url('dashboard/call_service?table='); ?>" + table + '&text=' + text, function(data) {
+        console.log(data);
+        $('#exampleModal').modal('hide')
+        $('#keterangan').val('')
       })
-    };
+    });
   </script>
 
 

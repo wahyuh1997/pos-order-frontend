@@ -28,7 +28,7 @@
 
 <script src="<?= base_url(); ?>assets/plugins/sweetalert/dist/sweetalert.min.js"></script>
 <script src="<?= base_url(); ?>assets/plugins/select2/dist/js/select2.full.js"></script>
-<script src="<?= base_url(); ?>assets/js/core_1_0_0_5.js"></script>
+<!-- <script src="<?= base_url(); ?>assets/js/core_1_0_0_5.js"></script> -->
 <!-- <script src="<?= base_url(); ?>assets/js/core-system_0_5234.js"></script> -->
 <script src="<?= base_url(); ?>assets/js/demo/dashboard-v2-01.js"></script>
 <!-- ================== END page-js ================== -->
@@ -36,7 +36,6 @@
 
 </html>
 <script>
-  refreshDtbServerSide()
   $(".default-select2").select2();
 
   $(document).on('click', '.sel-lang', function() {
@@ -271,22 +270,22 @@
    * token check
    */
   setInterval(function() {
-    $.get("<?= base_url('dashboard/call_service'); ?>", function(data) {
+    $.get("<?= base_url('dashboard/get_service'); ?>", function(data) {
       let res = JSON.parse(data)
+      // console.log(res);
 
-
-      if (res == 'ok') {
+      if (res.status == true) {
         setTimeout(function() {
           $.gritter.add({
-            title: 'Welcome back, Admin!',
-            text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tempus lacus ut lectus rutrum placerat.',
-            image: '../assets/img/user/user-12.jpg',
+            title: res.title,
+            text: res.text,
+            // image: '../assets/img/user/user-12.jpg',
             sticky: true,
             time: '',
             class_name: 'my-sticky-class'
           });
-        }, 400);
+        }, 1000);
       }
     })
-  }, 1000)
+  }, 3000)
 </script>

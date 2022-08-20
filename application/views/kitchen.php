@@ -10,6 +10,8 @@
 
   <!-- ================== BEGIN core-css ================== -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
+  <link href="<?= base_url(); ?>assets/plugins/select2/dist/css/select2.css" rel="stylesheet" />
+  <link href="<?= base_url(); ?>assets/plugins/select2/dist/css/select2-bootstrap.min.css" rel="stylesheet" />
   <link href="<?= base_url(); ?>assets/css/vendor.min.css" rel="stylesheet" />
   <link href="<?= base_url(); ?>assets/css/default/app.min.css" rel="stylesheet" />
   <!-- ================== END core-css ================== -->
@@ -51,12 +53,37 @@
   </div>
   <!-- END #app -->
 
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Batalkan Pesanan</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="message-text" class="col-form-label">Alasan Pembatalan :</label>
+            <select class="form-select default-select2" id="keterangan" name="keterangan">
+              <option selected value="Stok Habis">Stok Habis</option>
+              <option value="Tidak Tersedia">Tidak Tersedia</option>
+            </select>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" id="btn-submit-cancel" class="btn btn-danger">Batalkan</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- ================== BEGIN core-js ================== -->
   <script src="<?= base_url(); ?>assets/js/vendor.min.js"></script>
   <script src="<?= base_url(); ?>assets/js/app.min.js"></script>
   <!-- ================== END core-js ================== -->
 
   <!-- ================== BEGIN page-js ================== -->
+  <script src="<?= base_url(); ?>assets/plugins/select2/dist/js/select2.full.js"></script>
   <script src="<?= base_url(); ?>assets/plugins/sweetalert/dist/sweetalert.min.js"></script>
   <script src="<?= base_url(); ?>assets/js/demo/pos-kitchen-order.demo.js"></script>
   <!-- ================== END page-js ================== -->
@@ -79,13 +106,30 @@
     })
 
     $(document).on('click', '#btn-cancel', function(e) {
-      e.preventDefault();
+      e.preventDefault()
+      selectRefresh()
       let menuId = $(this).parent().data('id');
 
-      update_kitchen(menuId, 3, 'cancel', 0);
+      $('#btn-submit-cancel').attr('data-id', menuId)
+
+      $('#exampleModal').modal('show')
     })
 
-    function update_kitchen(menuId, status, param, qty) {
+    $(document).on('click', '#btn-submit-cancel', function(e) {
+      let menuId = $(this).data('id');
+      update_kitchen(menuId, 3, 'cancel', 0, $('#keterangan').val());
+      $('#exampleModal').modal('hide')
+    })
+
+    function selectRefresh() {
+      $('.default-select2').each(function() {
+        $(this).select2({
+          dropdownParent: $(this).parent()
+        });
+      });
+    }
+
+    function update_kitchen(menuId, status, param, qty, keterangan = '') {
       let text;
 
       if (param === 'complete') {
@@ -93,8 +137,6 @@
       } else {
         text = 'Ingin Membatalkan Pesanan ini ?';
       }
-
-      // console.log(param);
 
       swal({
         title: 'Apakah anda yakin ?',
@@ -116,6 +158,7 @@
             closeModal: true
           }
         }
+
       }).then((result) => {
         if (result == true) {
           $.ajax({
@@ -126,7 +169,7 @@
             data: {
               status: status,
               qty: qty,
-              keterangan: '',
+              keterangan: keterangan,
             },
             success: function(res) {
               if (res.status == true) {
@@ -163,6 +206,10 @@
         }
       })
     }
+
+    setInterval(function() {
+      load_kitchen()
+    }, 30000)
   </script>
 </body>
 

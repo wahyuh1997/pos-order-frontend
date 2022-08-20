@@ -26,8 +26,8 @@
   <link href="<?= base_url(); ?>assets/plugins/datatables.net-bs5/css/dataTables.bootstrap5.min.css" rel="stylesheet" />
   <link href="<?= base_url(); ?>assets/plugins/datatables.net-responsive-bs5/css/responsive.bootstrap5.min.css" rel="stylesheet" />
   <link href="<?= base_url(); ?>assets/plugins/select2/dist/css/select2.css" rel="stylesheet" />
-  <link href="<?= base_url() ?>assets/plugins/switchery/dist/switchery.min.css" rel="stylesheet" />
   <link href="<?= base_url(); ?>assets/plugins/select2/dist/css/select2-bootstrap.min.css" rel="stylesheet" />
+  <link href="<?= base_url() ?>assets/plugins/switchery/dist/switchery.min.css" rel="stylesheet" />
   <!-- ================== END page-css ================== -->
   <style>
     .bg-process {
