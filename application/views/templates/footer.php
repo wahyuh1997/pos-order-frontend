@@ -19,6 +19,8 @@
 <script src="<?= base_url(); ?>assets/plugins/jvectormap-next/jquery-jvectormap-world-mill.js"></script>
 <script src="<?= base_url(); ?>assets/plugins/simple-calendar/dist/jquery.simple-calendar.min.js"></script>
 <script src="<?= base_url(); ?>assets/plugins/gritter/js/jquery.gritter.js"></script>
+
+
 <script src="<?= base_url(); ?>assets/plugins/datatables.net/js/jquery.dataTables.min.js"></script>
 <script src="<?= base_url(); ?>assets/plugins/datatables.net-bs5/js/dataTables.bootstrap5.min.js"></script>
 <script src="<?= base_url(); ?>assets/plugins/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
@@ -28,8 +30,6 @@
 
 <script src="<?= base_url(); ?>assets/plugins/sweetalert/dist/sweetalert.min.js"></script>
 <script src="<?= base_url(); ?>assets/plugins/select2/dist/js/select2.full.js"></script>
-<!-- <script src="<?= base_url(); ?>assets/js/core_1_0_0_5.js"></script> -->
-<!-- <script src="<?= base_url(); ?>assets/js/core-system_0_5234.js"></script> -->
 <script src="<?= base_url(); ?>assets/js/demo/dashboard-v2-02.js"></script>
 <!-- ================== END page-js ================== -->
 </body>

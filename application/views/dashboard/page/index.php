@@ -14,7 +14,7 @@
       <div class="stats-icon stats-icon-lg"><i class="fa fa-dollar-sign fa-fw"></i></div>
       <div class="stats-content">
         <div class="stats-title">Total Pendapatan</div>
-        <div class="stats-number">Rp. <?= $data['pendapatan_harian']; ?></div>
+        <div class="stats-number">Rp. <?= number_format($data['pendapatan_harian'], 0); ?></div>
       </div>
     </div>
   </div>
@@ -69,7 +69,10 @@
             <img src="<?= base_url('assets/img/product/' . $menu['image']) ?>" width="50" height="50" class="rounded" />
           </div>
           <div class="widget-list-content">
-            <h4 class="widget-list-title"><?= $menu['nama_menu']; ?></h4>
+            <div class="widget-list-title d-flex justify-content-between">
+              <h6><?= $menu['nama_menu']; ?></h6>
+              <small>Terjual <?= $menu['jumlah']; ?>x</small>
+            </div>
             <small><?= $menu['attribute']; ?></small>
             <p class="widget-list-desc">Rp. <?= $menu['harga']; ?></p>
           </div>

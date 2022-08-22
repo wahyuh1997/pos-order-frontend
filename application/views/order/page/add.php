@@ -16,6 +16,7 @@
     </div>
   </div>
   <form id="regCrudForm" data-redurl="<?= base_url('order'); ?>" method="POST">
+    <input type="hidden" name="created_by" value="<?= $_SESSION['pos_order']['id']; ?>">
     <div class="panel-body">
       <!-- Search by Branch Name -->
       <div class="mb-3 row">

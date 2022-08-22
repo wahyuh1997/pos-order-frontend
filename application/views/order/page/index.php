@@ -63,7 +63,7 @@
                   </ul>
                 </div>
               <?php else : ?>
-                <a href="" class="btn btn-sm btn-info">Detail</a>
+                <a href="<?= base_url('order/paid_order/' . $res['id']); ?>" class="btn btn-sm btn-primary">Detail</a>
               <?php endif; ?>
             </td>
             <td><?= $res['nama_pelanggan']; ?></td>

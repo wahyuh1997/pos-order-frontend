@@ -41,7 +41,11 @@ class Order extends MY_Controller
       // view
       $this->load_template('order/page/add', $dataView);
     } else {
-      $response = $this->lib_curl->curl_request($this->pos_service_v1 . 'order/insert_order', 'POST', $_POST);
+      if ($post['nama_pelanggan'] == '') {
+        $post['nama_pelanggan'] = 'Anonymous';
+      }
+
+      $response = $this->lib_curl->curl_request($this->pos_service_v1 . 'order/insert_order', 'POST', $post);
       // trace($response['data']);
       $this->load->library('ciqrcode'); //pemanggilan library QR CODE
 
@@ -64,19 +68,23 @@ class Order extends MY_Controller
   {
     $post = $this->input->post(null, true);
     $data = $this->lib_curl->curl_request($this->pos_service_v1 . 'order/get_order/' . $id);
+    // trace($data['data']['order_detail']);
+    if ($data['status']) {
+      if (count($post) == 0) {
+        # code...
+        $dataView = [
+          'title'     => 'Bayar Pesanan',
+          'subtitle'  => 'Bayar Pesanan',
+          'data'      => $data['data'],
+          'js'        => 'order/js/data'
+        ];
 
-    if (count($post) == 0) {
-      # code...
-      $dataView = [
-        'title'     => 'Bayar Pesanan',
-        'subtitle'  => 'Bayar Pesanan',
-        'data'      => $data['data'],
-        'js'        => 'order/js/data'
-      ];
-
-      $this->load_template('order/page/paid', $dataView);
+        $this->load_template('order/page/paid', $dataView);
+      } else {
+        echo json_encode($this->lib_curl->curl_request($this->pos_service_v1 . 'order/final_order/' . $id, 'PUT', $_POST));
+      }
     } else {
-      echo json_encode($this->lib_curl->curl_request($this->pos_service_v1 . 'order/final_order/' . $id, 'PUT', $_POST));
+      redirect('order');
     }
   }
 

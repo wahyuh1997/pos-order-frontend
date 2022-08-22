@@ -34,7 +34,7 @@ use PhpOffice\PhpSpreadsheet\Calculation\MathTrig\Base;
           <input type="text" class="form-control" id="name" name="name" value="<?= $data['name']; ?>" autocomplete="off">
         </div>
       </div>
-      <div class="mb-3 row">
+      <div class="mb-3 row <?= $_SESSION['pos_order']['id'] == $data['id'] ? 'd-none' : ''; ?>">
         <label for="role" class="col-sm-2 col-form-label">Posisi</label>
         <div class="col-sm-6">
           <select class="form-select default-select2" id="role" name="role" required>

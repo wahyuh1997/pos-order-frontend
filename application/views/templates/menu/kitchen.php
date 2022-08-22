@@ -29,37 +29,42 @@
               <div class="pos-task-product-row">
 
                 <?php foreach ($kitchen['order_detail'] as $menu) : ?>
-                  <div class="pos-task-product <?= $menu['status'] == 1 ? 'completed' : ''; ?>">
-                    <div class="pos-task-product-img">
-                      <div class="cover" style="background-image: url(<?= base_url('assets/img/product/' . $menu['image']); ?>);"></div>
-                      <?php if ($menu['status'] == 1) : ?>
-                        <div class="caption">
-                          <div>Selesai</div>
+                  <?php if ($menu['status'] != 0) : ?>
+                    <div class="pos-task-product <?= $menu['status'] == 1 ? 'completed' : ''; ?>">
+                      <div class="pos-task-product-img">
+                        <div class="cover" style="background-image: url(<?= base_url('assets/img/product/' . $menu['image']); ?>);"></div>
+                        <?php if ($menu['status'] == 1) : ?>
+                          <div class="caption">
+                            <div>Selesai</div>
+                          </div>
+                        <?php elseif ($menu['status'] == 3) : ?>
+                          <div class="caption">
+                            <div>Dibatalkan !</div>
+                          </div>
+                        <?php endif; ?>
+                      </div>
+                      <div class="pos-task-product-info">
+                        <div class="info">
+                          <div class="title"><?= $menu['nama_menu']; ?></div>
+                          <div class="desc">
+                            - <?= $menu['name_attribute']; ?>
+                          </div>
                         </div>
-                      <?php elseif ($menu['status'] == 3) : ?>
-                        <div class="caption">
-                          <div>Dibatalkan !</div>
+                        <div class="qty">
+                          x<?= $menu['qty']; ?>
+                        </div>
+                      </div>
+                      <?php if ($menu['status'] == 3) : ?>
+                        <h3 class="text-center"><?= $menu['keterangan']; ?></h3>
+                      <?php endif; ?>
+                      <?php if ($menu['status'] == 2) : ?>
+                        <div class="pos-task-product-action" data-id="<?= $menu['id']; ?>" data-qty="<?= $menu['qty']; ?>">
+                          <a id="btn-complete" href="#" class="btn btn-success">Complete</a>
+                          <a id="btn-cancel" href="#" class="btn btn-outline-inverse" data-menu="<?= $menu['nama_menu']; ?>">Cancel</a>
                         </div>
                       <?php endif; ?>
                     </div>
-                    <div class="pos-task-product-info">
-                      <div class="info">
-                        <div class="title"><?= $menu['nama_menu']; ?></div>
-                        <div class="desc">
-                          - <?= $menu['name_attribute']; ?>
-                        </div>
-                      </div>
-                      <div class="qty">
-                        x<?= $menu['qty']; ?>
-                      </div>
-                    </div>
-                    <?php if ($menu['status'] == 2) : ?>
-                      <div class="pos-task-product-action" data-id="<?= $menu['id']; ?>" data-qty="<?= $menu['qty']; ?>">
-                        <a id="btn-complete" href="#" class="btn btn-success">Complete</a>
-                        <a id="btn-cancel" href="#" class="btn btn-outline-inverse">Cancel</a>
-                      </div>
-                    <?php endif; ?>
-                  </div>
+                  <?php endif; ?>
                 <?php endforeach; ?>
               </div>
             </div>

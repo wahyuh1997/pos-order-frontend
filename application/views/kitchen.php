@@ -38,6 +38,11 @@
             </a>
           </div>
           <div class="time" id="time">00:00</div>
+          <div class="nav">
+            <div class="nav-item">
+              <a href="<?= base_url('login/logout'); ?>" class="btn-logout dropdown-item" data-redurl="<?= base_url('login'); ?>"><b>KELUAR</b></a>
+            </div>
+          </div>
         </div>
         <div class="pos-kitchen-body">
 
@@ -109,14 +114,24 @@
       e.preventDefault()
       selectRefresh()
       let menuId = $(this).parent().data('id');
-
+      let menu = $(this).data('menu');
       $('#btn-submit-cancel').attr('data-id', menuId)
+      $('#btn-submit-cancel').attr('data-menu', menu)
 
       $('#exampleModal').modal('show')
     })
 
     $(document).on('click', '#btn-submit-cancel', function(e) {
       let menuId = $(this).data('id');
+      let menu = $(this).data('menu');
+      let message = $('#keterangan').val();
+
+      $.get("<?= base_url('dashboard/call_service?menu='); ?>" + menu + '&text=' + message, function(data) {
+
+        $('#exampleModal').modal('hide')
+        // $('#keterangan').val('')
+      })
+
       update_kitchen(menuId, 3, 'cancel', 0, $('#keterangan').val());
       $('#exampleModal').modal('hide')
     })
@@ -210,6 +225,47 @@
     setInterval(function() {
       load_kitchen()
     }, 30000)
+
+    /* Logout Function */
+    $(document).on('click', '.btn-logout', function(e) {
+      e.preventDefault();
+
+      // init
+      var url = $(this).attr('href');
+      var redUrl = $(this).data('redurl');
+
+      // confirmation
+      swal({
+        title: 'Are you sure?',
+        text: 'Want To Logout ?',
+        icon: 'info',
+        buttons: {
+          cancel: {
+            text: 'No',
+            value: null,
+            visible: true,
+            className: 'btn btn-default',
+            closeModal: true,
+          },
+          confirm: {
+            text: 'Yes',
+            value: true,
+            visible: true,
+            className: 'btn btn-primary',
+            closeModal: true
+          }
+        }
+      }).then((result) => {
+        // check if confirmed
+        if (result == false) {
+          return false;
+        } else if (result == true) {
+          $.get(url, function() {
+            window.location.href = redUrl;
+          });
+        }
+      });
+    });
   </script>
 </body>
 

@@ -23,7 +23,7 @@ class Pos extends MY_Controller
     } else {
       $order = ['status' => false];
     }
-
+    // trace($order);
     $dataView = [
       'data_menu'     => $menu,
       'data_kategori' => $kategori,

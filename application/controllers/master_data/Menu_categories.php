@@ -52,26 +52,30 @@ class Menu_categories extends MY_Controller
 
     // check body
     $data = $this->lib_curl->curl_request($this->pos_service_v1 . 'menu/get_category/' . $id);
-    if (count($post) == 0) {
-      // get menu category details data
-      // response check
-      if ($data['status'] == true) {
-        // dataView
-        $dataView = [
-          'title'       => 'Master Data',
-          'subtitle'    => 'Ubah Kategori',
-          'menuCatData' => $data['data']
-        ];
+    if ($data['status']) {
+      if (count($post) == 0) {
+        // get menu category details data
+        // response check
+        if ($data['status'] == true) {
+          // dataView
+          $dataView = [
+            'title'       => 'Master Data',
+            'subtitle'    => 'Ubah Kategori',
+            'menuCatData' => $data['data']
+          ];
 
-        // view
-        $this->load_template('master_data/menu_categories/page/edit', $dataView);
+          // view
+          $this->load_template('master_data/menu_categories/page/edit', $dataView);
+        } else {
+          // redirect
+          redirect('master-data/menu-categories');
+        }
       } else {
-        // redirect
-        redirect('master-data/menu-categories');
+        $menuCategoriesResponse = $this->lib_curl->curl_request($this->pos_service_v1 . 'menu/update_category/' . $data['data']['id'], "PUT", $post);
+        echo json_encode($menuCategoriesResponse);
       }
     } else {
-      $menuCategoriesResponse = $this->lib_curl->curl_request($this->pos_service_v1 . 'menu/update_category/' . $data['data']['id'], "PUT", $post);
-      echo json_encode($menuCategoriesResponse);
+      redirect('master-data/menu-categories');
     }
   }
 

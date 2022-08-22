@@ -62,7 +62,7 @@
           <div class="menu-text">Order</div>
         </a>
       </div>
-      <div class="menu-item">
+      <div class="menu-item d-none">
         <a href="<?= base_url('pos'); ?>" target="_blank" class="menu-link">
           <div class="menu-icon">
             <i class="fa fa-cash-register"></i>
@@ -70,7 +70,7 @@
           <div class="menu-text">POS</div>
         </a>
       </div>
-      <div class="menu-item">
+      <div class="menu-item d-none">
         <a href="<?= base_url('kitchen'); ?>" target="_blank" class="menu-link">
           <div class="menu-icon">
             <i class="fa fa-bell"></i>
@@ -78,14 +78,16 @@
           <div class="menu-text">Kitchen</div>
         </a>
       </div>
-      <div class="menu-item">
-        <a href="#" target="_blank" class="menu-link">
-          <div class="menu-icon">
-            <i class="fa fa-file-lines"></i>
-          </div>
-          <div class="menu-text">Report</div>
-        </a>
-      </div>
+      <?php if ($_SESSION['pos_order']['role'] == 'owner') : ?>
+        <div class="menu-item <?= $this->uri->segment(1) == 'report' ? 'active' : null; ?>">
+          <a href="<?= base_url('report'); ?>" class="menu-link">
+            <div class="menu-icon">
+              <i class="fa fa-file-lines"></i>
+            </div>
+            <div class="menu-text">Report</div>
+          </a>
+        </div>
+      <?php endif; ?>
       <div class="menu-item <?= $this->uri->segment(1) == 'user' ? 'active' : null; ?>">
         <a href="<?= base_url('user'); ?>" class="menu-link">
           <div class="menu-icon">

@@ -22,8 +22,6 @@
               Rp. <?= $menu['sub_harga']; ?>
             </div>
           </div>
-        </div>
-        <div class="row">
           <div class="col-12 text-center">
             <div class="info">
               <!-- Notice -->
@@ -42,6 +40,12 @@
               <!-- End Of Notice -->
             </div>
           </div>
+          <?php if ($menu['status'] == 3) : ?>
+            <div class="pos-remove-confirmation d-block text-center">
+              <p><?= $status; ?></p>
+              <?= $menu['keterangan']; ?>
+            </div>
+          <?php endif; ?>
         </div>
       <?php endif; ?>
     <?php endforeach; ?>

@@ -10,7 +10,9 @@
 <div class="card">
   <div class="card-header d-flex justify-content-between">
     <span>Informasi Pelanggan</span>
-    <a href="<?= base_url('order/print_bill/' . $data['id']); ?>" class="btn btn-sm btn-danger"><i class="fa fa-print-pdf"></i> Cetak Tagihan</a>
+    <?php if (count($data['order_detail']) > 0) : ?>
+      <a href="<?= base_url('order/print_bill/' . $data['id']); ?>" class="btn btn-sm btn-danger"><i class="fa fa-print-pdf"></i> Cetak Tagihan</a>
+    <?php endif; ?>
   </div>
   <div class="card-body">
     <div class="row">
@@ -34,11 +36,27 @@
         <table class="table-borderless">
           <tr>
             <th class="h6">Kasir</th>
-            <td class="h5">: <?= $_SESSION['pos_order']['name']; ?></td>
+            <td class="h5">: <?= $data['created_by_username']; ?></td>
           </tr>
           <tr>
             <th class="h6">Tanggal</th>
             <td class="h5">: <?= date('d F Y H:i', strtotime($data['created_at'])); ?></td>
+          </tr>
+          <tr>
+            <th class="h6">Status Pesanan</th>
+            <?php
+            switch ($data['status']) {
+              case 1:
+                $status = 'Dibatalkan';
+                break;
+              case 2:
+                $status = 'Selesai';
+                break;
+              default:
+                $status = 'Sedang Berjalan';
+                break;
+            }; ?>
+            <td class="h5">: <?= $status; ?></td>
           </tr>
         </table>
       </div>
@@ -119,11 +137,27 @@
       <div class="mb-3 row">
         <label for="payment_type" class="col-sm-2 col-form-label">Jenis Pembayaran</label>
         <div class="col-sm-6">
-          <select class="form-select default-select2" id="payment_type" name="payment_type" required>
-            <option selected value="1">Cash</option>
-            <option value="2">QRIS</option>
-            <option value="3">Debit</option>
-          </select>
+          <?php if ($data['status'] == 1) : ?>
+            <select class="form-select default-select2" id="payment_type" name="payment_type" required>
+              <option selected value="1">Cash</option>
+              <option value="2">QRIS</option>
+              <option value="3">Debit</option>
+            </select>
+          <?php else : ?>
+            <?php
+            switch ($data['payment_type']) {
+              case 1:
+                $payment_type = 'Cash';
+                break;
+              case 2:
+                $payment_type = 'QRIS';
+                break;
+              default:
+                $payment_type = 'Debit';
+                break;
+            }; ?>
+            <input type="text" class="form-control" value="<?= $payment_type; ?>" readonly>
+          <?php endif; ?>
         </div>
       </div>
       <div class="mb-3 row">
@@ -159,7 +193,7 @@
         <div class="col-sm-6">
           <div class="input-group">
             <span class="input-group-text">Rp.</span>
-            <input type="number" class="form-control" id="pay" name="bayar" value="0" min="0">
+            <input type="number" class="form-control" id="pay" name="bayar" value="<?= $data['bayar'] != null ? $data['bayar'] : 0; ?>" min="0" <?= $data['bayar'] != null ? 'readonly' : null; ?>>
           </div>
         </div>
       </div>
@@ -168,14 +202,14 @@
         <div class="col-sm-6">
           <div class="input-group">
             <span class="input-group-text">Rp.</span>
-            <input type="number" class="form-control" id="change" name="kembalian" value="0" min="0" readonly>
+            <input type="number" class="form-control" id="change" name="kembalian" value="<?= $data['kembalian'] != null ? $data['kembalian'] : 0; ?>" min="0" readonly>
           </div>
         </div>
       </div>
     </div>
     <div class="card-footer text-end">
       <a href="<?= base_url('order'); ?>" class="btn btn-secondary">Back</a>
-      <?php if (isset($subtotal)) : ?>
+      <?php if (isset($subtotal) && $data['status'] == 1) : ?>
         <button type="submit" class="btn btn-info">Bayar</button>
       <?php endif; ?>
     </div>

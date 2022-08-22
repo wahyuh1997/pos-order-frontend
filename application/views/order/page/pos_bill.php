@@ -45,6 +45,7 @@
   <div class="row">
     <div class="text-center">
       <h2 style="font-size:13px;">TAMAN IDE Cafe</h2>
+      <h6 style="font-size:11px;"><?= $data['data']['created_by_username']; ?></h6>
       <h5 style="font-size:13px;"><?= $data['data']['no_receip']; ?></h5>
     </div>
   </div>
@@ -79,13 +80,17 @@
   <div class="row" style="margin-top: 0.5rem;">
     <table style="width: 100%;">
       <?php foreach ($data['data']['order_detail'] as $item) : ?>
-        <tr>
-          <td style="padding-top: 0.5rem;font-size:13px;font-weight:bold" width="10%"><?= $item['qty']; ?></td>
-          <td style="padding-top: 0.5rem;font-size:13px;font-weight:bold" width="40%"><?= $item['nama_menu']; ?></td>
+        <?php if ($item['status'] != 3) : ?>
+          <tr>
+            <td style="padding-top: 0.5rem;font-size:13px;font-weight:bold" width="10%"><?= $item['qty']; ?></td>
+            <td style="padding-top: 0.5rem;font-size:13px;font-weight:bold" width="40%"><?= $item['nama_menu']; ?></td>
 
-          <td style="padding-top: 0.5rem;font-size:13px;font-weight:bold;" align="right"><small>Rp.</small> <?= number_format($item['harga'], 0); ?></td>
-        </tr>
-      <?php endforeach; ?>
+            <td style="padding-top: 0.5rem;font-size:13px;font-weight:bold;" align="right"><small>Rp.</small> <?= number_format($item['harga'], 0); ?></td>
+          </tr>
+        <?php endif; ?>
+      <?php
+        $subtotal[] = $item['sub_harga'];
+      endforeach; ?>
     </table>
   </div>
 
@@ -98,7 +103,7 @@
     <table style="width: 100%;">
       <tr>
         <td style="padding-top: 0.5rem;font-size:13px">SUBTOTAL</td>
-        <td style="font-size:13px" align="right"><small>Rp.</small> <?= number_format($data['data']['sub_total'], 0); ?></td>
+        <td style="font-size:13px" align="right"><small>Rp.</small> <?= number_format(array_sum($subtotal), 0); ?></td>
       </tr>
       <tr>
         <td style="font-size:13px">PB1 (10%)</td>
@@ -110,12 +115,12 @@
       </tr>
       <?php if ($data['data']['checkout'] == 1) : ?>
         <tr>
-          <td style="font-size:13px">CASH</td>
-          <td style="font-size:13px" align="right"><small>Rp.</small> <?= number_format($data['data']['orderTotalPay']); ?></td>
+          <td style="font-size:13px">BAYAR</td>
+          <td style="font-size:13px" align="right"><small>Rp.</small> <?= number_format($data['data']['bayar'], 0); ?></td>
         </tr>
         <tr>
-          <td style="font-size:13px">CHANGE</td>
-          <td style="font-size:13px" align="right"><small>Rp.</small> <?= number_format($data['data']['orderChange']); ?></td>
+          <td style="font-size:13px">KEMBALIAN</td>
+          <td style="font-size:13px" align="right"><small>Rp.</small> <?= number_format($data['data']['kembalian']); ?></td>
         </tr>
       <?php endif; ?>
     </table>

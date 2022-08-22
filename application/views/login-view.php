@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8" />
-  <title>Color Admin | Login v2</title>
+  <title>TAMAN IDE POS | Login</title>
   <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
   <meta content="" name="description" />
   <meta content="" name="author" />
@@ -68,7 +68,7 @@
               <label for="password" class="d-flex align-items-center text-gray-600 fs-13px">Password</label>
             </div>
             <div class="mb-20px">
-              <button type="submit" class="btn btn-success d-block w-100 h-45px btn-lg">Sign me in</button>
+              <button type="submit" class="btn btn-success d-block w-100 h-45px btn-lg">Log in</button>
             </div>
           </form>
         </div>

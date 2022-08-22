@@ -80,48 +80,53 @@ class Menu extends MY_Controller
     $data = $this->lib_curl->curl_request($this->pos_service_v1 . 'menu/get_menu/' . $id);
     // request menu type
     $category = $this->lib_curl->curl_request($this->pos_service_v1 . 'menu/get_all_category');
-    // trace($data);
-    if (count($post) == 0) {
-      // dataView
-      $dataView = [
-        'title'         => 'Master Data',
-        'subtitle'      => 'Edit Menu',
-        'data'          => $data['data'],
-        'kategori'      => $category['data'],
-        'js'            => 'master_data/menu/js/data'
-      ];
 
-      // view
-      $this->load_template('master_data/menu/page/edit', $dataView);
-    } else {
-      // check if the image input exist
-      $config = [
-        'allowed_types' => '*',
-        'max_size'      => '2048',
-        'upload_path'   => './assets/img/product',
-        'encrypt_name'  => true,
-        'remove_spaces' => true,
-      ];
+    if ($data['status']) {
+      # code...
+      if (count($post) == 0) {
+        // dataView
+        $dataView = [
+          'title'         => 'Master Data',
+          'subtitle'      => 'Edit Menu',
+          'data'          => $data['data'],
+          'kategori'      => $category['data'],
+          'js'            => 'master_data/menu/js/data'
+        ];
 
-      $this->load->library('upload', $config);
-
-      if (!$this->upload->do_upload('image')) {
-        if ($data['data']['image'] == null) {
-          $post['image'] = null;
-        } else {
-          $post['image'] = $data['data']['image'];
-          # code...
-        }
+        // view
+        $this->load_template('master_data/menu/page/edit', $dataView);
       } else {
-        $data_image = $this->upload->data();
-        $fileName = $data_image['file_name'];
-        // delete the tmp image
-        unlink('./assets/img/product/' . $data['data']['image']);
-        $post['image'] = $fileName;
-      }
+        // check if the image input exist
+        $config = [
+          'allowed_types' => '*',
+          'max_size'      => '2048',
+          'upload_path'   => './assets/img/product',
+          'encrypt_name'  => true,
+          'remove_spaces' => true,
+        ];
 
-      $menuInsertResponse = $this->lib_curl->curl_request($this->pos_service_v1 . 'menu/edit_menu/' . $data['data']['id'], 'PUT', $post);
-      echo json_encode($menuInsertResponse);
+        $this->load->library('upload', $config);
+
+        if (!$this->upload->do_upload('image')) {
+          if ($data['data']['image'] == null) {
+            $post['image'] = null;
+          } else {
+            $post['image'] = $data['data']['image'];
+            # code...
+          }
+        } else {
+          $data_image = $this->upload->data();
+          $fileName = $data_image['file_name'];
+          // delete the tmp image
+          unlink('./assets/img/product/' . $data['data']['image']);
+          $post['image'] = $fileName;
+        }
+
+        $menuInsertResponse = $this->lib_curl->curl_request($this->pos_service_v1 . 'menu/edit_menu/' . $data['data']['id'], 'PUT', $post);
+        echo json_encode($menuInsertResponse);
+      }
+    } else {
+      redirect('master-data/menu');
     }
   }
 

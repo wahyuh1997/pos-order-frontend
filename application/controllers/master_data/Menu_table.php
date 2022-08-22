@@ -52,26 +52,30 @@ class Menu_table extends MY_Controller
 
     // check body
     $data = $this->lib_curl->curl_request($this->pos_service_v1 . 'menu/get_meja/' . $id);
-    if (count($post) == 0) {
-      // get menu category details data
-      // response check
-      if ($data['status'] == true) {
-        // dataView
-        $dataView = [
-          'title'       => 'Master Data',
-          'subtitle'    => 'Ubah No. Meja',
-          'data' => $data['data']
-        ];
+    if ($data['status']) {
+      if (count($post) == 0) {
+        // get menu category details data
+        // response check
+        if ($data['status'] == true) {
+          // dataView
+          $dataView = [
+            'title'       => 'Master Data',
+            'subtitle'    => 'Ubah No. Meja',
+            'data' => $data['data']
+          ];
 
-        // view
-        $this->load_template('master_data/Menu_table/page/edit', $dataView);
+          // view
+          $this->load_template('master_data/Menu_table/page/edit', $dataView);
+        } else {
+          // redirect
+          redirect('master-data/menu-categories');
+        }
       } else {
-        // redirect
-        redirect('master-data/menu-categories');
+        $menuCategoriesResponse = $this->lib_curl->curl_request($this->pos_service_v1 . 'menu/edit_meja/' . $data['data']['id'], "PUT", $post);
+        echo json_encode($menuCategoriesResponse);
       }
     } else {
-      $menuCategoriesResponse = $this->lib_curl->curl_request($this->pos_service_v1 . 'menu/edit_meja/' . $data['data']['id'], "PUT", $post);
-      echo json_encode($menuCategoriesResponse);
+      redirect('master_data/menu_table');
     }
   }
 

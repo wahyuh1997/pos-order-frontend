@@ -155,19 +155,19 @@
           <div class="pos-sidebar-footer">
             <div class="subtotal">
               <div class="text">Subtotal</div>
-              <div class="price">$30.98</div>
+              <div class="price">0</div>
             </div>
             <div class="taxes">
               <div class="text">Taxes (6%)</div>
-              <div class="price">$2.12</div>
+              <div class="price">0</div>
             </div>
             <div class="total">
               <div class="text">Total</div>
-              <div class="price">$33.10</div>
+              <div class="price">0</div>
             </div>
             <div class="btn-row">
               <a href="#" id="btn-service" class="btn btn-default"><i class="fa fa-bell fa-fw fa-lg"></i> Service</a>
-              <a href="#" id="btn-bill" class="btn btn-success d-none"><i class="fa fa-file-invoice-dollar fa-fw fa-lg"></i> Bill</a>
+              <a href="<?= base_url('order/print_bill/' . $data_order['data']['id']); ?>" id="btn-bill" class="btn btn-success d-none"><i class="fa fa-file-invoice-dollar fa-fw fa-lg"></i> Bill</a>
               <a href="#" id="submit-order" class="btn btn-success"><i class="fa fa-check fa-fw fa-lg"></i> Submit Order</a>
             </div>
           </div>
@@ -684,7 +684,7 @@
       let table = $('#tableNumber').val();
       let text = $('#keterangan').val()
       $.get("<?= base_url('dashboard/call_service?table='); ?>" + table + '&text=' + text, function(data) {
-        console.log(data);
+        // console.log(data);
         $('#exampleModal').modal('hide')
         $('#keterangan').val('')
       })

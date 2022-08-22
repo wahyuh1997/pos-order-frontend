@@ -41,7 +41,11 @@ class Login extends MY_Controller
       ];
 
       $this->session->set_flashdata('notice', $response['message']);
-      redirect('');
+      if ($_SESSION['pos_order']['role'] == 'dapur') {
+        redirect('kitchen');
+      } else {
+        redirect('');
+      }
     } else {
       $this->session->set_flashdata('notice', $response['message']);
       redirect('login');
