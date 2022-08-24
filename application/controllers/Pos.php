@@ -21,7 +21,10 @@ class Pos extends MY_Controller
       # code...
       $order = $this->lib_curl->curl_request($this->pos_service_v1 . 'customer/get_order/' . $_SESSION['pos_order']['qrcode']);
     } else {
-      $order = ['status' => false];
+      $order = [
+        'status' => false,
+        'data'   => null
+      ];
     }
     // trace($order);
     $dataView = [

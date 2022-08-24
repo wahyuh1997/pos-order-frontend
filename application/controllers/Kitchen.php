@@ -7,6 +7,10 @@ class Kitchen extends MY_Controller
   public function __construct()
   {
     parent::__construct();
+
+    if (!isset($_SESSION['pos_order'])) {
+      redirect('login');
+    }
   }
 
   /**

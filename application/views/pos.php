@@ -115,8 +115,8 @@
         <!-- BEGIN pos-sidebar -->
         <div class="pos-sidebar" id="pos-sidebar">
           <div class="pos-sidebar-header">
-            <input type="hidden" id="orderId" value="<?= $data_order['data']['id']; ?>">
-            <input type="hidden" id="tableNumber" value="<?= $data_order['data']['no_meja']; ?>">
+            <input type="hidden" id="orderId" value="<?= check_null($data_order['data']['id']); ?>">
+            <input type="hidden" id="tableNumber" value="<?= check_null($data_order['data']['no_meja']); ?>">
 
             <div class="back-btn">
               <button type="button" data-dismiss-class="pos-mobile-sidebar-toggled" data-target="#pos-customer" class="btn">
