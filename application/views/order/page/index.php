@@ -48,6 +48,22 @@
           }
 
         ?>
+
+          <?php
+          switch ($res['payment_type']) {
+            case 1:
+              $payment_type = 'Cash';
+              break;
+            case 2:
+              $payment_type = 'QRIS';
+              break;
+            case 3:
+              $payment_type = 'Debit';
+              break;
+            default:
+              $payment_type = '-';
+              break;
+          }; ?>
           <tr>
             <td><?= $key + 1; ?></td>
             <td class="text-center">
@@ -73,7 +89,7 @@
             <td class="text-end">Rp. <?= check_null($res['total_harga']); ?></td>
             <td class="text-center"><?= $status; ?></td>
             <td class="text-center"><?= $res['checkout'] == 1 ? '<i class="fa fa-check text-success"></i>' : '<i class="fa fa-times text-danger"></i>'; ?></td>
-            <td>-</td>
+            <td><?= $payment_type; ?></td>
             <td><?= dateFormat($res['created_at']); ?></td>
             <td><?= dateFormat(check_null($res['updated_at'])); ?></td>
           </tr>

@@ -113,7 +113,7 @@
         <td class="font-weight-bold" style="font-size:13px">TOTAL</td>
         <td class="font-weight-bold" style="font-size:13px" align="right"><small>Rp.</small> <?= number_format($data['data']['total_harga'], 0); ?></td>
       </tr>
-      <?php if ($data['data']['checkout'] == 1) : ?>
+      <?php if ($data['data']['checkout'] == 1 && $data['data']['payment_type'] == 1) : ?>
         <tr>
           <td style="font-size:13px">BAYAR</td>
           <td style="font-size:13px" align="right"><small>Rp.</small> <?= number_format($data['data']['bayar'], 0); ?></td>

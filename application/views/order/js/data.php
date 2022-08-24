@@ -5,12 +5,34 @@
   });
 
   $(document).on('change', '#payment_type', function() {
-    if ($(this).val() != 'cash') {
+    if ($(this).val() != '1') {
       $('.cash').addClass('d-none');
     } else {
       $('.cash').removeClass('d-none');
     }
   });
+
+  $(document).on('click', '#bayar', function(e) {
+    if ($('#payment_type').val() == 1) {
+      if ($('#pay').val() < $('#total').val()) {
+        e.preventDefault();
+        swal({
+          title: 'Gagal',
+          text: 'Total Bayar Tidak Boleh Kurang Dari Nominal Pembelian',
+          icon: 'error',
+          buttons: {
+            confirm: {
+              text: 'Ok',
+              value: true,
+              visible: true,
+              className: 'btn btn-primary',
+              closeModal: true
+            }
+          }
+        })
+      }
+    }
+  })
 
   /* Logout Function */
   $(document).on('click', '.cancel', function(e) {

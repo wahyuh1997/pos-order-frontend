@@ -32,7 +32,7 @@
   <!-- END col-3 -->
   <!-- BEGIN col-3 -->
   <div class="col-xl-4 col-md-6">
-    <div class="widget widget-stats bg-gray-900">
+    <div class="widget widget-stats bg-success">
       <div class="stats-icon stats-icon-lg"><i class="fa fa-comment-alt fa-fw"></i></div>
       <div class="stats-content">
         <div class="stats-title">Total Meja Digunakan</div>

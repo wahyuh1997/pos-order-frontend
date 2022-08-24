@@ -115,7 +115,7 @@
         $.plot($("#interactive-chart2"), [{
           data: data2,
           label: "Total Menu",
-          color: app.color.blue,
+          color: app.color.purple,
           lines: {
             show: true,
             fill: false,
@@ -158,7 +158,7 @@
         $.plot($("#interactive-chart3"), [{
           data: data3,
           label: "Total Meja",
-          color: app.color.blue,
+          color: app.color.green,
           lines: {
             show: true,
             fill: false,

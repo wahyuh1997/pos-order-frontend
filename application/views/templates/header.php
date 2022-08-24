@@ -48,7 +48,7 @@
   </style>
 </head>
 
-<body>
+<body class="pace-done theme-cyan">
   <!-- BEGIN #loader -->
   <div id="loader" class="app-loader">
     <span class="spinner"></span>
@@ -63,7 +63,7 @@
   </div>
 
   <!-- BEGIN #app -->
-  <div id="app" class="app app-header-fixed app-sidebar-fixed">
+  <div id="app" class="app app-header-fixed app-sidebar-fixed app-gradient-enabled app-with-light-sidebar">
     <!-- BEGIN #header -->
     <div id="header" class="app-header">
       <!-- BEGIN navbar-header -->

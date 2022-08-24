@@ -88,14 +88,16 @@
           </a>
         </div>
       <?php endif; ?>
-      <div class="menu-item <?= $this->uri->segment(1) == 'user' ? 'active' : null; ?>">
-        <a href="<?= base_url('user'); ?>" class="menu-link">
-          <div class="menu-icon">
-            <i class="fa fa-user"></i>
-          </div>
-          <div class="menu-text">User</div>
-        </a>
-      </div>
+      <?php if ($_SESSION['pos_order']['role'] == 'owner') : ?>
+        <div class="menu-item <?= $this->uri->segment(1) == 'user' ? 'active' : null; ?>">
+          <a href="<?= base_url('user'); ?>" class="menu-link">
+            <div class="menu-icon">
+              <i class="fa fa-user"></i>
+            </div>
+            <div class="menu-text">User</div>
+          </a>
+        </div>
+      <?php endif; ?>
       <!-- BEGIN minify-button -->
       <div class="menu-item d-flex">
         <a href="javascript:;" class="app-sidebar-minify-btn ms-auto" data-toggle="app-sidebar-minify"><i class="fa fa-angle-double-left"></i></a>

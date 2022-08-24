@@ -81,6 +81,8 @@ class Order extends MY_Controller
 
         $this->load_template('order/page/paid', $dataView);
       } else {
+        unset($_SESSION['pos_order']['qrcode']);
+        $this->print_bill($id);
         echo json_encode($this->lib_curl->curl_request($this->pos_service_v1 . 'order/final_order/' . $id, 'PUT', $_POST));
       }
     } else {

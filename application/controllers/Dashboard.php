@@ -36,10 +36,8 @@ class Dashboard extends MY_Controller
     if (isset($_GET['table'])) {
       set_cookie('table', $_GET['table'], 2);
       set_cookie('text', $_GET['text'], 2);
-    }
-
-    /* From Kitchen */
-    if (isset($_GET['menu'])) {
+    } else if (isset($_GET['menu'])) {
+      /* From Kitchen */
       set_cookie('menu', $_GET['menu'], 2);
       set_cookie('text', $_GET['text'], 2);
     }
@@ -49,19 +47,13 @@ class Dashboard extends MY_Controller
   {
     if (get_cookie('table')) {
       $data = [
-        'status' => true,
+        'status'  => true,
         'title'   => 'Meja Nomor ' . get_cookie('table'),
         'text'    => get_cookie('text')
       ];
-    } else {
+    } else if (get_cookie('menu')) {
       $data = [
-        'status'  => false,
-      ];
-    }
-
-    if (get_cookie('menu')) {
-      $data = [
-        'status' => true,
+        'status'  => true,
         'title'   => 'Menu ' . get_cookie('menu'),
         'text'    => get_cookie('text')
       ];
@@ -70,8 +62,6 @@ class Dashboard extends MY_Controller
         'status'  => false,
       ];
     }
-
-
 
     echo json_encode($data);
   }

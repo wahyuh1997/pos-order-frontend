@@ -20,6 +20,13 @@ class Pos extends MY_Controller
     if (isset($_SESSION['pos_order']['qrcode'])) {
       # code...
       $order = $this->lib_curl->curl_request($this->pos_service_v1 . 'customer/get_order/' . $_SESSION['pos_order']['qrcode']);
+      if ($order['data']['status'] != 0) {
+        unset($_SESSION['pos_order']['qrcode']);
+        $order = [
+          'status' => false,
+          'data'   => null
+        ];
+      }
     } else {
       $order = [
         'status' => false,
@@ -39,10 +46,13 @@ class Pos extends MY_Controller
   public function get_order_customer($qrcode)
   {
     $response = $this->lib_curl->curl_request($this->pos_service_v1 . 'customer/get_order/' . $qrcode);
-    if ($response['status'] == true) {
+    if ($response['status'] == true && $response['data']['status'] == 0) {
       $_SESSION['pos_order']['qrcode']  = $qrcode;
+      redirect('pos');
+    } else {
+      $this->session->set_flashdata('notice', 'Pesanan Anda Telah Berakhir');
+      redirect('pos');
     }
-    redirect('pos');
   }
 
   public function get_detail_item($id)
@@ -74,12 +84,16 @@ class Pos extends MY_Controller
   public function get_history()
   {
     $response = $this->lib_curl->curl_request($this->pos_service_v1 . 'customer/get_order/' . $_SESSION['pos_order']['qrcode']);
-    $dataView = [
-      'data'     => $response,
-    ];
 
+    if ($response['status'] == true && $response['data']['status'] == 0) {
+      $dataView = [
+        'data'     => $response,
+      ];
 
-    $this->load->view("templates/menu/pos_history", $dataView);
+      $this->load->view("templates/menu/pos_history", $dataView);
+    } else {
+      redirect('pos');
+    }
   }
 
   public function delete_order($id)

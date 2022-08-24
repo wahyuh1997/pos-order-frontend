@@ -10,8 +10,10 @@
 <div class="card">
   <div class="card-header d-flex justify-content-between">
     <span>Informasi Pelanggan</span>
-    <?php if (count($data['order_detail']) > 0) : ?>
-      <a href="<?= base_url('order/print_bill/' . $data['id']); ?>" class="btn btn-sm btn-danger"><i class="fa fa-print-pdf"></i> Cetak Tagihan</a>
+    <?php if (count($data['order_detail']) > 1) : ?>
+      <?php if ($data['status'] != 0) : ?>
+        <a href="<?= base_url('order/print_bill/' . $data['id']); ?>" class="btn btn-sm btn-danger"><i class="fa fa-print-pdf"></i> Cetak Tagihan</a>
+      <?php endif; ?>
     <?php endif; ?>
   </div>
   <div class="card-body">
@@ -137,7 +139,7 @@
       <div class="mb-3 row">
         <label for="payment_type" class="col-sm-2 col-form-label">Jenis Pembayaran</label>
         <div class="col-sm-6">
-          <?php if ($data['status'] == 1) : ?>
+          <?php if ($data['status'] == 0) : ?>
             <select class="form-select default-select2" id="payment_type" name="payment_type" required>
               <option selected value="1">Cash</option>
               <option value="2">QRIS</option>
@@ -188,29 +190,31 @@
         </div>
       </div>
 
-      <div class="mb-3 row cash">
-        <label for="pay" class="col-sm-2 col-form-label">Bayar</label>
-        <div class="col-sm-6">
-          <div class="input-group">
-            <span class="input-group-text">Rp.</span>
-            <input type="number" class="form-control" id="pay" name="bayar" value="<?= $data['bayar'] != null ? $data['bayar'] : 0; ?>" min="0" <?= $data['bayar'] != null ? 'readonly' : null; ?>>
+      <?php if ($data['payment_type'] != 2 && $data['payment_type'] != 3) : ?>
+        <div class="mb-3 row cash">
+          <label for="pay" class="col-sm-2 col-form-label">Bayar</label>
+          <div class="col-sm-6">
+            <div class="input-group">
+              <span class="input-group-text">Rp.</span>
+              <input type="number" class="form-control" id="pay" name="bayar" value="<?= $data['bayar'] != null ? $data['bayar'] : 0; ?>" min="0" <?= $data['bayar'] != null ? 'readonly' : null; ?>>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="mb-3 row cash">
-        <label for="change" class="col-sm-2 col-form-label">Kembali</label>
-        <div class="col-sm-6">
-          <div class="input-group">
-            <span class="input-group-text">Rp.</span>
-            <input type="number" class="form-control" id="change" name="kembalian" value="<?= $data['kembalian'] != null ? $data['kembalian'] : 0; ?>" min="0" readonly>
+        <div class="mb-3 row cash">
+          <label for="change" class="col-sm-2 col-form-label">Kembali</label>
+          <div class="col-sm-6">
+            <div class="input-group">
+              <span class="input-group-text">Rp.</span>
+              <input type="number" class="form-control" id="change" name="kembalian" value="<?= $data['kembalian'] != null ? $data['kembalian'] : 0; ?>" min="0" readonly>
+            </div>
           </div>
         </div>
-      </div>
+      <?php endif; ?>
     </div>
     <div class="card-footer text-end">
       <a href="<?= base_url('order'); ?>" class="btn btn-secondary">Back</a>
-      <?php if (isset($subtotal) && $data['status'] == 1) : ?>
-        <button type="submit" class="btn btn-info">Bayar</button>
+      <?php if (isset($subtotal) && $data['status'] == 0) : ?>
+        <button type="submit" id="bayar" class="btn btn-info">Bayar</button>
       <?php endif; ?>
     </div>
   </div>

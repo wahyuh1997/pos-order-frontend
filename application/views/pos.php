@@ -23,7 +23,7 @@
       bottom: 0;
       left: 0;
       right: 0;
-      z-index: 99999;
+      z-index: 999;
       background: white;
     }
   </style>
@@ -40,6 +40,9 @@
   <!-- BEGIN #app -->
   <div id="app" class="app app-content-full-height app-without-sidebar app-without-header bg-white">
     <?php if ($data_order['status'] == false) : ?>
+      <?php if ($this->session->flashdata('notice')) : ?>
+        <div class="flashdata"></div>
+      <?php endif; ?>
       <div id="reader" width="600px"></div>
     <?php endif; ?>
     <!-- BEGIN #content -->
@@ -626,21 +629,29 @@
         })
     });
 
-    $(document).on('click', '.total-order', function() {
+    var historyActive = false
+    $(document).on('click', '.total-order', function(e) {
+      e.preventDefault();
+      historyActive = false;
       $('#btn-bill').addClass('d-none');
       $('#submit-order').removeClass('d-none');
+      $('#tabOrderHistory').removeClass('active');
       load_cart();
+
     });
 
     /* Tab Order History */
-    $(document).on('click', '#tabOrderHistory', function() {
+    $(document).on('click', '#tabOrderHistory', function(e) {
+      e.preventDefault();
       load_history();
-      if ($('#tabOrderHistory').hasClass('active')) {
-        setInterval(function() {
-          // console.log('ok')
+      historyActive = true;
+
+      setInterval(function() {
+        if (historyActive == true) {
           load_history(false)
-        }, 30000)
-      }
+        }
+      }, 30000)
+
     });
 
 
@@ -719,6 +730,25 @@
       html5QrcodeScanner.render(onScanSuccess, onScanFailure);
     </script>
   <?php endif; ?>
+
+  <script>
+    if ($('.flashdata').length > 0) {
+      swal({
+        title: 'SCAN Gagal',
+        text: 'Pesanan Anda Telah Berakhir',
+        icon: 'error',
+        buttons: {
+          confirm: {
+            text: 'Ok',
+            value: true,
+            visible: true,
+            className: 'btn btn-primary',
+            closeModal: true
+          }
+        }
+      })
+    }
+  </script>
 </body>
 
 </html>

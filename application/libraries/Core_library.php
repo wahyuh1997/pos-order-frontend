@@ -31,6 +31,6 @@ class core_library
     ob_end_clean();
 
     // Output the generated PDF to Browser
-    $dompdf->stream($filename, array('Attachment' => 0));
+    $dompdf->stream($filename, array('Attachment' => 1));
   }
 }
