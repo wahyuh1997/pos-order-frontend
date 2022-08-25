@@ -40,7 +40,7 @@ use PhpOffice\PhpSpreadsheet\Calculation\MathTrig\Base;
           <select class="form-select default-select2" id="role" name="role" required>
             <option value="kasir" <?= $data['role'] == 'kasir' ? 'selected' : null; ?>>Kasir</option>
             <option value="dapur" <?= $data['role'] == 'dapur' ? 'selected' : null; ?>>Dapur</option>
-            <option value="owner" <?= $data['role'] == 'owner' ? 'selected' : null; ?>>Owner</option>
+            <!-- <option value="owner" <?= $data['role'] == 'owner' ? 'selected' : null; ?>>Owner</option> -->
           </select>
         </div>
       </div>

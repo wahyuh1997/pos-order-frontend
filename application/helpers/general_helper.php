@@ -116,40 +116,40 @@ function month($month)
 {
   switch ($month) {
     case 1:
-      return "January";
+      return "Januari";
       break;
     case 2:
       return "February";
       break;
     case 3:
-      return "March";
+      return "Maret";
       break;
     case 4:
       return "April";
       break;
     case 5:
-      return "May";
+      return "Mei";
       break;
     case 6:
-      return "June";
+      return "Juni";
       break;
     case 7:
-      return "July";
+      return "Juli";
       break;
     case 8:
-      return "August";
+      return "Agustus";
       break;
     case 9:
       return "September";
       break;
     case 10:
-      return "October";
+      return "Oktober";
       break;
     case 11:
       return "November";
       break;
     case 12:
-      return "December";
+      return "Desember";
       break;
   }
 }

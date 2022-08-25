@@ -13,8 +13,9 @@
   });
 
   $(document).on('click', '#bayar', function(e) {
+    // console.log($('#pay').val())
     if ($('#payment_type').val() == 1) {
-      if ($('#pay').val() < $('#total').val()) {
+      if (parseInt($('#pay').val()) < parseInt($('#total').val())) {
         e.preventDefault();
         swal({
           title: 'Gagal',

@@ -82,9 +82,13 @@
       <?php foreach ($data['data']['order_detail'] as $item) : ?>
         <?php if ($item['status'] != 3) : ?>
           <tr>
-            <td style="padding-top: 0.5rem;font-size:13px;font-weight:bold" width="10%"><?= $item['qty']; ?></td>
-            <td style="padding-top: 0.5rem;font-size:13px;font-weight:bold" width="40%"><?= $item['nama_menu']; ?></td>
-
+            <td style="padding-top: 0.5rem;font-size:13px;font-weight:bold" width="7%"><?= $item['qty']; ?></td>
+            <td style="padding-top: 0.5rem;font-size:13px;font-weight:bold" width="63%">
+              <p style="margin-bottom: -0.75rem;"><?= $item['nama_menu']; ?></p>
+              <?php if ($item['name_attribute']) : ?>
+                <small><?= $item['name_attribute']; ?></small>
+              <?php endif; ?>
+            </td>
             <td style="padding-top: 0.5rem;font-size:13px;font-weight:bold;" align="right"><small>Rp.</small> <?= number_format($item['harga'], 0); ?></td>
           </tr>
         <?php endif; ?>
@@ -135,6 +139,10 @@
       <h5 style="margin-top: 3rem !important;font-size:13px;padding-bottom:10px;">-- THANK YOU ! --</h5>
     </div>
   </div>
+
+  <footer class="fixed-bottom text-center">
+    <p style="font-size:11px">Jl. Raya Triraksa Village 2, Tigaraksa, Kec. Tigaraksa, Kabupaten Tangerang, Banten.</p>
+  </footer>
 
 
 
