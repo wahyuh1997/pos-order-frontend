@@ -21,6 +21,7 @@ class Menu extends MY_Controller
     $dataView = [
       'title'         => 'Master Data',
       'subtitle'      => 'Menu',
+      'js'            => 'master_data/menu/js/data_index',
       'data'          => $data['data']
     ];
 
@@ -143,6 +144,12 @@ class Menu extends MY_Controller
     }
 
     $response = $this->lib_curl->curl_request($this->pos_service_v1 . 'menu/delete_menu/' . $id, "DELETE");
+    echo json_encode($response);
+  }
+
+  public function change_status($id)
+  {
+    $response = $this->lib_curl->curl_request($this->pos_service_v1 . 'menu/change_status/' . $id);
     echo json_encode($response);
   }
 }

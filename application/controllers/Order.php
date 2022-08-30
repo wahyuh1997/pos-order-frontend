@@ -122,7 +122,10 @@ class Order extends MY_Controller
 
   public function cancelled($id)
   {
-    $delete = $this->lib_curl->curl_request($this->pos_service_v1 . 'order/batal_order/' . $id);
-    echo json_encode($delete);
+    $data = $this->lib_curl->curl_request($this->pos_service_v1 . 'order/batal_order/' . $id, 'PUT', $_POST);
+    if ($data['status'] == true) {
+      unset($_SESSION['pos_order']['qrcode']);
+    }
+    echo json_encode($data);
   }
 }

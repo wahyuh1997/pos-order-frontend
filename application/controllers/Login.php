@@ -31,19 +31,25 @@ class Login extends MY_Controller
     $response = $this->lib_curl->curl_request($this->pos_service_v1 . 'login', 'POST', $post);
     // trace($response);
     if ($response['status'] == true) {
-      /* Set Session */
-      $_SESSION['pos_order'] = [
-        'id' => $response['data']['detail_user']['id'],
-        'name' => $response['data']['detail_user']['name'],
-        'username' => $response['data']['detail_user']['username'],
-        'role' => $response['data']['detail_user']['role'],
-        'token' => $response['data']['access_token'],
-      ];
+      // $this->session->set_flashdata('notice', $response['message']);
 
-      $this->session->set_flashdata('notice', $response['message']);
-      if ($_SESSION['pos_order']['role'] == 'dapur') {
+      if ($response['data']['detail_user']['role'] == 'dapur') {
+        $_SESSION['dapur_pos_order'] = [
+          'id'        => $response['data']['detail_user']['id'],
+          'name'      => $response['data']['detail_user']['name'],
+          'username'  => $response['data']['detail_user']['username'],
+          'role'      => $response['data']['detail_user']['role'],
+        ];
         redirect('kitchen');
       } else {
+        /* Set Session */
+        $_SESSION['pos_order'] = [
+          'id'        => $response['data']['detail_user']['id'],
+          'name'      => $response['data']['detail_user']['name'],
+          'username'  => $response['data']['detail_user']['username'],
+          'role'      => $response['data']['detail_user']['role'],
+          // 'token' => $response['data']['access_token'],
+        ];
         redirect('');
       }
     } else {

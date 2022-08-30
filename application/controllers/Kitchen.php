@@ -8,7 +8,7 @@ class Kitchen extends MY_Controller
   {
     parent::__construct();
 
-    if (!isset($_SESSION['pos_order'])) {
+    if (!isset($_SESSION['dapur_pos_order'])) {
       redirect('login');
     }
   }
@@ -23,7 +23,7 @@ class Kitchen extends MY_Controller
     // $dataView = [
     //   'data_kitchen'     => $kitchen,
     // ];
-
+    // trace($_SESSION);
     $this->load->view('kitchen',);
   }
 
@@ -50,5 +50,11 @@ class Kitchen extends MY_Controller
     }
 
     echo json_encode($this->lib_curl->curl_request($this->pos_service_v1 . 'kitchen/confirmation_menu/' . $id, 'PUT', $_POST));
+  }
+
+  public function logout()
+  {
+    unset($_SESSION['dapur_pos_order']);
+    redirect('login');
   }
 }

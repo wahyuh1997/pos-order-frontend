@@ -75,7 +75,8 @@
                   <ul class="dropdown-menu">
                     <a class="dropdown-item" href="<?= base_url('order/print_qrcode/' . $res['id']); ?>" target="_blank">Cetak QR Code</a>
                     <a class="dropdown-item" href="<?= base_url('order/paid_order/' . $res['id']); ?>" class="btn btn-primary btn-sm">Bayar</a>
-                    <a class="dropdown-item cancel" href="<?= base_url('order/cancelled/' . $res['id']); ?>" data-redurl="<?= base_url('order'); ?>">Batalkan Pesanan</a>
+                    <a class="dropdown-item modal-id" href="#modal-dialog" data-bs-toggle="modal" data-id="<?= $res['id']; ?>">Batalkan Pesanan</a>
+                    <!-- <a class="dropdown-item cancel" href="<?= base_url('order/cancelled/' . $res['id']); ?>" data-redurl="<?= base_url('order'); ?>">Batalkan Pesanan</a> -->
                   </ul>
                 </div>
               <?php else : ?>
@@ -99,5 +100,23 @@
     </table>
 
     <!-- script -->
+  </div>
+</div>
+
+<!-- #modal-dialog -->
+<div class="modal fade" id="modal-dialog">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Alasan Pembatalan</h4>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
+      </div>
+      <div class="modal-body">
+        <textarea class="form-control" name="keterangan" id="keterangan" cols="30" rows="5"></textarea>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-primary cancel" href="<?= base_url('order/cancelled/'); ?>" data-redurl="<?= base_url('order'); ?>">Batalkan</a>
+      </div>
+    </div>
   </div>
 </div>
