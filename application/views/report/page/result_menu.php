@@ -32,6 +32,6 @@
     </table>
   </div>
   <div class="card-footer text-end">
-    <a href="report" class="btn btn-info">Back</a>
+    <a href="<?= base_url('report'); ?>" class="btn btn-info">Back</a>
   </div>
 </div>

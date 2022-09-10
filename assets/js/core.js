@@ -23,14 +23,14 @@ $(document).on('click', '.btn-del', function (e) {
       icon: 'info',
       buttons: {
         cancel: {
-          text: 'Cancel',
+          text: 'Batal',
           value: null,
           visible: true,
           className: 'btn btn-default',
           closeModal: true,
         },
         confirm: {
-          text: 'Delete',
+          text: 'Hapus',
           value: true,
           visible: true,
           className: 'btn btn-danger',

@@ -40,7 +40,7 @@
           <div class="time" id="time">00:00</div>
           <div class="nav">
             <div class="nav-item">
-              <a href="<?= base_url('login/logout'); ?>" class="btn-logout dropdown-item" data-redurl="<?= base_url('login'); ?>"><b>KELUAR</b></a>
+              <a href="<?= base_url('kitchen/logout'); ?>" class="btn-logout dropdown-item" data-redurl="<?= base_url('login'); ?>"><b>KELUAR</b></a>
             </div>
           </div>
         </div>

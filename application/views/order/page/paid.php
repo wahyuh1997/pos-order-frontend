@@ -60,6 +60,12 @@
             }; ?>
             <td class="h5">: <?= $status; ?></td>
           </tr>
+          <?php if ($data['status'] == 1) : ?>
+            <tr>
+              <th class="h6">Alasan Dibatalkan</th>
+              <td class="h5">: <?= $data['keterangan']; ?></td>
+            </tr>
+          <?php endif; ?>
         </table>
       </div>
     </div>

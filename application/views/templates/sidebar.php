@@ -28,32 +28,45 @@
           <div class="menu-text">Dashboard</div>
         </a>
       </div>
-      <div class="menu-item has-sub <?= $this->uri->segment(1) == 'master-data' || $this->uri->segment(1) == 'master_data' ? 'active' : null; ?>">
-        <a href="javascript:;" class="menu-link">
-          <div class="menu-icon">
-            <i class="fa fa-hdd"></i>
-          </div>
-          <div class="menu-text">Master Data</div>
-          <div class="menu-caret"></div>
-        </a>
-        <div class="menu-submenu">
-          <div class="menu-item <?= $this->uri->segment(2) == 'menu' ? 'active' : null; ?>">
-            <a href="<?= base_url('master-data/menu'); ?>" class="menu-link">
-              <div class="menu-text">Menu</div>
-            </a>
-          </div>
-          <div class="menu-item <?= $this->uri->segment(2) == 'menu-categories' ? 'active' : null; ?>">
-            <a href="<?= base_url('master-data/menu-categories'); ?>" class="menu-link">
-              <div class="menu-text">Kategori</div>
-            </a>
-          </div>
-          <div class="menu-item <?= $this->uri->segment(2) == 'menu_table' ? 'active' : null; ?>">
-            <a href="<?= base_url('master_data/menu_table'); ?>" class="menu-link">
-              <div class="menu-text">No. Meja</div>
-            </a>
+      <?php if ($_SESSION['pos_order']['role'] == 'owner') : ?>
+        <div class="menu-item has-sub <?= $this->uri->segment(1) == 'master-data' || $this->uri->segment(1) == 'master_data' ? 'active' : null; ?>">
+          <a href="javascript:;" class="menu-link">
+            <div class="menu-icon">
+              <i class="fa fa-hdd"></i>
+            </div>
+            <div class="menu-text">Master Data</div>
+            <div class="menu-caret"></div>
+          </a>
+          <div class="menu-submenu">
+            <div class="menu-item <?= $this->uri->segment(2) == 'menu' ? 'active' : null; ?>">
+              <a href="<?= base_url('master-data/menu'); ?>" class="menu-link">
+                <div class="menu-text">Menu</div>
+              </a>
+            </div>
+            <div class="menu-item <?= $this->uri->segment(2) == 'menu-categories' ? 'active' : null; ?>">
+              <a href="<?= base_url('master-data/menu-categories'); ?>" class="menu-link">
+                <div class="menu-text">Kategori</div>
+              </a>
+            </div>
+            <div class="menu-item <?= $this->uri->segment(2) == 'menu_table' ? 'active' : null; ?>">
+              <a href="<?= base_url('master_data/menu_table'); ?>" class="menu-link">
+                <div class="menu-text">No. Meja</div>
+              </a>
+            </div>
           </div>
         </div>
-      </div>
+      <?php endif; ?>
+
+      <?php if ($_SESSION['pos_order']['role'] == 'kasir') : ?>
+        <div class="menu-item has-sub <?= $this->uri->segment(2) == 'menu' ? 'active' : null; ?>">
+          <a href="<?= base_url('master-data/menu'); ?>" class="menu-link">
+            <div class="menu-icon">
+              <i class="fa fa-hdd"></i>
+            </div>
+            <div class="menu-text">Menu</div>
+          </a>
+        </div>
+      <?php endif; ?>
       <div class="menu-item <?= $this->uri->segment(1) == 'order' ? 'active' : null; ?>">
         <a href="<?= base_url('order'); ?>" class="menu-link">
           <div class="menu-icon">

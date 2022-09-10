@@ -35,13 +35,21 @@
     }
   })
 
+  $(document).on('click', '.modal-id', function() {
+    let id = $(this).data('id');
+    $('.cancel').data('id', id);
+  });
+
   /* Logout Function */
   $(document).on('click', '.cancel', function(e) {
     e.preventDefault();
 
     // init
-    var url = $(this).attr('href');
+    let id = $(this).data('id');
+    let href = $(this).attr('href');
+    var url = href + id;
     var redUrl = $(this).data('redurl');
+    var ket = $('#keterangan').val();
 
     // confirmation
     swal({
@@ -69,13 +77,39 @@
       if (result == false) {
         return false;
       } else if (result == true) {
-        $.get(url, function(response) {
-          let parse = JSON.parse(response)
-          if (parse.status == true) {
-            swal({
-                title: 'Success',
+        $.ajax({
+          url: url,
+          method: 'POST',
+          dataType: 'json',
+          data: {
+            keterangan: ket
+          },
+          success: function(parse) {
+            if (parse.status == true) {
+              swal({
+                  title: 'Success',
+                  text: parse.message,
+                  icon: 'success',
+                  buttons: {
+                    confirm: {
+                      text: 'Ok',
+                      value: true,
+                      visible: true,
+                      className: 'btn btn-primary',
+                      closeModal: true
+                    }
+                  }
+                })
+                .then((result) => {
+                  if (result == true) {
+                    window.location.href = window.location.href
+                  }
+                })
+            } else {
+              swal({
+                title: 'Failed',
                 text: parse.message,
-                icon: 'success',
+                icon: 'error',
                 buttons: {
                   confirm: {
                     text: 'Ok',
@@ -86,28 +120,9 @@
                   }
                 }
               })
-              .then((result) => {
-                if (result == true) {
-                  window.location.href = window.location.href
-                }
-              })
-          } else {
-            swal({
-              title: 'Failed',
-              text: parse.message,
-              icon: 'error',
-              buttons: {
-                confirm: {
-                  text: 'Ok',
-                  value: true,
-                  visible: true,
-                  className: 'btn btn-primary',
-                  closeModal: true
-                }
-              }
-            })
+            }
           }
-        });
+        })
       }
     });
   });
