@@ -38,9 +38,15 @@ use PhpOffice\PhpSpreadsheet\Calculation\MathTrig\Base;
         <label for="role" class="col-sm-2 col-form-label">Posisi</label>
         <div class="col-sm-6">
           <select class="form-select default-select2" id="role" name="role" required>
-            <option value="kasir" <?= $data['role'] == 'kasir' ? 'selected' : null; ?>>Kasir</option>
-            <option value="dapur" <?= $data['role'] == 'dapur' ? 'selected' : null; ?>>Dapur</option>
-            <!-- <option value="owner" <?= $data['role'] == 'owner' ? 'selected' : null; ?>>Owner</option> -->
+            <?php if($_SESSION['pos_order']['id'] == $data['id']){?>
+              <option value="kasir" <?= $data['role'] == 'kasir' ? 'selected' : null; ?>>Kasir</option>
+              <option value="dapur" <?= $data['role'] == 'dapur' ? 'selected' : null; ?>>Dapur</option>
+              <option value="owner" <?= $data['role'] == 'owner' ? 'selected' : null; ?>>Owner</option>
+            <?php }else{?>
+              <option value="kasir" <?= $data['role'] == 'kasir' ? 'selected' : null; ?>>Kasir</option>
+              <option value="dapur" <?= $data['role'] == 'dapur' ? 'selected' : null; ?>>Dapur</option>
+              <!-- <option value="owner" <?= $data['role'] == 'owner' ? 'selected' : null; ?>>Owner</option> -->
+            <?php }?>
           </select>
         </div>
       </div>
