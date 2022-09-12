@@ -170,7 +170,6 @@
             </div>
             <div class="btn-row">
               <a href="#" id="btn-service" class="btn btn-default"><i class="fa fa-bell fa-fw fa-lg"></i> Service</a>
-              <a href="<?= base_url('order/print_bill/' . $data_order['data']['id']); ?>" id="btn-bill" class="btn btn-success d-none"><i class="fa fa-file-invoice-dollar fa-fw fa-lg"></i> Bill</a>
               <a href="#" id="submit-order" class="btn btn-success"><i class="fa fa-check fa-fw fa-lg"></i> Submit Order</a>
             </div>
           </div>
@@ -633,8 +632,9 @@
     $(document).on('click', '.total-order', function(e) {
       e.preventDefault();
       historyActive = false;
-      $('#btn-bill').addClass('d-none');
+      // $('#btn-bill').addClass('d-none');
       $('#submit-order').removeClass('d-none');
+      $('#btn-service').removeAttr('style');
       $('#tabOrderHistory').removeClass('active');
       load_cart();
 
@@ -644,6 +644,7 @@
     $(document).on('click', '#tabOrderHistory', function(e) {
       e.preventDefault();
       load_history();
+      $('#btn-service').css('width', '100%');
       historyActive = true;
 
       setInterval(function() {
@@ -673,7 +674,7 @@
           $('.subtotal .price').html('Rp. ' + $('#historyPrice').val());
           $('.taxes .price').html('Rp. ' + $('#historyTax').val())
           $('.total .price').html('Rp. ' + $('#historyTotalPrice').val())
-          $('#btn-bill').removeClass('d-none');
+          // $('#btn-bill').removeClass('d-none');
           $('#submit-order').addClass('d-none');
           // if (res.status == true) {}
         }

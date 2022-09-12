@@ -217,9 +217,19 @@
         </div>
       <?php endif; ?>
     </div>
+    <?php
+    /* Check All Menu Already Finish or not */
+    $count = 0;
+    for ($i = 0; $i < count($data['order_detail']); $i++) {
+      if ($data['order_detail'][$i]['status'] == 2) {
+        $count++;
+      }
+    }; ?>
+
     <div class="card-footer text-end">
-      <a href="<?= base_url('order'); ?>" class="btn btn-secondary">Back</a>
-      <?php if (isset($subtotal) && $data['status'] == 0) : ?>
+      <a href="<?= base_url('order'); ?>" class="btn btn-secondary">Kembali</a>
+      <?php if (isset($subtotal) && $data['status'] == 0 && $count == 0) : ?>
+
         <button type="submit" id="bayar" class="btn btn-info">Bayar</button>
       <?php endif; ?>
     </div>

@@ -1,7 +1,7 @@
 <div class="d-flex justify-content-between">
   <h1 class="page-header"><?= $subtitle; ?></h1>
   <div class="ml-auto">
-    <a href="<?= base_url('master-data/menu-categories/add'); ?>" class="btn btn-sm btn-primary btn-round">Add New</a>
+    <a href="<?= base_url('master-data/menu-categories/add'); ?>" class="btn btn-sm btn-primary btn-round">Tambah Kategori</a>
   </div>
 </div>
 
@@ -20,7 +20,7 @@
       <thead>
         <tr>
           <th width="1%">#</th>
-          <th width="10%"></th>
+          <th width="20%"></th>
           <th>Nama Kategori</th>
           <th>Tanggal Dibuat</th>
           <th>Tanggal Diubah</th>

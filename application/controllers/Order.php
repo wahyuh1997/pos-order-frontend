@@ -68,7 +68,7 @@ class Order extends MY_Controller
   {
     $post = $this->input->post(null, true);
     $data = $this->lib_curl->curl_request($this->pos_service_v1 . 'order/get_order/' . $id);
-    // trace($data['data']['order_detail']);
+
     if ($data['status']) {
       if (count($post) == 0) {
         # code...
@@ -82,7 +82,7 @@ class Order extends MY_Controller
         $this->load_template('order/page/paid', $dataView);
       } else {
         unset($_SESSION['pos_order']['qrcode']);
-        $this->print_bill($id);
+        // $this->print_bill($id);
         echo json_encode($this->lib_curl->curl_request($this->pos_service_v1 . 'order/final_order/' . $id, 'PUT', $_POST));
       }
     } else {

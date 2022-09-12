@@ -68,7 +68,7 @@
     <div id="header" class="app-header">
       <!-- BEGIN navbar-header -->
       <div class="navbar-header">
-        <a href="index.html" class="navbar-brand"><span class="navbar-logo"></span> <b>TAMAN IDE </b> POS</a>
+        <a href="index.html" class="navbar-brand"><b>TAMAN IDE </b></a>
         <button type="button" class="navbar-mobile-toggler" data-toggle="app-sidebar-mobile">
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
@@ -77,6 +77,7 @@
       </div>
       <!-- END navbar-header -->
       <!-- BEGIN header-nav -->
+      <!-- style="background: linear-gradient(#fec3df,yellow)  !important;"  -->
       <div class="navbar-nav">
         <div class="navbar-item navbar-user dropdown">
           <a href="<?= base_url('login/logout'); ?>" class="btn-logout dropdown-item" data-redurl="<?= base_url('login'); ?>"><b>Log Out</b></a>

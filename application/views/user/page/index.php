@@ -3,7 +3,7 @@
   <div class="ml-auto">
     <a href="<?= base_url('user/change_password'); ?>" class="btn btn-sm btn-info btn-round">Ubah Kata Sandi</a>
     <a href="<?= base_url('user/edit'); ?>" class="btn btn-sm btn-info btn-round">Ubah Profile</a>
-    <a href="<?= base_url('user/add'); ?>" class="btn btn-sm btn-primary btn-round">Add New</a>
+    <a href="<?= base_url('user/add'); ?>" class="btn btn-sm btn-primary btn-round">Tambah User</a>
   </div>
 </div>
 
@@ -22,7 +22,7 @@
       <thead>
         <tr>
           <th width="1%">#</th>
-          <th width="15%"></th>
+          <th width="20%"></th>
           <th>Username</th>
           <th>Name</th>
           <th>Role</th>

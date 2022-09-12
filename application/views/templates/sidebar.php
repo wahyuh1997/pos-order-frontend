@@ -4,9 +4,9 @@
   <div class="app-sidebar-content" data-scrollbar="true" data-height="100%">
     <!-- BEGIN menu -->
     <div class="menu">
-      <div class="menu-profile">
+      <div class="menu-profile" img src="<?= base_url(); ?>assets/img/logo/logo.jpeg">
         <a href="javascript:;" class="menu-profile-link" data-toggle="app-sidebar-profile" data-target="#appSidebarProfileMenu">
-          <div class="menu-profile-cover with-shadow"></div>
+          <!-- <div class="menu-profile-cover with-shadow"></div> -->
           <div class="menu-profile-image">
             <img src="<?= base_url(); ?>assets/img/user/user-13.jpg" alt="" />
           </div>

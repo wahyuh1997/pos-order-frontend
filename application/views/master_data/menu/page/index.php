@@ -22,7 +22,7 @@
       <thead>
         <tr>
           <th width="1%">#</th>
-          <th width="10%"></th>
+          <th width="20%"></th>
           <th>Nama Makanan</th>
           <th width="1%" data-orderable="false">Gambar</th>
           <th>Harga</th>
